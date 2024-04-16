@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator
 
 class Gita(models.Model):
     STATO_CHOICES = (
@@ -73,7 +74,9 @@ class Docenti_gita(models.Model):
 
 class Documenti(models.Model):
     Nome = models.CharField(max_length=20)
-    prezzo = models.FloatField()
+    Descrizione = models.CharField(max_length=300)
+    Gita = models.ForeignKey('Gita', on_delete=models.CASCADE)
+    file = models.FileField(upload_to='documenti/')
 
     def __str__(self):
         return self.Nome
@@ -94,7 +97,9 @@ class Classe_gita(models.Model):
 
 class Classe(models.Model):
     Nome = models.CharField(max_length=20)
-    prezzo = models.FloatField()
+    anno = models.IntegerField(validators=[MaxValueValidator(5)])
+    sezione = models.CharField(max_length=3)
+
 
     def __str__(self):
         return self.Nome
