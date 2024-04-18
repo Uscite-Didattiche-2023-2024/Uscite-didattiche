@@ -1,0 +1,57 @@
+/*Container notifica */
+.custom-notification {
+    display: flex;
+    height: 34;
+    width: 40;
+}
+
+/*cerchio numero notifiche e numero*/
+.custom-notification-number {
+    font-size: default; /* grandezza del numero dentro il cerchio */
+    cursor: pointer;
+    font-family: 'arial';
+    height: 30px; /* Grandezza del cerchio*/
+    width: 30px; /* Larghezza del cerchio */
+    background-color: #d63031;
+    border-radius: 20px;
+    color: white;
+    text-align: center;
+    position: relative; /* Lasciare in relativo per poterla spostare con la campanella*/
+    top: -10px; /* Su/giu (numero piu alto risultato piu giu, numero piu basso risultato piu su)*/
+    left: -10px; /* Destra/sinistra (numero piu alto risultato piu a destra, numero piu basso risultato piu a sinistra) */
+    padding: 2px;
+    border-style: solid;
+    border-width: 2px;
+}
+
+/*campanella*/
+.fas {
+    font-size: 25pt;
+    cursor: pointer;
+}
+
+/*campanella quando premuta*/
+.custom-notification:hover {
+    color: red;
+}
+
+.fas:hover>.box {
+    height: 60vh
+}
+
+.custom-notification-box {
+    width: 400px;
+    height: 0px;
+    border-radius: 10px;
+    transition: 0.5s;
+    position: absolute;
+    overflow-y: scroll;
+    padding: 0px;
+    left: -300px;
+    margin-top: 5px;
+    background-color: rgb(0, 0, 0);
+    -webkit-box-shadow: 10px 10px 23px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 10px 10px 23px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 10px 10px 23px 0px rgba(0, 0, 0, 0.1);
+    cursor: context-menu;
+}
