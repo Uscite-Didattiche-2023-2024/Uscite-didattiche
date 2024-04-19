@@ -1,9 +1,10 @@
 /*Container notifica */
 .custom-notification {
     display: flex;
-    margin-left: 150%; 
+    position: absolute;
+    right:20px;
     height: 34;
-    left: 100;
+    
 }
 
 /*cerchio numero notifiche e numero*/
