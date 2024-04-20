@@ -76,7 +76,9 @@
 <body class="bg-black text-white mt-0" data-bs-spy="scroll" data-bs-target="#navScroll">
   <nav id="navScroll" class="navbar navbar-dark bg-black px-vw-5" tabindex="0">
     <div class="container">
+
       <!-- SIDEBAR-->
+      <script src="js/Bell.js"></script>
       <script src="js/Sidebar.js"></script>
       <div class="custom-container">
         <button class="custom-toggle-btn custom-serifbianco" onclick="toggleMenu()">☰</button>
@@ -116,9 +118,36 @@
           </a>
         </li>
         <div class="custom-notification">
+          <div class="custom-notification-icon" onclick="BellClicked()">
           <i id = "Bell" class="fas fa-bell"></i>
           <i class="custom-notification-number">5</i>
-          <div class="custom-notification-box">
+        </div>
+          <div class="custom-notification-box" id="Box">
+              <?php                                         
+                // Utilizzo di un ciclo for per generare 5 notifiche
+                for ($x = 1; $x <= 5; $x++) {
+              ?>
+                  <div class="custom-notification-box-item">
+                    <h3>notifica <?php echo $x; ?></h3>
+                  </div>
+              <?php
+                }
+              ?>  
+              <div class="custom-notification-box-item">
+                <h3>notifica 1</h3>
+              </div>
+              <div class="custom-notification-box-item">
+                <h3>notifica 2</h3>
+              </div>
+              <div class="custom-notification-box-item">
+                <h3>notifica 3</h3>
+              </div>
+              <div class="custom-notification-box-item">
+                <h3>notifica 4</h3>
+              </div>
+              <div class="custom-notification-box-item">
+                <h3>notifica 5</h3>
+              </div>
           </div>
         </div>
     </div>
