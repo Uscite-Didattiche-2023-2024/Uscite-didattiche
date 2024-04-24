@@ -64,6 +64,10 @@
     cursor: pointer;
     border-bottom: 1px solid grey;
 }
+/*toglie la linea grigia all'ultimo elemento notifica*/
+.custom-notification-box-item:last-child {
+    border-bottom: none;
+}
 
 .custom-notification-box-item:hover{
     opacity: 1;
