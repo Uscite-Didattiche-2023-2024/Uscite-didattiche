@@ -1,0 +1,10 @@
+.TI {
+    color: white;
+    position: absolute;
+    width: 200;
+    height: 20;
+    top: 20;
+    margin-top: 90px;
+    cursor: pointer;
+}
+
