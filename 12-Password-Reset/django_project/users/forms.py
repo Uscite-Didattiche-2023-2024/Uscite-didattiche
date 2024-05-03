@@ -3,7 +3,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 
+class PasswordResetForm(forms.Form):
+    from_email = forms.EmailField(label="From Email")
+    to_email = forms.EmailField(label="To Email")
 
+    
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
 
