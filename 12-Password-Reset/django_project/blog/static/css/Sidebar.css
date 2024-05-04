@@ -2,7 +2,6 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   background-color: #1e2124;
-
 }
 
 .custom-container {
@@ -21,11 +20,16 @@ body {
   cursor: pointer;
   border: none;
   background: none;
-  display: flex;
+  display: block;
   /* Aggiunto display:flex per abilitare il flexbox */
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
+  transition: transform 0.5s; 
+}
 
+/* Funzione per rotare l'icona della sidebar quando premuto */
+.custom-toggle-btn.rotate {
+  transform: rotate(180deg); 
 }
 
 .custom-sidebar {
@@ -57,16 +61,12 @@ body {
 }
 
 .custom-center {
-
   text-align: center;
-
 }
 
 .custom-serifbianco {
   color: white;
   /* Rende il testo bianco */
-  font-family: 'sans-serif';
-  /* Utilizza un generico sans-serif font */
   font-weight: bold;
   /* Rende il testo in grassetto */
 }
