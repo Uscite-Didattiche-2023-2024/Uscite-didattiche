@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.contrib.auth.models import Group
 
 from django.core.validators import MaxValueValidator
 from django.core.validators import MinValueValidator
@@ -10,6 +11,13 @@ from django.conf import settings
 
 character = RegexValidator(r'^[A-Z]*$', 'Only CAPS characters are allowed.')
 
+def get_default_group():
+    try:
+        group = Group.objects.get(name='')
+        return group.id 
+    except Group.DoesNotExist:
+        return None
+    
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
@@ -90,18 +98,20 @@ class Docenti_gita(models.Model):
         
     class Meta:
          verbose_name_plural = 'Docenti_gita'
-
+         
 class Documenti(models.Model):
     Titolo = models.CharField(max_length=20)
     Descrizione = models.CharField(max_length=300, default='')
     Gita = models.ForeignKey('Gita', on_delete=models.CASCADE, default='')
-    Allegato = models.FileField(upload_to='documenti/',default='')
+    Allegato = models.FileField(upload_to='documenti/', default='')
+#    group = models.ForeignKey(Group, related_name="documenti", on_delete=models.CASCADE, default=get_default_group)
+    groups = models.ManyToManyField(Group, related_name="documenti")
 
     def __str__(self):
         return self.Titolo
-        
+
     class Meta:
-         verbose_name_plural = 'Documenti'
+        verbose_name_plural = 'Documenti'
 
 class Classe_gita(models.Model):
     Gita = models.ForeignKey('Gita', on_delete=models.CASCADE, default='')
@@ -133,3 +143,20 @@ class Presenti_prenotati(models.Model):
         
     class Meta:
         verbose_name_plural = 'Presenti_prenotati'
+
+class Notifica(models.Model):
+    Titolo = models.CharField(max_length=20)
+    Descrizione = models.CharField(max_length=300, default='')
+    Gita = models.ForeignKey('Gita', on_delete=models.CASCADE, default='')
+    Proposta_Gita = models.ForeignKey('Proposta_Gita', on_delete=models.CASCADE, default='')
+    Classe = models.ForeignKey('Classe', on_delete=models.CASCADE, default='')
+    Documenti = models.ForeignKey('Documenti', on_delete=models.CASCADE, default='')
+
+
+    groups = models.ManyToManyField(Group, related_name="notifica")
+
+    def __str__(self):
+        return self.Titolo
+
+    class Meta:
+        verbose_name_plural = 'Notifica'

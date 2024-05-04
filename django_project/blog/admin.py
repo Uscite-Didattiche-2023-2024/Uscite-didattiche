@@ -8,6 +8,8 @@ from .models import Documenti
 from .models import Classe_gita
 from .models import Classe
 from .models import Presenti_prenotati
+from .models import Notifica
+
 
 admin.site.register(Post)
 
@@ -20,4 +22,6 @@ admin.site.register(Documenti)
 admin.site.register(Classe_gita)
 admin.site.register(Classe)
 admin.site.register(Presenti_prenotati)
+admin.site.register(Notifica)
+
 
