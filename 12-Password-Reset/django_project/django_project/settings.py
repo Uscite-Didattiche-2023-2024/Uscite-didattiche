@@ -131,12 +131,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'blog-home'
 LOGIN_URL = 'login'
 
-DEFAULT_FROM_EMAIL = 'uscite.didattiche@libero.it'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.libero.it'
 EMAIL_USE_TLS = False
 EMAIL_PORT = 465
-EMAIL_USE_SSL = True  # Utilizza SSL invece di STARTTLS
-EMAIL_HOST_USER = 'uscite.didattiche@libero.it'  # Rimuovi os.environ.get()
-EMAIL_HOST_PASSWORD = 'Uscitedidattiche24!'  # Rimuovi os.environ.get()
+EMAIL_USE_SSL = True   #Utilizza SSL invece di STARTTLS
+EMAIL_HOST_USER = 'uscite.didattiche@libero.it'  # Default fallback
+EMAIL_HOST_PASSWORD = 'Uscitedidattiche24!'
+DEFAULT_FROM_EMAIL = 'uscite.didattiche@libero.it'

@@ -4,7 +4,11 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 from django.core.validators import MaxValueValidator
+from django.core.validators import MinValueValidator
+from django.core.validators import RegexValidator
 from django.conf import settings
+
+character = RegexValidator(r'^[A-Z]*$', 'Only CAPS characters are allowed.')
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
@@ -110,8 +114,8 @@ class Classe_gita(models.Model):
 
 
 class Classe(models.Model):
-    anno = models.IntegerField(validators=[MaxValueValidator(5)],default=0)
-    sezione = models.CharField(max_length=3,default='')
+    anno = models.IntegerField(default=1,validators=[MaxValueValidator(5),MinValueValidator(1)])
+    sezione = models.CharField(max_length=3,default='',validators=[character])
 
 
     def __str__(self):
