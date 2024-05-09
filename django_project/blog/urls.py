@@ -13,7 +13,7 @@ from . import views
 
 urlpatterns = [
 
-    #path('',views.index,name='blog-home'), TODO
+    path('',HomeView.as_view(),name='blog-home'),
     path('create/', PostListView.as_view(), name='blog-home'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
