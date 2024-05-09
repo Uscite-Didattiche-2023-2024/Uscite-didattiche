@@ -1,4 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.contrib import messages 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic import (
@@ -58,14 +60,18 @@ class PostDetailView(DetailView):
     model = Post
 
 
-class PostCreateView(LoginRequiredMixin, CreateView):
-    model = Post
-    fields = ['title', 'content']
+class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
+    model = Proposta_Gita
+    fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato']  
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.Creatore = self.request.user  
+        messages.success(self.request, 'Gita creata con successo!')  # TOFIX
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('proposte') 
+    
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
