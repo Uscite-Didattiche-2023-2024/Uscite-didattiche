@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic import (
-    TemplateView,
     ListView,
     DetailView,
     CreateView,
@@ -18,10 +17,7 @@ def home(request):
     }
     return render(request, 'blog/home.html', context)
 
-class HomeView(TemplateView):
-    template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
-    context_object_name = 'Home'
-    
+
 class PostListView(ListView):
     model = Post
     template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
