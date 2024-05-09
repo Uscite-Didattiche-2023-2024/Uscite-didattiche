@@ -16,15 +16,15 @@ def home(request):
     context = {
         'posts': Post.objects.all()
     }
-    return render(request, 'blog/home.html', context)
+    return render(request, 'gite/home.html', context)
 
 class HomeView(TemplateView):
-    template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
+    template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'Home'
     
 class Proposta_gitaListView(ListView):
     model = Proposta_Gita
-    template_name = 'blog/proposte_list.html'  # <app>/<model>_<viewtype>.html
+    template_name = 'gite/proposte_list.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'proposte'
     ordering = ['-Data']  # Ordina per data decrescente
     paginate_by = 5
@@ -37,7 +37,7 @@ class Proposta_gitaListView(ListView):
     
 class PostListView(ListView):
     model = Post
-    template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
+    template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 5
@@ -45,7 +45,7 @@ class PostListView(ListView):
 
 class UserPostListView(ListView):
     model = Post
-    template_name = 'blog/user_posts.html'  # <app>/<model>_<viewtype>.html
+    template_name = 'gite/user_posts.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     paginate_by = 5
 
@@ -94,5 +94,5 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 def about(request):
-    return render(request, 'blog/about.html', {'title': 'About'})
+    return render(request, 'gite/about.html', {'title': 'About'})
 
