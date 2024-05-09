@@ -9,7 +9,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Post
+from .models import Post, Proposta_Gita
 
 
 def home(request):
@@ -21,6 +21,19 @@ def home(request):
 class HomeView(TemplateView):
     template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'Home'
+    
+class Proposta_gitaListView(ListView):
+    model = Proposta_Gita
+    template_name = 'blog/proposte_list.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'proposte'
+    ordering = ['-Data']  # Ordina per data decrescente
+    paginate_by = 5
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # Personalizza la query per includere il nome dell'autore
+        queryset = queryset.select_related('Creatore').order_by('-Data')
+        return queryset
     
 class PostListView(ListView):
     model = Post

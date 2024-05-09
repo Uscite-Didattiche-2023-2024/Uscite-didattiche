@@ -2,6 +2,7 @@
 from django.urls import path
 from .views import (
     HomeView,
+    Proposta_gitaListView,
     PostListView,
     PostDetailView,
     PostCreateView,
@@ -14,7 +15,8 @@ from . import views
 
 urlpatterns = [
 
-    path('',HomeView.as_view(),name='blog-home'),
+    path('',HomeView.as_view(),name='homepage'),
+    path('ProposteList/', Proposta_gitaListView.as_view(), name='proposte'),
     path('create/', PostListView.as_view(), name='blog-home'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
