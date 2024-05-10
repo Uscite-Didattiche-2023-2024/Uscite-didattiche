@@ -12,18 +12,3 @@ function toggleMenu() {
     toggleBtn.classList.add('rotate'); // Aggiungi la classe di rotazione
   }
 }
-
-
-function startshakebell() {
-
-  document.getElementById("Bell").className = "fas fa-bell fa-beat fa-shake";
-
-}
-
-
-function stopshakebell() {
-
-  document.getElementById("Bell").className = "fas fa-bell";
-
-  
-}
