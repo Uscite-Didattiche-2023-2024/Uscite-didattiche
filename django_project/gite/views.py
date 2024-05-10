@@ -57,15 +57,10 @@ class Proposta_gitaDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Aggiungi tutti gli attributi necessari al contesto
-        context['creatore'] = self.object.Creatore
-        context['titolo'] = self.object.Titolo
-        context['data'] = self.object.Data
-        context['descrizione'] = self.object.Descrizione
-        context['posto'] = self.object.Posto
-        context['costo'] = self.object.Costo
-        context['stato'] = self.object.get_Stato_display()
+        # Passa l'intero oggetto Proposta_Gita al contesto
+        context['proposta'] = self.object
         return context
+
 
 
 
@@ -99,13 +94,13 @@ class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
 
 class Proposta_gitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Proposta_Gita
-    success_url = '/'
+    success_url = reverse_lazy('proposte')
 
     def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        return False
+        # Ottieni la proposta gita
+        proposta = self.get_object()
+        # Verifica se l'utente loggato è il creatore della proposta gita
+        return self.request.user 
 
 
 def about(request):
