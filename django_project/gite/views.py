@@ -41,14 +41,6 @@ class Proposta_gitaListView(ListView):
         queryset = queryset.select_related('Creatore').order_by('Data')
         return queryset
     
-class PostListView(ListView):
-    model = Post
-    template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
-    context_object_name = 'posts'
-    ordering = ['-date_posted']
-    paginate_by = 5
-
-
 class UserPostListView(ListView):
     model = Post
     template_name = 'gite/user_posts.html'  # <app>/<model>_<viewtype>.html
@@ -60,9 +52,14 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 
-class PostDetailView(DetailView):
-    model = Post
+class Proposta_gitaDetailView(DetailView):
+    model = Proposta_Gita
 
+    def get_queryset(self):
+            queryset = super().get_queryset()
+            # Personalizza la query per includere il nome dell'autore
+            queryset = queryset.select_related('Creatore')
+            return queryset
 
 class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
     model = Proposta_Gita
@@ -77,8 +74,8 @@ class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy('proposte') 
     
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Post
+class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Proposta_Gita
     fields = ['title', 'content']
 
     def form_valid(self, form):
@@ -92,8 +89,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return False
 
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Post
+class Proposta_gitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Proposta_Gita
     success_url = '/'
 
     def test_func(self):
