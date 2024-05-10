@@ -2,13 +2,13 @@
 
 {% block content %}
   <div class="container">
-    <h1>{{ proposta.Titolo }}</h1>
-    <p>Creato da: <a href="{% url 'user-posts' proposta.Creatore.username %}">{{ proposta.Creatore }}</a></p><!--TOFIX-->
-    <p>Data: {% if proposta.Data %}{{ proposta.Data|date:"F d, Y" }}{% else %}N/D{% endif %}</p>
-    <p>Descrizione: {{ proposta.Descrizione }}</p>
-    <p>Luogo: {{ proposta.Posto }}</p>
-    <p>Costo: €{{ proposta.Costo }}</p>
-    <p>Stato: {{ proposta.get_Stato_display }}</p>
+    <h1>{{ titolo }}</h1>
+    <p>Creato da:{{ creatore }}</p>
+    <p>Data: {% if data %}{{ data|date:"F d, Y" }}{% else %}N/D{% endif %}</p>
+    <p>Descrizione: {{ descrizione }}</p>
+    <p>Posto: {{ posto }}</p>
+    <p>Costo: €{{ costo }}</p>
+    <p>Stato: {{ stato }}</p>
 
     <!-- Aggiungi qui altri dettagli della proposta se necessario -->
 

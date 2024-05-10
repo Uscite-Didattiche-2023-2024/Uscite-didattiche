@@ -55,11 +55,19 @@ class UserPostListView(ListView):
 class Proposta_gitaDetailView(DetailView):
     model = Proposta_Gita
 
-    def get_queryset(self):
-            queryset = super().get_queryset()
-            # Personalizza la query per includere il nome dell'autore
-            queryset = queryset.select_related('Creatore')
-            return queryset
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Aggiungi tutti gli attributi necessari al contesto
+        context['creatore'] = self.object.Creatore
+        context['titolo'] = self.object.Titolo
+        context['data'] = self.object.Data
+        context['descrizione'] = self.object.Descrizione
+        context['posto'] = self.object.Posto
+        context['costo'] = self.object.Costo
+        context['stato'] = self.object.get_Stato_display()
+        return context
+
+
 
 class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
     model = Proposta_Gita
