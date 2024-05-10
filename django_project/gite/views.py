@@ -34,7 +34,7 @@ class Proposta_gitaListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         # Personalizza la query per includere il nome dell'autore
-        queryset = queryset.select_related('Creatore').order_by('-Data')
+        queryset = queryset.select_related('Creatore').order_by('Data')
         return queryset
     
 class PostListView(ListView):
