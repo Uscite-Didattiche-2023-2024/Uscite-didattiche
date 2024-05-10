@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth import logout
 
 class CustomPasswordResetView(auth_views.PasswordResetView):
     template_name = 'users/password_reset.html'
@@ -37,7 +38,15 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
 
-
+def custom_logout(request):
+    if request.method == 'GET':
+        # Effettua il logout solo se la richiesta è GET
+        logout(request)  # Esegue il logout dell'utente
+        return redirect('home')  # Reindirizza alla pagina home dopo il logout
+    else:
+        # Gestisci altri metodi HTTP, se necessario
+        pass
+    
 @login_required
 def profile(request):
     if request.method == 'POST':

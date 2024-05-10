@@ -128,7 +128,7 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'gite-home'
+LOGIN_REDIRECT_URL = 'home-logged'
 LOGIN_URL = 'login'
 
 

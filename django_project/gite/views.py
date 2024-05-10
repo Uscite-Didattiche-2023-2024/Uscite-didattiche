@@ -24,6 +24,10 @@ class HomeView(TemplateView):
     template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'Home'
     
+class LogView(TemplateView):
+    template_name = 'gite/logged.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'Logged'
+
 class Proposta_gitaListView(ListView):
     model = Proposta_Gita
     template_name = 'gite/proposte_list.html'  # <app>/<model>_<viewtype>.html
