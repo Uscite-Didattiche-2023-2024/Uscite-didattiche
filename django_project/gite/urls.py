@@ -2,7 +2,6 @@
 from django.urls import path
 from .views import (
     HomeView,
-    LogView,
     UserPostListView,
     Proposta_gitaListView,
     Proposta_gitaCreateView,
@@ -16,7 +15,6 @@ from . import views
 urlpatterns = [
 
     path('',HomeView.as_view(),name='homepage'),
-    path('new/', LogView.as_view(), name='home-logged'),    
     path('ProposteList/', Proposta_gitaListView.as_view(), name='proposte'),
     path('proposta/new/', Proposta_gitaCreateView.as_view(), name='proposta-create'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),

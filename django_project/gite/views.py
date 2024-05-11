@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -24,10 +24,6 @@ class HomeView(TemplateView):
     template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'Home'
     
-class LogView(TemplateView):
-    template_name = 'gite/logged.html'  # <app>/<model>_<viewtype>.html
-    context_object_name = 'Logged'
-
 class Proposta_gitaListView(ListView):
     model = Proposta_Gita
     template_name = 'gite/proposte_list.html'  # <app>/<model>_<viewtype>.html
