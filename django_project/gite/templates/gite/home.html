@@ -9,10 +9,9 @@
         {% if user.is_authenticated %}
         <!-- Se l'utente ha effettuato il login -->
         <!--<link rel="stylesheet" type="text/css">TOFIX -->
-        <span class="h5 text-secondary fw-lighter"><a href="{% url 'logout' %}">Esci dall'account</a></span>
         <form action="{% url 'logout' %}" method="post">
           {% csrf_token %}
-          <button style="background-color: black;" type="submit">Logout</button>
+          <button type="submit" class="btn btn-danger">Logout</button>
         </form>
         {% else %}
         <!-- Se l'utente non ha effettuato il login -->

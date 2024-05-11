@@ -63,7 +63,7 @@ class Proposta_Gita(models.Model):
     Posto = models.CharField(max_length=20)
     Costo = models.FloatField()
     Stato = models.CharField(max_length=20, choices=STATO_CHOICES, default='IN_ELABORAZIONE')
-    Creatore = models.ForeignKey(User, on_delete=models.CASCADE, default='')
+    Creatore = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.Titolo

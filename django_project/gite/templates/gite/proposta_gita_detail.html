@@ -7,18 +7,15 @@
   <p>Data: {% if proposta.Data %}{{ proposta.Data|date:"F d, Y" }}{% else %}N/D{% endif %}</p>
   <p>Descrizione: {{ proposta.Descrizione }}</p>
   <p>Posto: {{ proposta.Posto }}</p>
-  <p>Costo: €{{ proposta.Costo }}</p>
+  <p>Costo: {{ proposta.Costo }} €</p>
   <p>Stato: {{ proposta.get_Stato_display }}</p>
 
+  <div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'proposta-update' %}">Update</a>
+    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'proposta-delete' %}">Delete</a>
+  </div>
 
-
-  <form action="{% url 'proposta-delete' proposta.pk %}" method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Elimina</button>
-  </form>
   <!-- Aggiungi qui altri dettagli della proposta se necessario -->
-
-  <!-- Se ci sono azioni aggiuntive, ad esempio modifica o cancella, possono essere aggiunte qui -->
 
   <a href="{% url 'proposte' %}" class="btn btn-primary">Torna alla lista delle gite</a>
 </div>
