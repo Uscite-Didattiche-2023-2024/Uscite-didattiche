@@ -24,12 +24,12 @@
 
 ### Ubuntu and Debian OS:
 
-    source env/bin/activate
+    source e<nome-ambiente-virtuale>/bin/activate
 
 ### Windows:
 
-    env/Scripts/activate.bat    //In CMD
-    env/Scripts/Activate.ps1    //In Powershell
+    <nome-ambiente-virtuale>\Scripts\activate.bat    //In CMD
+    <nome-ambiente-virtuale>/Scripts/Activate.ps1    //In Powershell
 
 ## 2. installare I moduli di python:
 
