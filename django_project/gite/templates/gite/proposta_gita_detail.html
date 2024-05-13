@@ -11,8 +11,8 @@
   <p>Stato: {{ proposta.get_Stato_display }}</p>
 
   <div>
-    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'proposta-update' %}">Update</a>
-    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'proposta-delete' %}">Delete</a>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'proposta-update' pk=proposta.pk %}">Update</a>
+    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'proposta-delete' pk=proposta.pk %}">Delete</a>
   </div>
 
   <!-- Aggiungi qui altri dettagli della proposta se necessario -->
