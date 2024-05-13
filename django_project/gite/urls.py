@@ -8,6 +8,7 @@ from .views import (
     Proposta_gitaDetailView,
     Proposta_gitaUpdateView,
     Proposta_gitaDeleteView,
+    CalendarioView,
 )
 from . import views
 
@@ -20,6 +21,7 @@ urlpatterns = [
     path('proposta/<int:pk>/', Proposta_gitaDetailView.as_view(), name='proposta-detail'),
     path('proposta/<int:pk>/update/', Proposta_gitaUpdateView.as_view(), name='proposta-update'),
     path('proposta/<int:pk>/delete/', Proposta_gitaDeleteView.as_view(), name='proposta-delete'),
+    path('calendario/', CalendarioView.as_view(), name='calendario'),
     path('about/', views.about, name='gite-about'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
 ]

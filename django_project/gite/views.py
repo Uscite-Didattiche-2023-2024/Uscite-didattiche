@@ -6,6 +6,8 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.utils import timezone
+from datetime import datetime, timedelta
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -14,7 +16,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Post, Proposta_Gita
+from .models import Gita, Post, Proposta_Gita
 
 
 
@@ -31,6 +33,9 @@ class HomeView(TemplateView):
     context_object_name = 'Home'
     
 
+class CalendarioView(TemplateView):
+    template_name = 'gite/calendario.html'
+    context_object_name = 'Calendario'
 
 class Proposta_gitaListView(ListView):
     model = Proposta_Gita
