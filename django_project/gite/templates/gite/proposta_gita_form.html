@@ -1,8 +1,8 @@
-{% extends "blog/index.html" %}
+{% extends "gite/index.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section">
-        <form method="POST">
+        <form method="POST" id="propostaForm">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Blog Post</legend>
@@ -13,4 +13,11 @@
             </div>
         </form>
     </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message }} 
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock content %}

@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'blog.apps.BlogConfig',
+    'gite.apps.GiteConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
     'crispy_bootstrap4',
@@ -128,7 +128,7 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'blog-home'
+LOGIN_REDIRECT_URL = 'homepage'
 LOGIN_URL = 'login'
 
 
