@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib import messages 
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -76,6 +77,7 @@ class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
     model = Proposta_Gita
     fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato'] 
     success_url = reverse_lazy('proposte')
+    permission_required = 'gite.change_proposta_gita'
 
     def form_valid(self, form):
         form.instance.Creatore = self.request.user
@@ -83,7 +85,10 @@ class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
 
     def test_func(self):
         proposta = self.get_object()
-        return self.request.user == proposta.Creatore
+        return self.request.user == proposta.Creatore or self.request.user.has_perm('gite.change_proposta_gita')
+    
+    def handle_no_permission(self):
+        raise PermissionDenied
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -94,10 +99,14 @@ class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
 class Proposta_gitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Proposta_Gita
     success_url = reverse_lazy('proposte')
+    permission_required = 'gite.delete_proposta_gita'
 
+    def handle_no_permission(self):
+        raise PermissionDenied
+    
     def test_func(self):
         proposta = self.get_object()
-        return self.request.user == proposta.Creatore
+        return self.request.user == proposta.Creatore or self.request.user.has_perm('gite.delete_proposta_gita')
        
 
 

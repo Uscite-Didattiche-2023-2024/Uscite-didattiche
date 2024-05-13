@@ -3,10 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.contrib.auth.models import Group
-
-from django.core.validators import MaxValueValidator
-from django.core.validators import MinValueValidator
-from django.core.validators import RegexValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.conf import settings
 
 character = RegexValidator(r'^[A-Z]*$', 'Only CAPS characters are allowed.')
