@@ -149,7 +149,41 @@ class Proposta_gitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteVie
         return self.request.user == proposta.Creatore or self.request.user.has_perm('gite.delete_proposta_gita')
        
 
+class GitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Gita
+    fields = ['Stato', 'Data_ritrovo', 'Data_rientro', 'Luogo_ritrovo', 'Luogo_rientro', 'Proposta_Gita']  
+    success_url = reverse_lazy('gite')
+    permission_required = 'gite.change_gita'
 
+    def form_valid(self, form):
+        form.instance.Creatore = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        proposta = self.get_object()
+        return self.request.user.has_perm('gite.change_gita')
+    
+    def handle_no_permission(self):
+        raise PermissionDenied
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['gita'] = self.get_object()  # Aggiungi la proposta al contesto
+        return context
+
+
+class GitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Gita
+    success_url = reverse_lazy('gite')
+    permission_required = 'gite.delete_gita'
+
+    def handle_no_permission(self):
+        raise PermissionDenied
+    
+    def test_func(self):
+        proposta = self.get_object()
+        return self.request.user.has_perm('gite.delete_gita')
+       
 
 def about(request):
     return render(request, 'gite/about.html', {'title': 'About'})

@@ -3,13 +3,19 @@
 {% block content %}
 <div class="container">
   <h1>{{ gita.Proposta_Gita.Titolo }}</h1>
-  <p>Creato da: {{ gita.Proposta_Gita.Creatore }}</p>
   <p>Descrizione: {{ gita.Proposta_Gita.Descrizione }}</p>
   <p>Posto: {{ gita.Proposta_Gita.Posto }}</p>
+  <p>Data ritrovo: {{ gita.Data_ritrovo }}</p>
+  <p>Data rientro: {{ gita.Data_rientro }}</p>
+  <p>Luogo ritrovo: {{ gita.Luogo_ritrovo }}</p>
+  <p>Luogo rientro: {{ gita.Luogo_rientro }}</p>
   <p>Costo: {{ gita.Proposta_Gita.Costo }} €</p>
   <p>Stato: {{ gita.get_Stato_display }}</p>
 
   <div>
+
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'gita-update' pk=gita.pk %}">Update</a>
+    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'gita-delete' pk=gita.pk %}">Delete</a>
   </div>
 
   <!-- Aggiungi qui altri dettagli della proposta se necessario -->
