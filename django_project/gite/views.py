@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime, timedelta
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -100,7 +101,19 @@ class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
         context['proposta'] = self.get_object()  # Aggiungi la proposta al contesto
         return context
 
+def conferma_proposta(request, pk):
+    proposta = get_object_or_404(Proposta_Gita, pk=pk)
+    proposta.Stato = 'CONFERMATA'
+    proposta.save()
+    return redirect('proposta-update', pk=pk)
 
+def rifiuta_proposta(request, pk):
+    proposta = get_object_or_404(Proposta_Gita, pk=pk)
+    proposta.Stato = 'RIFIUTATA'
+    proposta.save()
+    return redirect('proposta-update', pk=pk)
+
+    
 class Proposta_gitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Proposta_Gita
     success_url = reverse_lazy('proposte')
