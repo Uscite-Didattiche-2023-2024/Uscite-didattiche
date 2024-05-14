@@ -12,8 +12,15 @@
   <p>Costo: {{ gita.Proposta_Gita.Costo }} €</p>
   <p>Stato: {{ gita.get_Stato_display }}</p>
 
-  <div>
+  <p>Classi associate:</p>
+  <ul>
+    {% for classe_gita in gita.classe_gita_set.all %}
+      <li>{{ classe_gita.Classe }}</li>
+    {% endfor %}
+  </ul>
 
+  
+  <div>
     <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'gita-update' pk=gita.pk %}">Update</a>
     <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'gita-delete' pk=gita.pk %}">Delete</a>
   </div>

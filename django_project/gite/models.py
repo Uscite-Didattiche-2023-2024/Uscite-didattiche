@@ -27,6 +27,16 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
 
+class Classe(models.Model):
+    anno = models.IntegerField(default=1,validators=[MaxValueValidator(5),MinValueValidator(1)])
+    sezione = models.CharField(max_length=3,default='',validators=[character])
+
+    def __str__(self):
+        return "{}{}".format(self.anno, self.sezione)
+        
+    class Meta:
+         verbose_name_plural = 'Classe'
+
 class Gita(models.Model):
     STATO_CHOICES = (
         ('IN_PROGRAMMA', 'In programma'),
@@ -41,7 +51,7 @@ class Gita(models.Model):
     Luogo_ritrovo = models.CharField(max_length=20)
     Luogo_rientro = models.CharField(max_length=20)
     Proposta_Gita = models.ForeignKey('Proposta_Gita', on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return self.Proposta_Gita.Titolo
         
@@ -119,18 +129,6 @@ class Classe_gita(models.Model):
         
     class Meta:
          verbose_name_plural = 'Classe_gita'
-
-
-class Classe(models.Model):
-    anno = models.IntegerField(default=1,validators=[MaxValueValidator(5),MinValueValidator(1)])
-    sezione = models.CharField(max_length=3,default='',validators=[character])
-
-
-    def __str__(self):
-        return "{}{}".format(self.anno, self.sezione)
-        
-    class Meta:
-         verbose_name_plural = 'Classe'
 
 class Presenti_prenotati(models.Model):
     Gita = models.ForeignKey('Gita', on_delete=models.CASCADE, default='')

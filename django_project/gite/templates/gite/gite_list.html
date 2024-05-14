@@ -21,7 +21,7 @@
             <!-- Aggiunto accesso a Costo -->
             <p class="article-content">Costo: {{ gita.Proposta_Gita.Costo }} €</p>
             <!-- Aggiunto accesso a Stato -->
-            <p class="article-content">Stato: {{ gita.Stato }}</p>
+            <p class="article-content">Stato: {{ gita.get_Stato_display }}</p>
         </div>
     </article>
 {% endfor %}

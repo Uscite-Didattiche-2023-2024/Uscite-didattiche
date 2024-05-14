@@ -17,7 +17,9 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Gita, Post, Proposta_Gita, Notifica
+
+from .forms import GitaForm
+from .models import Classe, Classe_gita, Gita, Post, Proposta_Gita, Notifica
 
 
 class HomeView(TemplateView):
@@ -41,8 +43,10 @@ class Proposta_gitaListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        queryset = queryset.order_by('Data')
+        queryset = queryset.order_by('Stato')
+
         # Personalizza la query per includere il nome dell'autore
-        queryset = queryset.select_related('Creatore').order_by('Data')
         return queryset
 
 
@@ -101,7 +105,7 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
     fields = ['Stato', 'Data_ritrovo', 'Data_rientro', 'Luogo_ritrovo', 'Luogo_rientro', 'Proposta_Gita']  
     
     def form_valid(self, form):
-        form.instance.Creatore = self.request.user  
+        form.instance.Creatore = self.request.user
         messages.success(self.request, 'Gita creata con successo!')
         return super().form_valid(form)
 
@@ -115,6 +119,12 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('gite') 
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['classi'] = Classe.objects.all()  # Aggiungi le classi al contesto
+        return context
+
+
 
 def conferma_proposta(request, pk):
     proposta = get_object_or_404(Proposta_Gita, pk=pk)
@@ -127,7 +137,7 @@ def rifiuta_proposta(request, pk):
     proposta = get_object_or_404(Proposta_Gita, pk=pk)
     proposta.Stato = 'RIFIUTATA'
     proposta.save()
-    return redirect('proposta-update', pk=pk)
+    return render(request, 'gite/proposta_gita_detail.html', {'proposta': proposta})
 
     
 class Proposta_gitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -145,7 +155,8 @@ class Proposta_gitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteVie
 
 class GitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Gita
-    fields = ['Stato', 'Data_ritrovo', 'Data_rientro', 'Luogo_ritrovo', 'Luogo_rientro', 'Proposta_Gita']  
+    form_class = GitaForm  # Usa il form personalizzato se ne hai uno
+    template_name = 'gite/gita_form.html'  # Assicurati di specificare il tuo template
     success_url = reverse_lazy('gite')
     permission_required = 'gite.change_gita'
 
@@ -162,7 +173,7 @@ class GitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['gita'] = self.get_object()  # Aggiungi la proposta al contesto
+        context['classi'] = Classe.objects.all()  # Aggiungi le classi al contesto
         return context
 
 

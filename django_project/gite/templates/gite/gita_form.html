@@ -5,11 +5,19 @@
         <form method="POST" id="gitaForm">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Blog Post</legend>
+                <legend class="border-bottom mb-4">Nuova Gita</legend>
                 {{ form|crispy }}
+                <div class="form-group">
+                    <label for="id_classi">Seleziona le Classi:</label>
+                    <select name="classi" id="id_classi" class="form-control" multiple>
+                        {% for classe in classi %}
+                            <option value="{{ classe.pk }}">{{ classe }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Post</button>
+                <button class="btn btn-outline-info" type="submit">Crea Gita</button>
             </div>
         </form>
     </div>
