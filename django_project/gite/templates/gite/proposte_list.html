@@ -8,6 +8,7 @@
     <tr>
       <th scope="col">Titolo</th>
       <th scope="col">Autore</th>
+      <th scope="col">Data</th>
       <th scope="col">Descrizione</th>
       <th scope="col">Posto</th>
       <th scope="col">Prezzo</th>
@@ -18,7 +19,8 @@
     {% for proposta in proposte %}
     <tr>
       <td><a class="article-title" href="{% url 'proposta-detail' proposta.id %}">{{ proposta.Titolo }}</a></td>
-      <td><a class="mr-2" href="{% url 'user-posts' proposta.Creatore.username %}">{{ proposta.Creatore }}</a> {{ proposta.Data|date:"F d, Y" }}</td>
+      <td>{{ proposta.Creatore }}</td>
+      <td> {{ proposta.Data|date:"F d, Y" }} </td>
       <td>{{ proposta.Descrizione }}</td>
       <td>{{ proposta.Posto }}</td>
       <td>{{ proposta.Costo }}€</td>
