@@ -17,22 +17,16 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Gita, Post, Proposta_Gita
-
-
-
-def home(request):
-    context = {
-        'posts': Post.objects.all()
-    }
-    return render(request, 'gite/home.html', context)
-
+from .models import Gita, Post, Proposta_Gita, Notifica
 
 
 class HomeView(TemplateView):
     template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
-    context_object_name = 'Home'
-    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['notifiche'] = Notifica.objects.all()
+        return context
 
 class CalendarioView(TemplateView):
     template_name = 'gite/calendario.html'
