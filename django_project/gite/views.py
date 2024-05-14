@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib import messages 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
@@ -68,6 +68,7 @@ class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
 
 
 
+
 class Proposta_gitaDetailView(DetailView):
     model = Proposta_Gita
 
@@ -101,11 +102,32 @@ class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
         context['proposta'] = self.get_object()  # Aggiungi la proposta al contesto
         return context
 
+class GitaCreateView(LoginRequiredMixin, CreateView):
+    model = Gita
+    fields = ['Stato', 'Data_ritrovo', 'Data_rientro', 'Luogo_ritrovo', 'Luogo_rientro', 'Proposta_Gita']  
+    
+    def form_valid(self, form):
+        form.instance.Creatore = self.request.user  
+        messages.success(self.request, 'Gita creata con successo!')
+        return super().form_valid(form)
+
+    def get_initial(self):
+        initial = super().get_initial()
+        proposta_gita_id = self.request.GET.get('proposta_gita_id')
+        if proposta_gita_id:
+            initial['Proposta_Gita'] = proposta_gita_id
+        return initial
+
+    def get_success_url(self):
+        return reverse_lazy('proposte') 
+
+
 def conferma_proposta(request, pk):
     proposta = get_object_or_404(Proposta_Gita, pk=pk)
     proposta.Stato = 'CONFERMATA'
     proposta.save()
-    return redirect('proposta-update', pk=pk)
+    return redirect(reverse('gita-create') + f'?proposta_gita_id={proposta.id}')
+
 
 def rifiuta_proposta(request, pk):
     proposta = get_object_or_404(Proposta_Gita, pk=pk)
