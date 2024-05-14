@@ -15,7 +15,7 @@ from django.views.generic import (
     DetailView,
     CreateView,
     UpdateView,
-    DeleteView
+    DeleteView,
 )
 from .models import Gita, Post, Proposta_Gita
 
@@ -143,3 +143,26 @@ class UserPostListView(ListView):
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-date_posted')
+
+class GiteListView(ListView):
+    model = Gita
+    template_name = 'gite/gite_list.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'gite'
+    ordering = ['-Data_ritrovo']  # Ordina per Data_ritrovo decrescente
+    paginate_by = 5
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # Personalizza la query per includere il nome dell'autore
+        queryset = queryset.select_related('Proposta_Gita__Creatore').order_by('-Data_ritrovo')
+        return queryset
+
+
+class GiteDetailView(DetailView):
+    model = Gita
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Passa l'intero oggetto Gite al contesto
+        context['gita'] = self.object
+        return context

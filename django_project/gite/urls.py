@@ -11,6 +11,8 @@ from .views import (
     CalendarioView,
     conferma_proposta,
     rifiuta_proposta,
+    GiteListView,
+    GiteDetailView
 )
 from . import views
 
@@ -26,6 +28,8 @@ urlpatterns = [
     path('proposta/<int:pk>/conferma/', conferma_proposta, name='conferma-proposta'),
     path('proposta/<int:pk>/rifiuta/', rifiuta_proposta, name='rifiuta-proposta'),
     path('calendario/', CalendarioView.as_view(), name='calendario'),
+    path('gite/', GiteListView.as_view(), name='gite'),
+    path('gite/<int:pk>/', GiteDetailView.as_view(), name='gite-detail'),
     path('about/', views.about, name='gite-about'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
 ]
