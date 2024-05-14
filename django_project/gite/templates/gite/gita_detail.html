@@ -1,0 +1,19 @@
+{% extends "gite/index.html" %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ gita.Proposta_Gita.Titolo }}</h1>
+  <p>Creato da: {{ gita.Proposta_Gita.Creatore }}</p>
+  <p>Descrizione: {{ gita.Proposta_Gita.Descrizione }}</p>
+  <p>Posto: {{ gita.Proposta_Gita.Posto }}</p>
+  <p>Costo: {{ gita.Proposta_Gita.Costo }} €</p>
+  <p>Stato: {{ gita.get_Stato_display }}</p>
+
+  <div>
+  </div>
+
+  <!-- Aggiungi qui altri dettagli della proposta se necessario -->
+
+  <a href="{% url 'proposte' %}" class="btn btn-primary">Torna alla lista delle gite</a>
+</div>
+{% endblock %}

@@ -119,7 +119,7 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
         return initial
 
     def get_success_url(self):
-        return reverse_lazy('proposte') 
+        return reverse_lazy('gite') 
 
 
 def conferma_proposta(request, pk):
