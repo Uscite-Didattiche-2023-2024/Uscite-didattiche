@@ -1,0 +1,51 @@
+{% extends "gite/index.html" %}
+{% block content %}
+<h1 class="mb-3">Gite</h1>
+{% for gita in gite %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <!-- Modificato accesso al Creatore -->
+                <a class="mr-2" href="{% url 'user-posts' gita.Proposta_Gita.Creatore.username %}">{{ gita.Proposta_Gita.Creatore }}</a>
+                <!-- Modificato accesso a Data_ritrovo -->
+                <small class="text-muted">{{ gita.Data_ritrovo|date:"F d, Y" }}</small>
+            </div>
+            <!-- Modificato accesso a Titolo -->
+            <h2><a class="article-title" href="{% url 'gite-detail' gita.id %}">{{ gita.Proposta_Gita.Titolo }}</a></h2>
+            <!-- Aggiunto accesso a Descrizione -->
+            <p class="article-content">{{ gita.Proposta_Gita.Descrizione }}</p>
+            <!-- Aggiunto accesso a Luogo_ritrovo -->
+            <p class="article-content">Luogo di ritrovo: {{ gita.Luogo_ritrovo }}</p>
+            <!-- Aggiunto accesso a Luogo_rientro -->
+            <p class="article-content">Luogo di rientro: {{ gita.Luogo_rientro }}</p>
+            <!-- Aggiunto accesso a Costo -->
+            <p class="article-content">Costo: {{ gita.Proposta_Gita.Costo }} €</p>
+            <!-- Aggiunto accesso a Stato -->
+            <p class="article-content">Stato: {{ gita.Stato }}</p>
+        </div>
+    </article>
+{% endfor %}
+
+
+{% if is_paginated %}
+
+{% if page_obj.has_previous %}
+<a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+{% endif %}
+
+{% for num in page_obj.paginator.page_range %}
+{% if page_obj.number == num %}
+<a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a class="btn btn-outline-info mb-4"
+    href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+
+    {% endif %}
+    {% endblock content %}
