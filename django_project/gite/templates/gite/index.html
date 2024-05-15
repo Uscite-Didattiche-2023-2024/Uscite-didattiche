@@ -87,6 +87,7 @@
           <a href="{% url 'homepage' %}">Home</a>
           <a href="{% url 'calendario' %}">Calendario</a>
           <a href="{% url 'proposte' %}">Proposte</a>
+          <a href="{% url 'gite' %}">Gite</a>
           <a href="{% url 'proposta-create' %}">Crea nuova proposta</a>
           <a href="{% url 'password_reset' %}">Password Dimenticata?</a>
         </div>
@@ -114,29 +115,34 @@
         </li>
 
         <div class="custom-notification">
-          <div class="custom-notification-icon" onclick="BellClicked()">
-            <i id="Bell" class="fas fa-bell"></i>
-            <i class="custom-notification-number">5</i>
-          </div>
+          <div class="custom-notification-icon" onclick="toggleNotificationBox()">
+              <i id="Bell" class="fas fa-bell"></i>
+              <i class="custom-notification-number">{{ notifiche.count }}</i>
+          </div>          
           <script>startshakebell()</script>
-          <div class="custom-notification-box" id="Box">
-            <div class="custom-notification-box-item">
-              <h3>notifica 1</h3>
-            </div>
-            <div class="custom-notification-box-item">
-              <h3>notifica 2</h3>
-            </div>
-            <div class="custom-notification-box-item">
-              <h3>notifica 3</h3>
-            </div>
-            <div class="custom-notification-box-item">
-              <h3>notifica 4</h3>
-            </div>
-            <div class="custom-notification-box-item">
-              <h3>notifica 5</h3>
-            </div>
+          <div class="custom-notification-box" id="Box" style="display: none;">
+              {% for notifica in notifiche %}
+                  <div class="custom-notification-box-item">
+                      <h3>{{ notifica.Titolo }}</h3>
+                      <p>Gita: {{ notifica.Gita }}</p>
+                      <p>Proposta Gita: {{ notifica.Proposta_Gita }}</p>
+                      <p>Classe: {{ notifica.Classe }}</p>
+                  </div>
+              {% endfor %}
           </div>
-        </div>
+      </div>
+      
+      <script>
+          function toggleNotificationBox() {
+              var box = document.getElementById("Box");
+              if (box.style.display === "none") {
+                  box.style.display = "block";
+              } else {
+                  box.style.display = "none";
+              }
+          }
+      </script>
+      
     </div>
   </nav>
   <main>

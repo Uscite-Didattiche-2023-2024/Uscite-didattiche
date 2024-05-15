@@ -12,7 +12,7 @@
             <p class="article-content">{{ proposta.Descrizione }}</p>
             <p class="article-content">{{ proposta.Posto }}</p>
             <p class="article-content">{{ proposta.Costo }} €</p>
-            <p class="article-content">{{ proposta.Stato }}</p>
+            <p class="article-content">{{ proposta.get_Stato_display }}</p>
           </div>
         </article>
     {% endfor %}
