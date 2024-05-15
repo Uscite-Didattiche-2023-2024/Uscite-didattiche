@@ -94,8 +94,14 @@ class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
 
 class GitaCreateView(LoginRequiredMixin, CreateView):
     model = Gita
-    fields = ['Stato', 'Data_ritrovo', 'Data_rientro', 'Luogo_ritrovo', 'Luogo_rientro', 'Proposta_Gita']  
-    
+    fields = ['Stato', 'Data_ritrovo', 'Data_rientro', 'Luogo_ritrovo', 'Luogo_rientro', 'Proposta_Gita']
+    permission_required = 'gite.add_gita'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm(self.permission_required):
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         form.instance.Creatore = self.request.user
         # Salva la gita
@@ -106,7 +112,7 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
         for classe_id in classi_selezionate:
             classe_gita = Classe_gita.objects.create(Gita=self.object, Classe_id=classe_id)
             classe_gita.save()
-        messages.success(self.request, 'Gita creata con successo!') #TOFIX
+        messages.success(self.request, 'Gita creata con successo!')
         return super().form_valid(form)
 
     def get_initial(self):
@@ -117,7 +123,7 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
         return initial
 
     def get_success_url(self):
-        return reverse_lazy('gite') 
+        return reverse_lazy('gite')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
