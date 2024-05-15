@@ -1,63 +1,18 @@
-{% extends "gite/index.html" %} {% load crispy_forms_tags %} {% block content %}
-<style>
-  fieldset {
-    border: 0px;
-  }
-  .crispy_font {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: bolder;
-
-    src: local(""), url("fonts/inter-v12-latin-500.woff2") format("woff2"),
-      /* Chrome 26+, Opera 23+, Firefox 39+ */
-        url("fonts/inter-v12-latin-500.woff") format("woff");
-    /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-  }
-  input[type="text"] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    background-color: #313335;
-    color: white;
-  }
-  input[type="number"] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    background-color: #313335;
-    color: white;
-  }
-  select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    border-color: transparent !important;
-    background-color: #313335 !important;
-    color: white !important;
-  }
-
-  option {
-    color: rgb(255, 255, 255);
-  }
-</style>
+{% extends "gite/index.html" %} {% load crispy_forms_tags %} {% load static %}  {% block content %}
+<head>
+</head>
 <div class="content-section" style="margin-left: 80px; margin-right: 80px">
   <form method="POST" id="propostaForm">
     {% csrf_token %}
     <fieldset class="form-group crispy_font">
-      <legend class="nav-link fs-5">Proponi la tua Gita:</legend>
+      <legend class="nav-link fs-5 crispy_font">Proponi la tua Gita:</legend>
       {{ form|crispy }}
     </fieldset>
     <div class="form-group">
       <br />
       <button
         style="margin-left: 20px"
-        class="btn btn-outline-light"
+        class="btn btn-outline-light crispy_font"
         type="submit"
       >
         Proponi
