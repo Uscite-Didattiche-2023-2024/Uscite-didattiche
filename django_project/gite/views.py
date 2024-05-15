@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime, timedelta
@@ -22,7 +21,6 @@ from django.views.generic import (
 
 from .forms import GitaForm
 from .models import Classe, Classe_gita, Gita, Post, Proposta_Gita, Notifica
-
 
 class HomeView(TemplateView):
     template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
@@ -51,8 +49,6 @@ class Proposta_gitaListView(ListView):
         # Personalizza la query per includere il nome dell'autore
         return queryset
 
-
-
 class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
     model = Proposta_Gita
     fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato']  
@@ -63,11 +59,7 @@ class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('proposte') 
-
-
-
-
+        return reverse_lazy('proposte')
 
 class Proposta_gitaDetailView(DetailView):
     model = Proposta_Gita
@@ -77,8 +69,6 @@ class Proposta_gitaDetailView(DetailView):
         # Passa l'intero oggetto Proposta_Gita al contesto
         context['proposta'] = self.object
         return context
-
-
 
 class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Proposta_Gita
@@ -116,7 +106,7 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
         for classe_id in classi_selezionate:
             classe_gita = Classe_gita.objects.create(Gita=self.object, Classe_id=classe_id)
             classe_gita.save()
-        messages.success(self.request, 'Gita creata con successo!')
+        messages.success(self.request, 'Gita creata con successo!') #TOFIX
         return super().form_valid(form)
 
     def get_initial(self):
@@ -134,15 +124,11 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
         context['classi'] = Classe.objects.all()  # Aggiungi le classi al contesto
         return context
 
-
-
-
 def conferma_proposta(request, pk):
     proposta = get_object_or_404(Proposta_Gita, pk=pk)
     proposta.Stato = 'CONFERMATA'
     proposta.save()
     return redirect(reverse('gita-create') + f'?proposta_gita_id={proposta.id}')
-
 
 def rifiuta_proposta(request, pk):
     proposta = get_object_or_404(Proposta_Gita, pk=pk)
@@ -150,7 +136,6 @@ def rifiuta_proposta(request, pk):
     proposta.save()
     return render(request, 'gite/proposta_gita_detail.html', {'proposta': proposta})
 
-    
 class Proposta_gitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Proposta_Gita
     success_url = reverse_lazy('proposte')
@@ -163,7 +148,6 @@ class Proposta_gitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteVie
         proposta = self.get_object()
         return self.request.user == proposta.Creatore or self.request.user.has_perm('gite.delete_proposta_gita')
        
-
 class GitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Gita
     form_class = GitaForm  # Usa il form personalizzato se ne hai uno
@@ -199,8 +183,6 @@ class GitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         context['classi'] = Classe.objects.all()  # Aggiungi le classi al contesto
         return context
 
-
-
 class GitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Gita
     success_url = reverse_lazy('gite')
@@ -212,12 +194,9 @@ class GitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         proposta = self.get_object()
         return self.request.user.has_perm('gite.delete_gita')
-       
 
 def about(request):
     return render(request, 'gite/about.html', {'title': 'About'})
-
-
 
 class UserPostListView(ListView):
     model = Post
@@ -241,7 +220,6 @@ class GiteListView(ListView):
         # Personalizza la query per includere il nome dell'autore
         queryset = queryset.select_related('Proposta_Gita__Creatore').order_by('-Data_ritrovo')
         return queryset
-
 
 class GiteDetailView(DetailView):
     model = Gita

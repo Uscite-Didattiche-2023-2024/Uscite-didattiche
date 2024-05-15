@@ -6,10 +6,12 @@ from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.conf import settings
 
+# Validatore per caratteri maiuscoli
 character = RegexValidator(r'^[A-Z]*$', 'Only CAPS characters are allowed.')
 
 def get_default_group():
     try:
+        # Cerca il gruppo vuoto
         group = Group.objects.get(name='')
         return group.id 
     except Group.DoesNotExist:
@@ -28,14 +30,14 @@ class Post(models.Model):
         return reverse('post-detail', kwargs={'pk': self.pk})
 
 class Classe(models.Model):
-    anno = models.IntegerField(default=1,validators=[MaxValueValidator(5),MinValueValidator(1)])
-    sezione = models.CharField(max_length=3,default='',validators=[character])
+    anno = models.IntegerField(default=1, validators=[MaxValueValidator(5), MinValueValidator(1)])
+    sezione = models.CharField(max_length=3, default='', validators=[character])
 
     def __str__(self):
         return "{}{}".format(self.anno, self.sezione)
         
     class Meta:
-         verbose_name_plural = 'Classe'
+        verbose_name_plural = 'Classe'
 
 class Gita(models.Model):
     STATO_CHOICES = (
@@ -43,7 +45,6 @@ class Gita(models.Model):
         ('IN_CORSO', 'In corso'),
         ('TERMINATA', 'Terminata'),
     )
-    
     
     Stato = models.CharField(max_length=20, choices=STATO_CHOICES, default='IN_PROGRAMMA')
     Data_ritrovo = models.DateTimeField(null=True, blank=True)
@@ -56,7 +57,7 @@ class Gita(models.Model):
         return self.Proposta_Gita.Titolo
         
     class Meta:
-         verbose_name_plural = 'Gita'
+        verbose_name_plural = 'Gita'
 
 class Proposta_Gita(models.Model):
     STATO_CHOICES = (
@@ -76,7 +77,7 @@ class Proposta_Gita(models.Model):
         return self.Titolo
 
     class Meta:
-         verbose_name_plural = 'Proposte_Gita'
+        verbose_name_plural = 'Proposte_Gita'
 
 class Attività(models.Model):
     STATO_CHOICES = (
@@ -95,24 +96,23 @@ class Attività(models.Model):
         return self.Titolo
         
     class Meta:
-         verbose_name_plural = 'Attività'
+        verbose_name_plural = 'Attività'
 
 class Docenti_gita(models.Model):
     Gita = models.ForeignKey('Gita', on_delete=models.CASCADE, default='')
-    utente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,default='')
+    utente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
     
     def __str__(self):
         return "{} - {}".format(self.Gita, self.utente.username)
         
     class Meta:
-         verbose_name_plural = 'Docenti_gita'
+        verbose_name_plural = 'Docenti_gita'
          
 class Documenti(models.Model):
     Titolo = models.CharField(max_length=20)
     Descrizione = models.CharField(max_length=300, default='')
     Gita = models.ForeignKey('Gita', on_delete=models.CASCADE, default='')
     Allegato = models.FileField(upload_to='documenti/', default='')
-#    group = models.ForeignKey(Group, related_name="documenti", on_delete=models.CASCADE, default=get_default_group)
     groups = models.ManyToManyField(Group, related_name="documenti")
 
     def __str__(self):
@@ -132,7 +132,7 @@ class Classe_gita(models.Model):
 
 class Presenti_prenotati(models.Model):
     Gita = models.ForeignKey('Gita', on_delete=models.CASCADE, default='')
-    utente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,default='')
+    utente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
     
     def __str__(self):
         return "{} - {}".format(self.Gita, self.utente.username)
