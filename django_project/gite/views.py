@@ -8,6 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime, timedelta
+from django.forms.models import model_to_dict
+from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import (
     TemplateView,
@@ -106,6 +108,14 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
     
     def form_valid(self, form):
         form.instance.Creatore = self.request.user
+        # Salva la gita
+        self.object = form.save()
+        # Ottieni le classi selezionate dalla form
+        classi_selezionate = self.request.POST.getlist('classi')
+        # Crea le entità classe_gita per ciascuna classe selezionata
+        for classe_id in classi_selezionate:
+            classe_gita = Classe_gita.objects.create(Gita=self.object, Classe_id=classe_id)
+            classe_gita.save()
         messages.success(self.request, 'Gita creata con successo!')
         return super().form_valid(form)
 
@@ -123,6 +133,7 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['classi'] = Classe.objects.all()  # Aggiungi le classi al contesto
         return context
+
 
 
 
@@ -162,6 +173,18 @@ class GitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.Creatore = self.request.user
+        # Salva la gita
+        self.object = form.save()
+        # Ottieni le classi selezionate dalla form
+        classi_selezionate = self.request.POST.getlist('classi')
+        # Ottieni le classi gia' associate alla gita
+        classi_gita_esistenti = Classe_gita.objects.filter(Gita=self.object)
+        # Crea le entità classe_gita per ciascuna classe selezionata nella form
+        for classe_id in classi_selezionate:
+            Classe_gita.objects.get_or_create(Gita=self.object, Classe_id=classe_id)
+        # Elimina le entità classe_gita per le classi deselezionate
+        classi_da_elimare = classi_gita_esistenti.exclude(Classe_id__in=classi_selezionate)
+        classi_da_elimare.delete()
         return super().form_valid(form)
 
     def test_func(self):
@@ -175,6 +198,7 @@ class GitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['classi'] = Classe.objects.all()  # Aggiungi le classi al contesto
         return context
+
 
 
 class GitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
