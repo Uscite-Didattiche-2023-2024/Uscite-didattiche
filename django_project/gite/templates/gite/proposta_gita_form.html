@@ -4,8 +4,8 @@
 <div class="content-section" style="margin-left: 80px; margin-right: 80px">
   <form method="POST" id="propostaForm">
     {% csrf_token %}
-    <fieldset class="form-group crispy_font">
-      <legend class="nav-link fs-5 crispy_font">Proponi la tua Gita:</legend>
+    <fieldset class="form-group fw-bolder">
+      <legend class="  fs-5 fw-bolder">Proponi la tua Gita:</legend>
       {{ form|crispy }}
     </fieldset>
     <div class="form-group">
