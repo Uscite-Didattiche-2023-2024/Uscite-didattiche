@@ -26,7 +26,7 @@
       <td>{{ proposta.Descrizione }}</td>
       <td>{{ proposta.Posto }}</td>
       <td>{{ proposta.Costo }}€</td>
-      <td>{{ proposta.Stato }}</td>
+      <td>{{ proposta.get_Stato_display }}</td>
     </tr>
     {% endfor %}
   </tbody>
