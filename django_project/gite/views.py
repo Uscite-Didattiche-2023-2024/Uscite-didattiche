@@ -30,11 +30,11 @@ class HomeView(TemplateView):
         context['notifiche'] = Notifica.objects.all()
         return context
 
-class CalendarioView(TemplateView):
+class CalendarioView(LoginRequiredMixin, TemplateView):
     template_name = 'gite/calendario.html'
     context_object_name = 'Calendario'
 
-class Proposta_gitaListView(ListView):
+class Proposta_gitaListView(LoginRequiredMixin, ListView):
     model = Proposta_Gita
     template_name = 'gite/proposte_list.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'proposte'
@@ -61,7 +61,7 @@ class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('proposte')
 
-class Proposta_gitaDetailView(DetailView):
+class Proposta_gitaDetailView(LoginRequiredMixin, DetailView):
     model = Proposta_Gita
 
     def get_context_data(self, **kwargs):
@@ -204,17 +204,8 @@ class GitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 def about(request):
     return render(request, 'gite/about.html', {'title': 'About'})
 
-class UserPostListView(ListView):
-    model = Post
-    template_name = 'gite/user_posts.html'  # <app>/<model>_<viewtype>.html
-    context_object_name = 'posts'
-    paginate_by = 5
 
-    def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Post.objects.filter(author=user).order_by('-date_posted')
-
-class GiteListView(ListView):
+class GiteListView(LoginRequiredMixin, ListView):
     model = Gita
     template_name = 'gite/gite_list.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'gite'
@@ -227,7 +218,7 @@ class GiteListView(ListView):
         queryset = queryset.select_related('Proposta_Gita__Creatore').order_by('-Data_ritrovo')
         return queryset
 
-class GiteDetailView(DetailView):
+class GiteDetailView(LoginRequiredMixin, DetailView):
     model = Gita
 
     def get_context_data(self, **kwargs):
@@ -235,3 +226,13 @@ class GiteDetailView(DetailView):
         # Passa l'intero oggetto Gite al contesto
         context['gita'] = self.object
         return context
+
+class UserPostListView(ListView):
+    model = Post
+    template_name = 'gite/user_posts.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+    paginate_by = 5
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Post.objects.filter(author=user).order_by('-date_posted')

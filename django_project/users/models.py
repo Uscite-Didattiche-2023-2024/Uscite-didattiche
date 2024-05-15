@@ -6,15 +6,26 @@ from PIL import Image
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    nome = models.CharField(max_length=100, default='')
+    cognome = models.CharField(max_length=100, default='')
+    
+    # Opzioni per il campo 'caratteristiche'
+    CARATTERISTICHE_CHOICES = [
+        ('dsa', 'DSA'),
+        ('disabile', 'Disabile'),
+        ('allergico', 'Allergico'),
+        # Aggiungi altre opzioni se necessario
+    ]
+    
+    # Usa il campo ChoiceField per le caratteristiche
+    caratteristiche = models.CharField(max_length=100, choices=CARATTERISTICHE_CHOICES, blank=True, null=True) 
 
     def __str__(self):
         return f'{self.user.username} Profile'
 
     def save(self, *args, **kwargs):
-        super(Profile, self).save(*args, **kwargs)  # Chiama il metodo save della classe genitore
-
+        super(Profile, self).save(*args, **kwargs)  
         img = Image.open(self.image.path)
-
         if img.height > 300 or img.width > 300:
             output_size = (300, 300)
             img.thumbnail(output_size)
