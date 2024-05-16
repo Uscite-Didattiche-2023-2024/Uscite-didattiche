@@ -244,5 +244,13 @@ class UserPostListView(ListView):
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Post.objects.filter(author=user).order_by('-date_posted')
     
+
+class ProfiloDetailView(LoginRequiredMixin, DetailView):
+    model = User 
+    template_name = 'gite/profilo_utente_detail.html'  # <app>/<model>_<viewtype>.html
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.object 
+        return context

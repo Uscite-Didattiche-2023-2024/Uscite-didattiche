@@ -16,6 +16,7 @@ from .views import (
     GitaUpdateView,
     GitaDeleteView,
     About,
+    ProfiloDetailView,
 )
 from . import views
 
@@ -32,6 +33,9 @@ urlpatterns = [
     path('proposta/<int:pk>/conferma/', Conferma_proposta.as_view(), name='conferma-proposta'),
     path('proposta/<int:pk>/rifiuta/', Rifiuta_proposta.as_view(), name='rifiuta-proposta'),
     
+    # Profilo utente
+    path('profilo-utente/<int:pk>/', ProfiloDetailView.as_view(), name='profilo-utente'),
+
     # Gita
     path('gita/new/', GitaCreateView.as_view(), name='gita-create'),
     path('gite/', GiteListView.as_view(), name='gite'),

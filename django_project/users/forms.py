@@ -1,4 +1,3 @@
-
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -11,9 +10,12 @@ class PasswordResetForm(forms.Form):
     
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
+    first_name = forms.CharField(max_length=100, required=False)  # Aggiunto campo per il nome
+    last_name = forms.CharField(max_length=100, required=False)   # Aggiunto campo per il cognome
 
     # Opzioni per il campo 'caratteristiche'
     CARATTERISTICHE_CHOICES = [
+        ('nessuna', 'Nessuna'),  
         ('dsa', 'DSA'),
         ('disabile', 'Disabile'),
         ('allergico', 'Allergico'),
@@ -25,26 +27,23 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2','first_name','last_name']
 
-    # Override del metodo __init__ per aggiungere i campi extra del profilo al form
-    def __init__(self, *args, **kwargs):
-        super(UserRegisterForm, self).__init__(*args, **kwargs)
-        self.fields['nome'] = forms.CharField(max_length=100, required=False)
-        self.fields['cognome'] = forms.CharField(max_length=100, required=False)
-
-     # Override del metodo save per salvare anche i campi extra del profilo
+    # Override del metodo save per salvare anche i campi extra del profilo
     def save(self, commit=True):
         user = super(UserRegisterForm, self).save(commit=False)
-        user.save()
-        profile = Profile.objects.create(
-            user=user,
-            nome=self.cleaned_data.get('nome'),
-            cognome=self.cleaned_data.get('cognome'),
-            esigenze=self.cleaned_data.get('caratteristiche')  # Utilizza il campo 'caratteristiche'
-        )
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']  # Aggiornamento del nome
+        user.last_name = self.cleaned_data['last_name']    # Aggiornamento del cognome
         if commit:
-            profile.save()
+            user.save()
+
+            # Se è stato fornito un first_name e un last_name, crea o aggiorna il profilo
+            if self.cleaned_data['first_name'] or self.cleaned_data['last_name']:
+                profile, created = Profile.objects.get_or_create(user=user)
+                profile.caratteristiche = self.cleaned_data['caratteristiche']
+                profile.save()
+
         return user
 
 
@@ -53,11 +52,10 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['username', 'email', 'first_name', 'last_name']  # Aggiornamento dei campi
 
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['image', 'nome', 'cognome', 'caratteristiche']
-
+        fields = ['image', 'caratteristiche']
