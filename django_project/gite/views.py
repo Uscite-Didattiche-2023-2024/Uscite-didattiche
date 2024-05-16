@@ -211,7 +211,8 @@ class About(TemplateView):
     template_name = 'gite/about.html'  # Specifica il nome del template
 
 def aboutUs(request):
-    return render(request, 'gite/aboutUs.html', {'title': 'AboutUs'})
+    notifiche = Notifica.objects.all()
+    return render(request, 'gite/aboutUs.html', {'title': 'AboutUs','notifiche': notifiche})
 
 class GiteListView(LoginRequiredMixin, ListView):
     model = Gita
