@@ -1,9 +1,9 @@
 {% extends "gite/index.html" %}
 {% block content %}
-    <h2>You have been logged out</h2>
-    <div class="border-top pt-3">
+    <h2 class="fw-bold margini">Sei Uscito con successo</h2>
+    <div class="border-top pt-3 fw-bold margini">
         <small class="text-muted">
-            <a href="{% url 'login' %}">Log In Again</a>
+            <a href="{% url 'login' %}">Accedi nuovamente da qui</a>
         </small>
     </div>
 {% endblock content %}
