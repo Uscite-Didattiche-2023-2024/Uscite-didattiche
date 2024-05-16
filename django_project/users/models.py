@@ -6,11 +6,10 @@ from PIL import Image
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    nome = models.CharField(max_length=100, default='')
-    cognome = models.CharField(max_length=100, default='')
     
     # Opzioni per il campo 'caratteristiche'
     CARATTERISTICHE_CHOICES = [
+        ('nessuna', 'Nessuna'),  
         ('dsa', 'DSA'),
         ('disabile', 'Disabile'),
         ('allergico', 'Allergico'),
