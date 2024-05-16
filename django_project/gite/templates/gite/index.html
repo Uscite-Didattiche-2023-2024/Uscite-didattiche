@@ -62,12 +62,19 @@
             Content
           </a>
         </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link fs-5" href="{% url 'calendario' %}" aria-label="Register-page">
+            About us
+          </a>
+        </li>
+        {% else %}
         <li class="nav-item">
           <a class="nav-link fs-5" href="{% url 'register' %}" aria-label="Register-page">
             Registrati
           </a>
         </li>
-
+        {% endif %}
         <div class="custom-notification">
           <div class="custom-notification-icon" onclick="toggleNotificationBox()">
               <i id="Bell" class="fas fa-bell"></i>
