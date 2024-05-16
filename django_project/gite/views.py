@@ -204,6 +204,8 @@ class GitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 def about(request):
     return render(request, 'gite/about.html', {'title': 'About'})
 
+def aboutUs(request):
+    return render(request, 'gite/aboutUs.html', {'title': 'AboutUs'})
 
 class GiteListView(LoginRequiredMixin, ListView):
     model = Gita

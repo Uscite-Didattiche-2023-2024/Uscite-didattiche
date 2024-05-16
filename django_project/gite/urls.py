@@ -43,6 +43,7 @@ urlpatterns = [
     
     # About
     path('about/', views.about, name='gite-about'),
+    path('aboutus/', views.aboutUs, name='gite-aboutUs'),
     
     # User Posts
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
