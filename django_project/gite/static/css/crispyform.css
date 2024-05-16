@@ -43,3 +43,21 @@ select {
   background-color: #313335 !important;
   color: white !important;
 }
+
+.margini{
+
+
+  margin-left: 80px;
+  margin-right: 80px
+
+}
+
+.crispy_table {
+  table-layout: auto;
+  width: 100%;
+  max-width: calc(100% - 160px); /* Larghezza massima meno i margini */
+  margin-left: 80px;
+  margin-right: 80px;
+  margin-bottom: 20px; /* Aggiungi un margine inferiore di 20px */
+}
+

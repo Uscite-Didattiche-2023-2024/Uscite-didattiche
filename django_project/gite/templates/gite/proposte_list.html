@@ -1,11 +1,16 @@
 {% extends "gite/index.html" %}
 {% load static %}
 {% block content %}
+<head>
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/custom.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/crispyform.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/custom.min.css' %}">
 
-<h1 class="mb-3">Proposte di Gita</h1>  
-<table class="table table-dark table-hover">
+</head>
+
+<h1  class="mb-3 fw-bolder  margini">Proposte di Gita:</h1>  
+<table class="table table-dark table-hover crispy_table fw-bolder margini">
   <thead>
     <tr>
       <th scope="col">Titolo</th>
