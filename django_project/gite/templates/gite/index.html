@@ -73,7 +73,7 @@
               <i id="Bell" class="fas fa-bell"></i>
               <i class="custom-notification-number">{{ notifiche.count }}</i>
           </div>          
-          <script>startshakebell()</script>
+          <script>if('{{ notifiche.count }}'!=0){startshakebell();}</script>
           <div class="custom-notification-box" id="Box" style="display: none;">
               {% for notifica in notifiche %}
                   <div class="custom-notification-box-item">
