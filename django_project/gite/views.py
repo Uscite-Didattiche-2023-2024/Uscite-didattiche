@@ -207,9 +207,6 @@ class GitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         proposta = self.get_object()
         return self.request.user.has_perm('gite.delete_gita')
     
-class About(TemplateView):
-    template_name = 'gite/about.html'  # Specifica il nome del template
-
 def aboutUs(request):
     notifiche = Notifica.objects.all()
     return render(request, 'gite/aboutUs.html', {'title': 'AboutUs','notifiche': notifiche})

@@ -15,7 +15,6 @@ from .views import (
     GiteDetailView,
     GitaUpdateView,
     GitaDeleteView,
-    About,
     ProfiloDetailView,
 )
 from . import views
@@ -47,7 +46,6 @@ urlpatterns = [
     path('calendario/', CalendarioView.as_view(), name='calendario'),
     
     # About
-    path('about/', About.as_view(), name='gite-about'),
     path('aboutus/', views.aboutUs, name='gite-aboutUs'),
     
     # User Posts
