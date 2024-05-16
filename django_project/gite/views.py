@@ -28,9 +28,19 @@ class HomeView(TemplateView):
     template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
 
 
-class CalendarioView(LoginRequiredMixin, TemplateView):
+class CalendarioView(LoginRequiredMixin, ListView):
+    model = Gita
     template_name = 'gite/calendario.html'
     context_object_name = 'Calendario'
+    paginate_by = 5
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.order_by('Data_ritrovo')
+
+        # Personalizza la query per includere il nome dell'autore
+        return queryset
+    
     
 class Proposta_gitaListView(LoginRequiredMixin, ListView):
     model = Proposta_Gita
