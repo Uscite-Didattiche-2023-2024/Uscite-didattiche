@@ -10,6 +10,8 @@ from datetime import datetime, timedelta
 from django.forms.models import model_to_dict
 from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404
+from django.views.generic.base import View
+
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -25,15 +27,11 @@ from .models import Classe, Classe_gita, Gita, Post, Proposta_Gita, Notifica
 class HomeView(TemplateView):
     template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['notifiche'] = Notifica.objects.all()
-        return context
 
 class CalendarioView(LoginRequiredMixin, TemplateView):
     template_name = 'gite/calendario.html'
     context_object_name = 'Calendario'
-
+    
 class Proposta_gitaListView(LoginRequiredMixin, ListView):
     model = Proposta_Gita
     template_name = 'gite/proposte_list.html'  # <app>/<model>_<viewtype>.html
@@ -48,7 +46,7 @@ class Proposta_gitaListView(LoginRequiredMixin, ListView):
 
         # Personalizza la query per includere il nome dell'autore
         return queryset
-
+    
 class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
     model = Proposta_Gita
     fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato']  
@@ -60,7 +58,7 @@ class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('proposte')
-
+    
 class Proposta_gitaDetailView(LoginRequiredMixin, DetailView):
     model = Proposta_Gita
 
@@ -68,6 +66,7 @@ class Proposta_gitaDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         # Passa l'intero oggetto Proposta_Gita al contesto
         context['proposta'] = self.object
+        
         return context
 
 class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -90,6 +89,7 @@ class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['proposta'] = self.get_object()  # Aggiungi la proposta al contesto
+        
         return context
 
 class GitaCreateView(LoginRequiredMixin, CreateView):
@@ -128,19 +128,25 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['classi'] = Classe.objects.all()  # Aggiungi le classi al contesto
+        
         return context
 
-def conferma_proposta(request, pk):
-    proposta = get_object_or_404(Proposta_Gita, pk=pk)
-    proposta.Stato = 'CONFERMATA'
-    proposta.save()
-    return redirect(reverse('gita-create') + f'?proposta_gita_id={proposta.id}')
+class Conferma_proposta(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        proposta = get_object_or_404(Proposta_Gita, pk=pk)
+        proposta.Stato = 'CONFERMATA'
+        proposta.save()
+        notifiche = Notifica.objects.all()  # Ottieni le notifiche
+        return redirect(reverse('gita-create') + f'?proposta_gita_id={proposta.id}')
 
-def rifiuta_proposta(request, pk):
-    proposta = get_object_or_404(Proposta_Gita, pk=pk)
-    proposta.Stato = 'RIFIUTATA'
-    proposta.save()
-    return render(request, 'gite/proposta_gita_detail.html', {'proposta': proposta})
+class Rifiuta_proposta(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        proposta = get_object_or_404(Proposta_Gita, pk=pk)
+        proposta.Stato = 'RIFIUTATA'
+        proposta.save()
+        notifiche = Notifica.objects.all()  # Ottieni le notifiche
+        return render(request, 'gite/proposta_gita_detail.html', {'proposta': proposta, 'notifiche': notifiche})
+
 
 class Proposta_gitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Proposta_Gita
@@ -200,10 +206,12 @@ class GitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         proposta = self.get_object()
         return self.request.user.has_perm('gite.delete_gita')
+    
+class About(TemplateView):
+    template_name = 'gite/about.html'  # Specifica il nome del template
 
-def about(request):
-    return render(request, 'gite/about.html', {'title': 'About'})
-
+def aboutUs(request):
+    return render(request, 'gite/aboutUs.html', {'title': 'AboutUs'})
 
 class GiteListView(LoginRequiredMixin, ListView):
     model = Gita
@@ -217,7 +225,7 @@ class GiteListView(LoginRequiredMixin, ListView):
         # Personalizza la query per includere il nome dell'autore
         queryset = queryset.select_related('Proposta_Gita__Creatore').order_by('-Data_ritrovo')
         return queryset
-
+    
 class GiteDetailView(LoginRequiredMixin, DetailView):
     model = Gita
 
@@ -236,3 +244,4 @@ class UserPostListView(ListView):
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-date_posted')
+    
