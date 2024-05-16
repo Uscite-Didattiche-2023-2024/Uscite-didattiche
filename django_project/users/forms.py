@@ -17,7 +17,7 @@ class UserRegisterForm(UserCreationForm):
     CARATTERISTICHE_CHOICES = [
         ('nessuna', 'Nessuna'),  
         ('dsa', 'DSA'),
-        ('disabile', 'Disabile'),
+        ('invalido', 'Invalido'),
         ('allergico', 'Allergico'),
         # Aggiungi altre opzioni se necessario
     ]
