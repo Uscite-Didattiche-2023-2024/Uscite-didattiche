@@ -11,8 +11,9 @@
         <!--<link rel="stylesheet" type="text/css">TOFIX -->
         <form action="{% url 'logout' %}" method="post">
           {% csrf_token %}
-          <button type="submit" class="btn btn-danger">Logout</button>
+          <button type="submit" class="btn btn-outline-light" type="submit">Logout</button>         
         </form>
+
         {% else %}
         <!-- Se l'utente non ha effettuato il login -->
         <span class="h5 text-secondary fw-lighter"><a href="{% url 'login' %}">Accedi</a> o <a
