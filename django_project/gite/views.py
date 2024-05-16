@@ -22,7 +22,7 @@ from django.views.generic import (
 )
 
 from .forms import GitaForm
-from .models import Classe, Classe_gita, Gita, Post, Proposta_Gita, Notifica
+from .models import Classe, Classe_gita, Gita, Proposta_Gita, Notifica
 
 class HomeView(TemplateView):
     template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
@@ -241,17 +241,7 @@ class GiteDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         # Passa l'intero oggetto Gite al contesto
         context['gita'] = self.object
-        return context
-
-class UserPostListView(ListView):
-    model = Post
-    template_name = 'gite/user_posts.html'  # <app>/<model>_<viewtype>.html
-    context_object_name = 'posts'
-    paginate_by = 5
-
-    def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-    
+        return context    
 
 class ProfiloDetailView(LoginRequiredMixin, DetailView):
     model = User 

@@ -17,18 +17,7 @@ def get_default_group():
     except Group.DoesNotExist:
         return None
     
-class Post(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    date_posted = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk': self.pk})
-
+    
 class Classe(models.Model):
     anno = models.IntegerField(default=1, validators=[MaxValueValidator(5), MinValueValidator(1)])
     sezione = models.CharField(max_length=3, default='', validators=[character])

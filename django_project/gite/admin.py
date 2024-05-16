@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import Post
 from .models import Gita
 from .models import Proposta_Gita
 from .models import Attività
@@ -11,7 +10,6 @@ from .models import Presenti_prenotati
 from .models import Notifica
 
 
-admin.site.register(Post)
 
 # Register your models here.
 admin.site.register(Gita)

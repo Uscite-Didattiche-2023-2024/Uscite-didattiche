@@ -1,7 +1,6 @@
 from django.urls import path
 from .views import (
     HomeView,
-    UserPostListView,
     Proposta_gitaListView,
     Proposta_gitaCreateView,
     Proposta_gitaDetailView,
@@ -48,6 +47,4 @@ urlpatterns = [
     # About
     path('aboutus/', views.aboutUs, name='gite-aboutUs'),
     
-    # User Posts
-    path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
 ]
