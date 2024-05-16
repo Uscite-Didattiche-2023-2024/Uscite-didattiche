@@ -69,7 +69,7 @@ class Proposta_Gita(models.Model):
     Descrizione = models.CharField(max_length=300)
     Data = models.DateTimeField(null=True, blank=True)
     Posto = models.CharField(max_length=20)
-    Costo = models.FloatField()
+    Costo = models.FloatField(validators=[MinValueValidator(0)])
     Stato = models.CharField(max_length=20, choices=STATO_CHOICES, default='IN_ELABORAZIONE')
     Creatore = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -87,7 +87,7 @@ class Attività(models.Model):
     )
     Titolo = models.CharField(max_length=20)
     Descrizione = models.CharField(max_length=300)
-    Costo = models.FloatField()
+    Costo = models.FloatField(validators=[MinValueValidator(0)])
     Stato = models.CharField(max_length=20, choices=STATO_CHOICES, default='IN_ELABORAZIONE')
     
     Proposta_Gita = models.ForeignKey('Proposta_Gita', on_delete=models.CASCADE)
