@@ -210,6 +210,8 @@ class GitaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class About(TemplateView):
     template_name = 'gite/about.html'  # Specifica il nome del template
 
+def aboutUs(request):
+    return render(request, 'gite/aboutUs.html', {'title': 'AboutUs'})
 
 class GiteListView(LoginRequiredMixin, ListView):
     model = Gita

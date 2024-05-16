@@ -6,11 +6,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-  <meta name="description" content="A well made and handcrafted Bootstrap 5 template">
-  <meta name="author" content="Holger Koenemann">
-  <meta name="generator" content="Eleventy v2.0.0">
-  <meta name="HandheldFriendly" content="true">
-  <title>Klar HTML Template - Frontpage one</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/theme.min.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'css/Sidebar.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'css/Bell.css' %}">
@@ -44,6 +39,7 @@
           <a href="{% url 'gite' %}">Gite</a>
           <a href="{% url 'proposta-create' %}">Crea nuova proposta</a>
           <a href="{% url 'password_reset' %}">Password Dimenticata?</a>
+          <a href="{% url 'profile' %}">Area Personale</a>
         </div>
       </div>
       <a class="navbar-brand pe-md-4 fs-4 col-12 col-md-auto text-center" href="{% url 'homepage' %}">
@@ -58,22 +54,29 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fs-5" href="{% url 'gite-about' %}" aria-label="Content-page">
-            Content
+          <a class="nav-link fs-5" href="{% url 'gite' %}" aria-label="Content-page">
+            Le tue gite
           </a>
         </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link fs-5" href="{% url 'gite-aboutUs' %}" aria-label="Register-page">
+            About us
+          </a>
+        </li>
+        {% else %}
         <li class="nav-item">
           <a class="nav-link fs-5" href="{% url 'register' %}" aria-label="Register-page">
             Registrati
           </a>
         </li>
-
+        {% endif %}
         <div class="custom-notification">
           <div class="custom-notification-icon" onclick="toggleNotificationBox()">
               <i id="Bell" class="fas fa-bell"></i>
               <i class="custom-notification-number">{{ notifiche.count }}</i>
           </div>          
-          <script>startshakebell()</script>
+          <script>if('{{ notifiche.count }}'!=0){startshakebell();}</script>
           <div class="custom-notification-box" id="Box" style="display: none;">
               {% for notifica in notifiche %}
                   <div class="custom-notification-box-item">
