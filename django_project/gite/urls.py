@@ -46,4 +46,5 @@ urlpatterns = [
     
     # User Posts
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
+
 ]
