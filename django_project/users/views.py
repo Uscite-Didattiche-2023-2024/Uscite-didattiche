@@ -7,6 +7,8 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
+from gite.models import Notifica
+
 class CustomPasswordResetView(auth_views.PasswordResetView):
     template_name = 'users/password_reset.html'
     success_url = reverse_lazy('password_reset_done')
@@ -35,8 +37,10 @@ def register(request):
             return redirect('login')
     else:
         form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
+    # Ottieni il contesto dei dati dalle notifiche
+    notifiche = Notifica.objects.all()
 
+    return render(request, 'users/register.html', {'form': form, 'notifiche': notifiche})
 
 @login_required
 def profile(request):
@@ -54,10 +58,13 @@ def profile(request):
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
+    
+    notifiche = Notifica.objects.all()
 
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'notifiche': notifiche,  # Aggiungi le notifiche al contesto
     }
 
     return render(request, 'users/profile.html', context)
