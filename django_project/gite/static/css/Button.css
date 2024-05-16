@@ -1,0 +1,56 @@
+.bottone-hover {
+    width: 160px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align: center;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    -o-transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+  }
+  
+  .bottone-hover:hover {
+    background-position: 100% 0;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+  }
+  
+  .bottone-hover:focus {
+    outline: none;
+  }
+  
+  .bottone-hover.bn24 {
+    background-image: linear-gradient(to right,
+        #6253e1,
+        #852d91,
+        #852d91,
+        #6253e1);
+    box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+  }
+  
+  .bottonemenu {
+    width: 100px;
+    /* change the width of the container */
+    height: 100px;
+    /* change the height of the container */
+  }
+  
+  .cssoverflow {
+    width: 0;
+    height: 100%;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+
+  .bottonegaucio{
+    background-color: #ffffff;
+  }

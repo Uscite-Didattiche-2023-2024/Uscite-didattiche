@@ -1,0 +1,34 @@
+{% extends "gite/index.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<title>Uscite Didattiche - Crea nuova gita</title>
+
+    <div class="content-section">
+        <form method="POST" id="gitaForm">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Nuova Gita</legend>
+                {{ form|crispy }}
+                <div class="form-group">
+                    <label for="id_classi">Seleziona le Classi:</label>
+                    <select name="classi" id="id_classi" class="form-control" multiple>
+                        {% for classe in classi %}
+                            <option value="{{ classe.pk }}">{{ classe }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Crea Gita</button>
+            </div>
+        </form>
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message }} 
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,31 @@
+{% extends "gite/index.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<title>Uscite Didattiche - profile</title>
+
+    <div class="content-section ">
+      <div class="media margini">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+          <p class="text-secondary">{{ user.nome }}</p>
+          <p class="text-secondary">{{ user.cognome }}</p>
+          <p class="text-secondary">{{ user.caratteristiche }}</p>
+        </div>
+      </div>
+      <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset class="form-group margini crispyform">
+              <legend class="border-bottom mb-4">Informazioni Profilo:</legend>
+              {{ u_form|crispy }}
+              {{ p_form|crispy }}          <p class="text-secondary">{{ user.email }}</p>
+          </fieldset>
+          <div class="form-group">
+              <button style="margin-left: 95px;" class="btn btn-outline-light  " type="submit">Aggiorna</button>
+          </div>
+      </form>
+    </div>
+{% endblock content %}

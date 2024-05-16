@@ -1,0 +1,143 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<title>Uscite Didattiche</title>
+<link rel="shortcut icon" type="image/svg" href="{% static 'img/svg/logomg.svg' %}" >
+
+<!doctype html>
+<html class="h-100" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/theme.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/Sidebar.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/Bell.css' %}">
+  <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/crispyform.css' %}">
+
+
+  <style>
+   
+  </style>
+
+
+</head>
+
+<body class="bg-black text-white mt-0" data-bs-spy="scroll" data-bs-target="#navScroll">
+  <nav id="navScroll" class="navbar navbar-dark bg-black px-vw-5" tabindex="0">
+    <div class="container">
+
+      <!-- SIDEBAR-->
+      <script src="{% static 'js/Bell.js'%}"></script>
+      <script src="{% static 'js/Sidebar.js'%}"></script>
+
+
+      <div class="custom-container">
+        <button class="custom-toggle-btn custom-serifbianco" onclick="toggleMenu()">☰</button>
+
+        <div class="custom-sidebar">
+          <a href="{% url 'homepage' %}">Home</a>
+          <a href="{% url 'calendario' %}">Calendario</a>
+          <a href="{% url 'proposte' %}">Proposte</a>
+          <a href="{% url 'gite' %}">Gite</a>
+          <a href="{% url 'proposta-create' %}">Crea nuova proposta</a>
+          <a href="{% url 'password_reset' %}">Password Dimenticata?</a>
+          <a href="{% url 'profile' %}">Area Personale</a>
+        </div>
+      </div>
+      <a class="navbar-brand pe-md-4 fs-4 col-12 col-md-auto text-center" href="{% url 'homepage' %}">
+        <img class="header_login fixed" width="60" height="55" viewBox="0 0 400 400" src="{% static 'img/svg/logomg.svg' %}"></svg>
+        <span class="ms-md-1 mt-1 fw-bolder me-md-5">Uscite Didattiche</span>
+      </a>
+
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 list-group list-group-horizontal">
+        <li class="nav-item">
+          <a class="nav-link fs-5" href="{% url 'homepage' %}" aria-label="Home-page">
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fs-5" href="{% url 'gite' %}" aria-label="Content-page">
+            Le tue gite
+          </a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link fs-5" href="{% url 'gite-aboutUs' %}" aria-label="Register-page">
+            About us
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link fs-5" href="{% url 'register' %}" aria-label="Register-page">
+            Registrati
+          </a>
+        </li>
+        {% endif %}
+        <div class="custom-notification">
+          <div class="custom-notification-icon" onclick="toggleNotificationBox()">
+              <i id="Bell" class="fas fa-bell"></i>
+              <i class="custom-notification-number">{{ notifiche.count }}</i>
+          </div>          
+          <script>if('{{ notifiche.count }}'!=0){startshakebell();}</script>
+          <div class="custom-notification-box" id="Box" style="display: none;">
+              {% for notifica in notifiche %}
+                  <div class="custom-notification-box-item">
+                      <h3>{{ notifica.Titolo }}</h3>
+                      <p>Gita: {{ notifica.Gita }}</p>
+                      <p>Proposta Gita: {{ notifica.Proposta_Gita }}</p>
+                      <p>Classe: {{ notifica.Classe }}</p>
+                  </div>
+              {% endfor %}
+          </div>
+      </div>
+      
+      <script>
+          function toggleNotificationBox() {
+              var box = document.getElementById("Box");
+              if (box.style.display === "none") {
+                  box.style.display = "block";
+              } else {
+                  box.style.display = "none";
+              }
+          }
+      </script>
+      
+    </div>
+  </nav>
+  <main>
+    {% block content %}
+    {% endblock content %}
+  </main>
+
+  <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'js/aos.js'%}"></script>
+
+  <script>
+    AOS.init({
+      duration: 800, // values from 0 to 3000, with step 50ms
+    });
+  </script>
+  <script>
+    let scrollpos = window.scrollY
+    const header = document.querySelector(".navbar")
+    const header_height = header.offsetHeight
+
+    const add_class_on_scroll = () => header.classList.add("scrolled", "shadow-sm")
+    const remove_class_on_scroll = () => header.classList.remove("scrolled", "shadow-sm")
+
+    window.addEventListener('scroll', function () {
+      scrollpos = window.scrollY;
+
+      if (scrollpos >= header_height) { add_class_on_scroll() }
+      else { remove_class_on_scroll() }
+
+      console.log(scrollpos)
+    })
+  </script>
+
+
+</body>
+
+</html>

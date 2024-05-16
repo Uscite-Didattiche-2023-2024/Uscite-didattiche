@@ -1,0 +1,30 @@
+{% extends "gite/index.html" %}
+{% load static %}
+{% load tz %}
+
+{% block content %}
+
+<!-- days sourced from: https://nationaldaycalendar.com/february/ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo&family=Roboto:wght@900&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'css/calendario.css' %}">
+
+<div id="title" style="text-align: center; display: inline;">
+    <h1 style="font-size:300%">{% now "F Y" %}</h1>
+</div>
+
+<div class="calendar-frame center">
+    <div class="day-frame placeholder"></div>
+    <div class="day-frame placeholder"></div>
+
+    {% for gita in object_list %}
+    <a class="day-frame center real" id='{{ gita.id }}' href="{% url 'gite-detail' gita.id %}">
+        <h2 class="day-number">{{ gita.Data_ritrovo }}</h2>
+        <div class="day-label center">{{ gita.Proposta_Gita.Titolo }}</div>
+    </a>
+    {% endfor %}
+
+</div>
+
+{% endblock content %}

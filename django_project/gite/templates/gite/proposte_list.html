@@ -1,0 +1,64 @@
+{% extends "gite/index.html" %}
+{% load static %}
+{% block content %}
+
+<title>Uscite Didattiche - Lista Proposte</title>
+
+<head>
+
+  <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/crispyform.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/custom.min.css' %}">
+
+</head>
+
+<h1  class="mb-3 fw-bolder  margini">Proposte di Gita:</h1>  
+<table class="table table-dark table-hover crispy_table fw-bolder margini">
+  <thead>
+    <tr>
+      <th scope="col">Titolo</th>
+      <th scope="col">Autore</th>
+      <th scope="col">Data</th>
+      <th scope="col">Descrizione</th>
+      <th scope="col">Posto</th>
+      <th scope="col">Prezzo</th>
+      <th scope="col">Stato</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for proposta in proposte %}
+    <tr>
+      <td><a class="article-title" href="{% url 'proposta-detail' proposta.id %}">{{ proposta.Titolo }}</a></td>
+      <td>{{ proposta.Creatore }}</td>
+      <td>{{ proposta.Data|date:"F d, Y" }} </td>
+      <td>{{ proposta.Descrizione }}</td>
+      <td>{{ proposta.Posto }}</td>
+      <td>{{ proposta.Costo }}€</td>
+      <td>{{ proposta.get_Stato_display }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if is_paginated %}
+
+{% if page_obj.has_previous %}
+<a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+{% endif %}
+
+{% for num in page_obj.paginator.page_range %}
+{% if page_obj.number == num %}
+<a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a class="btn btn-outline-info mb-4"
+    href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+
+    {% endif %}
+    
+{% endblock content %}
