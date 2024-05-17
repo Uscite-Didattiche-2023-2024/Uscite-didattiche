@@ -30,22 +30,22 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const caratteristicheSelect = document.getElementById('id_caratteristiche');
-    const tipiAllergieDiv = document.getElementById('div_id_tipi_allergie');
+    const dettagliDiv = document.getElementById('div_id_dettagli');
 
-    function toggleTipiAllergie() {
+    function toggledettagli() {
         const selectedValue = caratteristicheSelect.value;
         if (selectedValue === 'allergico' || selectedValue === 'invalido') {
-            tipiAllergieDiv.style.display = 'block';
+            dettagliDiv.style.display = 'block';
         } else {
-            tipiAllergieDiv.style.display = 'none';
+            dettagliDiv.style.display = 'none';
         }
     }
 
 
-    caratteristicheSelect.addEventListener('change', toggleTipiAllergie);
+    caratteristicheSelect.addEventListener('change', toggledettagli);
 
     // Chiamata iniziale per impostare lo stato corretto al caricamento della pagina
-    toggleTipiAllergie();
+    toggledettagli();
 });
 </script>
 {% endblock content %}
