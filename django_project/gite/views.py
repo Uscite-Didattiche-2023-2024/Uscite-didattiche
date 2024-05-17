@@ -141,7 +141,12 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
         
         return context
 
-class Conferma_proposta(LoginRequiredMixin, View):
+class Conferma_proposta(LoginRequiredMixin, UserPassesTestMixin, View):
+
+    def test_func(self):
+        proposta = get_object_or_404(Proposta_Gita, pk=self.kwargs['pk'])
+        return self.request.user.has_perm('gite.change_proposta_gita', proposta)
+    
     def get(self, request, pk):
         proposta = get_object_or_404(Proposta_Gita, pk=pk)
         proposta.Stato = 'CONFERMATA'
@@ -149,7 +154,12 @@ class Conferma_proposta(LoginRequiredMixin, View):
         notifiche = Notifica.objects.all()  # Ottieni le notifiche
         return redirect(reverse('gita-create') + f'?proposta_gita_id={proposta.id}')
 
-class Rifiuta_proposta(LoginRequiredMixin, View):
+class Rifiuta_proposta(LoginRequiredMixin, UserPassesTestMixin, View):
+    
+    def test_func(self):
+        proposta = get_object_or_404(Proposta_Gita, pk=self.kwargs['pk'])
+        return self.request.user.has_perm('gite.change_proposta_gita', proposta)
+    
     def get(self, request, pk):
         proposta = get_object_or_404(Proposta_Gita, pk=pk)
         proposta.Stato = 'RIFIUTATA'
