@@ -10,6 +10,7 @@
 
 <div class="container margini" id="gita-detail">
   <h1 class="fw-bolder">{{ gita.Proposta_Gita.Titolo }}</h1>
+  <p><a href="{% url 'profilo-utente' user.id %}">Creatore: {{ gita.Proposta_Gita.Creatore }}</a></p>
   <p>Descrizione: {{ gita.Proposta_Gita.Descrizione }}</p>
   <p>Posto: {{ gita.Proposta_Gita.Posto }}</p>
   <p>Data ritrovo: {{ gita.Data_ritrovo }}</p>

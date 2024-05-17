@@ -25,7 +25,7 @@
         {% for gita in gite %}
         <tr>
         <td><a class="article-title" href="{% url 'gite-detail' gita.id %}">{{ gita.Proposta_Gita.Titolo }}</a></td>
-            <td>{{ gita.Proposta_Gita.Creatore }}</td>
+            <td><a href="{% url 'profilo-utente' user.id %}">{{ gita.Proposta_Gita.Creatore }}</a></td>
             <td>{{ gita.Proposta_Gita.Descrizione }} </td>
             <td>{{ gita.Luogo_ritrovo }}</td>
             <td>{{ gita.Luogo_rientro }}</td>

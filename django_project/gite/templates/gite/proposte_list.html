@@ -29,7 +29,7 @@
     {% for proposta in proposte %}
     <tr>
       <td><a class="article-title" href="{% url 'proposta-detail' proposta.id %}">{{ proposta.Titolo }}</a></td>
-      <td>{{ proposta.Creatore }}</td>
+      <td><a href="{% url 'profilo-utente' user.id %}">{{ proposta.Creatore }}</a></td>
       <td>{{ proposta.Data|date:"F d, Y" }} </td>
       <td>{{ proposta.Descrizione }}</td>
       <td>{{ proposta.Posto }}</td>

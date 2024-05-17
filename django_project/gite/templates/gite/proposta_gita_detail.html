@@ -10,7 +10,7 @@
 
 <div class="container margini" id="proposta-detail">
   <h1 class="fw-bolder ">{{ proposta.Titolo }}</h1>
-  <p>Creato da: {{ proposta.Creatore }}</p>
+  <p><a href="{% url 'profilo-utente' user.id %}">Creato da: {{ proposta.Creatore }}</a></p>
   <p>Data: {% if proposta.Data %}{{ proposta.Data|date:"F d, Y" }}{% else %}N/D{% endif %}</p>
   <p>Descrizione: {{ proposta.Descrizione }}</p>
   <p>Posto: {{ proposta.Posto }}</p>
