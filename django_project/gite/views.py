@@ -57,10 +57,16 @@ class Proposta_gitaListView(LoginRequiredMixin, ListView):
         # Personalizza la query per includere il nome dell'autore
         return queryset
     
-class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
+class Proposta_gitaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Proposta_Gita
     fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato']  
+    permission_required = 'gite.add_proposta_gita'
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm(self.permission_required):
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+  
     def form_valid(self, form):
         form.instance.Creatore = self.request.user  
         messages.success(self.request, 'Gita creata con successo!')  # TOFIX
@@ -69,6 +75,9 @@ class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('proposte')
     
+    def test_func(self):
+        return self.request.user.has_perm(self.permission_required)
+
 class Proposta_gitaDetailView(LoginRequiredMixin, DetailView):
     model = Proposta_Gita
 
