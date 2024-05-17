@@ -15,8 +15,8 @@
 </div>
 
 <div class="calendar-frame center">
-    <div class="day-frame placeholder"></div>
-    <div class="day-frame placeholder"></div>
+    <div class="day-frame placeholder hidden"></div>
+    <div class="day-frame placeholder hidden"></div>
 
     {% for gita in object_list %}
     <a class="day-frame center real" id='{{ gita.id }}' href="{% url 'gite-detail' gita.id %}">
@@ -26,5 +26,17 @@
     {% endfor %}
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var proposals = document.querySelectorAll('.real');
+        if (proposals.length > 0) {
+            var placeholders = document.querySelectorAll('.placeholder');
+            placeholders.forEach(function(placeholder) {
+                placeholder.classList.remove('hidden');
+            });
+        }
+    });
+</script>
 
 {% endblock content %}

@@ -1,70 +1,123 @@
-* {
-	margin: 0;
-	padding: 0;
-	transition: 0.05s ease-in;
-	/*DIMENSIONS*/
-	--dim1: 11vw;
-	--dim2: 0.5vw;
+/*DIMENSIONS*/
+:root {
+    --dim1: 11vw;
+    --dim2: 0.5vw;
+    --font-size-base: 1rem; /* 16px by default */
 }
 
-/*LIBRARY*/
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    transition: 0.3s ease-in-out;
+}
+
+/* Title Styles */
 #title {
-	margin: auto;
-	flex-direction: column;
-	height: calc(2 * var(--dim1));
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    height: calc(2 * var(--dim1));
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 #title > h1 {
-	font-family: Roboto, sans-serif;
-	font-size: 10vw;
+    font-family: 'Roboto', sans-serif;
+    font-size: 6vw;
+    color: #ffffff;
 }
 #title > p {
-	font-family: Heebo, sans-serif;
-	font-size: 2vw;
+    font-family: 'Heebo', sans-serif;
+    font-size: 2vw;
+    color: #34495e;
 }
+
+/* Calendar Frame */
 .calendar-frame {
-	padding: var(--dim2);
-	width: 84vw;
-	margin: auto;
-	flex-wrap: wrap;
+    padding: var(--dim2);
+    width: 84vw;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem; /* 1rem = 16px */
 }
+
+/* Day Frame */
 .day-frame {
-	margin: var(--dim2);
-	height: var(--dim1);
-	width: var(--dim1);
+    margin: var(--dim2);
+    height: var(--dim1);
+    width: var(--dim1);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+    position: relative;
 }
+
+.day-frame:hover {
+    transform: scale(1.05);
+    background-color: #4d4d4d;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Day Number */
 .day-number {
-	text-shadow: 0 0 1vw rgba(0, 0, 0, 0.25);
+    font-family: 'Roboto', sans-serif;
+    font-size: 2vw; /* Scalable based on viewport width */
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+
+/* Day Label */
 .day-label {
-	width: var(--dim1);
-	position: absolute;
-	color: rgba(255, 255, 255, 0);
-	background-color: rgba(0, 0, 0, 0);
-	font-size: 1vw;
-	font-family: Heebo, sans-serif;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 0.5em;
+    color: rgba(74, 15, 15, 0);
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 1rem;
+    font-family: 'Heebo', sans-serif;
+    text-align: center;
+    transition: color 0.3s, background-color 0.3s;
 }
 .real:hover > .day-label {
-	color: rgba(255, 255, 255, 1);
-	background-color: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0 0 10px 10px;
 }
+
+/* Real Class */
 .real {
-	background-color: black;
-	background-repeat: no-repeat;
-	background-size: cover;
-	color: white;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
 }
 .real:hover {
-	transform: scale(1.1, 1.1);
+    transform: scale(1.1);
 }
 .real:hover > .day-number {
-	color: rgba(0, 0, 0, 0);
-	text-shadow: 0 0 10vw rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0);
+    text-shadow: none;
 }
+
+/* Center Utility Class */
 .center {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 
 /*DAYS*/
 #one {
