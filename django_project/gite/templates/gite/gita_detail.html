@@ -6,35 +6,49 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
 
-<title>Uscite Didattiche - Gita</title>
+<title>Uscite Didattiche - Dettagli Gita</title>
 
-<div class="container margini" id="gita-detail">
-  <h1 class="fw-bolder">{{ gita.Proposta_Gita.Titolo }}</h1>
-  <p><a href="{% url 'profilo-utente' user.id %}">Creatore: {{ gita.Proposta_Gita.Creatore }}</a></p>
-  <p>Descrizione: {{ gita.Proposta_Gita.Descrizione }}</p>
-  <p>Posto: {{ gita.Proposta_Gita.Posto }}</p>
-  <p>Data ritrovo: {{ gita.Data_ritrovo }}</p>
-  <p>Data rientro: {{ gita.Data_rientro }}</p>
-  <p>Luogo ritrovo: {{ gita.Luogo_ritrovo }}</p>
-  <p>Luogo rientro: {{ gita.Luogo_rientro }}</p>
-  <p>Costo: {{ gita.Proposta_Gita.Costo }} €</p>
-  <p>Stato: {{ gita.get_Stato_display }}</p>
+<div class="container margini">
+  <div class="row">
+    <div class="col-md-6" id="gita-detail">
+      <h1 class="fw-bolder">{{ gita.Proposta_Gita.Titolo }}</h1>
+      <p><a href="{% url 'profilo-utente' user.id %}">Creatore: {{ gita.Proposta_Gita.Creatore }}</a></p>
+      <p>Descrizione: {{ gita.Proposta_Gita.Descrizione }}</p>
+      <p>Posto: {{ gita.Proposta_Gita.Posto }}</p>
+      <p>Data ritrovo: {{ gita.Data_ritrovo }}</p>
+      <p>Data rientro: {{ gita.Data_rientro }}</p>
+      <p>Luogo ritrovo: {{ gita.Luogo_ritrovo }}</p>
+      <p>Luogo rientro: {{ gita.Luogo_rientro }}</p>
+      <p>Costo: {{ gita.Proposta_Gita.Costo }} €</p>
+      <p>Stato: {{ gita.get_Stato_display }}</p>
 
-  <p>Classi associate:</p>
-  <ul>
-    {% for classe_gita in gita.classe_gita_set.all %}
-      <li>{{ classe_gita.Classe }}</li>
-    {% endfor %}
-  </ul>
+      <p>Classi associate:</p>
+      <ul>
+        {% for classe_gita in gita.classe_gita_set.all %}
+          <li>{{ classe_gita.Classe }}</li>
+        {% endfor %}
+      </ul>
+      
+      <div>
+        <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'gita-update' pk=gita.pk %}">Update</a>
+        <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'gita-delete' pk=gita.pk %}">Delete</a>
+      </div>
 
-  
-  <div>
-    <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'gita-update' pk=gita.pk %}">Update</a>
-    <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'gita-delete' pk=gita.pk %}">Delete</a>
+      <!-- Aggiungi qui altri dettagli della gita se necessario -->
+
+      <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'proposte' %}">Torna alla lista delle gite</a>
+    </div>
+    <div class="col-md-6 allegato text-center">
+      Allegato: <br>
+      {% if gita.Allegato %}
+          <a href="{{ gita.Allegato.url }}" target="_blank">
+              <img src="{{ gita.Allegato.url }}" alt="Allegato" class="img-fluid">
+          </a>
+          <br>
+          <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" target="_blank">Ingrandisci</a>
+      {% endif %}
   </div>
-
-  <!-- Aggiungi qui altri dettagli della proposta se necessario -->
-
-  <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'proposte' %}">Torna alla lista delle gite</a>
+  
+  </div>
 </div>
 {% endblock %}
