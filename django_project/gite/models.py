@@ -58,7 +58,7 @@ class Proposta_Gita(models.Model):
     Descrizione = models.CharField(max_length=300)
     Data = models.DateTimeField(null=True, blank=True)
     Posto = models.CharField(max_length=20)
-    Costo = models.FloatField(validators=[MinValueValidator(0)])
+    Costo = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(30000)])
     Stato = models.CharField(max_length=20, choices=STATO_CHOICES, default='IN_ELABORAZIONE')
     Creatore = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -68,6 +68,12 @@ class Proposta_Gita(models.Model):
     class Meta:
         verbose_name_plural = 'Proposte_Gita'
 
+    def save(self, *args, **kwargs):
+        if self.pk is not None:
+            original = Proposta_Gita.objects.get(pk=self.pk)
+            self.Creatore = original.Creatore
+        super(Proposta_Gita, self).save(*args, **kwargs)
+
 class Attività(models.Model):
     STATO_CHOICES = (
         ('IN_ELABORAZIONE', 'In elaborazione'),
@@ -76,7 +82,7 @@ class Attività(models.Model):
     )
     Titolo = models.CharField(max_length=20)
     Descrizione = models.CharField(max_length=300)
-    Costo = models.FloatField(validators=[MinValueValidator(0)])
+    Costo = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5000)])
     Stato = models.CharField(max_length=20, choices=STATO_CHOICES, default='IN_ELABORAZIONE')
     
     Proposta_Gita = models.ForeignKey('Proposta_Gita', on_delete=models.CASCADE)
