@@ -29,7 +29,7 @@
 ### Windows:
 
     <nome-ambiente-virtuale>\Scripts\activate.bat    //In CMD
-    <nome-ambiente-virtuale>/Scripts/Activate.ps1    //In Powershell
+    <nome-ambiente-virtuale>\Scripts\Activate.ps1    //In Powershell
 
 ## 2. installare I moduli di python:
 

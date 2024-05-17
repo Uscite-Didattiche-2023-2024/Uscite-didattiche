@@ -57,10 +57,16 @@ class Proposta_gitaListView(LoginRequiredMixin, ListView):
         # Personalizza la query per includere il nome dell'autore
         return queryset
     
-class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
+class Proposta_gitaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Proposta_Gita
     fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato']  
+    permission_required = 'gite.add_proposta_gita'
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm(self.permission_required):
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+  
     def form_valid(self, form):
         form.instance.Creatore = self.request.user  
         messages.success(self.request, 'Gita creata con successo!')  # TOFIX
@@ -69,6 +75,9 @@ class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('proposte')
     
+    def test_func(self):
+        return self.request.user.has_perm(self.permission_required)
+
 class Proposta_gitaDetailView(LoginRequiredMixin, DetailView):
     model = Proposta_Gita
 
@@ -141,7 +150,12 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
         
         return context
 
-class Conferma_proposta(LoginRequiredMixin, View):
+class Conferma_proposta(LoginRequiredMixin, UserPassesTestMixin, View):
+
+    def test_func(self):
+        proposta = get_object_or_404(Proposta_Gita, pk=self.kwargs['pk'])
+        return self.request.user.has_perm('gite.change_proposta_gita', proposta)
+    
     def get(self, request, pk):
         proposta = get_object_or_404(Proposta_Gita, pk=pk)
         proposta.Stato = 'CONFERMATA'
@@ -149,7 +163,12 @@ class Conferma_proposta(LoginRequiredMixin, View):
         notifiche = Notifica.objects.all()  # Ottieni le notifiche
         return redirect(reverse('gita-create') + f'?proposta_gita_id={proposta.id}')
 
-class Rifiuta_proposta(LoginRequiredMixin, View):
+class Rifiuta_proposta(LoginRequiredMixin, UserPassesTestMixin, View):
+    
+    def test_func(self):
+        proposta = get_object_or_404(Proposta_Gita, pk=self.kwargs['pk'])
+        return self.request.user.has_perm('gite.change_proposta_gita', proposta)
+    
     def get(self, request, pk):
         proposta = get_object_or_404(Proposta_Gita, pk=pk)
         proposta.Stato = 'RIFIUTATA'
