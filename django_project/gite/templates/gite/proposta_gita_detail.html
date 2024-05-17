@@ -8,8 +8,8 @@
 
 <title>Uscite Didattiche - Lista Proposte</title>
 
-<div class="container" id="proposta-detail">
-  <h1>{{ proposta.Titolo }}</h1>
+<div class="container margini" id="proposta-detail">
+  <h1 class="fw-bolder ">{{ proposta.Titolo }}</h1>
   <p>Creato da: {{ proposta.Creatore }}</p>
   <p>Data: {% if proposta.Data %}{{ proposta.Data|date:"F d, Y" }}{% else %}N/D{% endif %}</p>
   <p>Descrizione: {{ proposta.Descrizione }}</p>
