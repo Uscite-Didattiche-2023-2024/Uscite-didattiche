@@ -1,10 +1,18 @@
 {% extends "gite/index.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/crispyform.css' %}">
+
+
 
 <title>Uscite Didattiche - Crea nuova gita</title>
 
-    <div class="content-section">
+    <div class="content-section margini">
         <form method="POST" id="gitaForm">
             {% csrf_token %}
             <fieldset class="form-group">
