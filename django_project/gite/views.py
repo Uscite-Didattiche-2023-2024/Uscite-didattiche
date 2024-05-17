@@ -21,7 +21,7 @@ from django.views.generic import (
     DeleteView,
 )
 
-from .forms import GitaForm
+from .forms import GitaForm, PropostaGitaForm
 from .models import Classe, Classe_gita, Gita, Proposta_Gita, Notifica
 
 class HomeView(TemplateView):
@@ -59,7 +59,7 @@ class Proposta_gitaListView(LoginRequiredMixin, ListView):
     
 class Proposta_gitaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Proposta_Gita
-    fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato']  
+    form_class = PropostaGitaForm
     permission_required = 'gite.add_proposta_gita'
 
     def dispatch(self, request, *args, **kwargs):
@@ -90,7 +90,7 @@ class Proposta_gitaDetailView(LoginRequiredMixin, DetailView):
 
 class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Proposta_Gita
-    fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato'] 
+    form_class = PropostaGitaForm
     success_url = reverse_lazy('proposte')
     permission_required = 'gite.change_proposta_gita'
 
@@ -113,7 +113,9 @@ class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
 
 class GitaCreateView(LoginRequiredMixin, CreateView):
     model = Gita
-    fields = ['Stato', 'Data_ritrovo', 'Data_rientro', 'Luogo_ritrovo', 'Luogo_rientro', 'Proposta_Gita']
+    form_class = GitaForm
+    template_name = 'gite/gita_form.html'
+    success_url = reverse_lazy('gite')
     permission_required = 'gite.add_gita'
 
     def dispatch(self, request, *args, **kwargs):
@@ -140,9 +142,6 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
         if proposta_gita_id:
             initial['Proposta_Gita'] = proposta_gita_id
         return initial
-
-    def get_success_url(self):
-        return reverse_lazy('gite')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -213,7 +212,7 @@ class GitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
     def test_func(self):
-        proposta = self.get_object()
+        gita = self.get_object()
         return self.request.user.has_perm('gite.change_gita')
     
     def handle_no_permission(self):

@@ -41,6 +41,7 @@ class Gita(models.Model):
     Luogo_ritrovo = models.CharField(max_length=20)
     Luogo_rientro = models.CharField(max_length=20)
     Proposta_Gita = models.ForeignKey('Proposta_Gita', on_delete=models.CASCADE)
+    Allegato = models.FileField(upload_to='documenti/', blank=True, null=True)
 
     def __str__(self):
         return self.Proposta_Gita.Titolo

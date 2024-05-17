@@ -13,7 +13,7 @@ fieldset {
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
-input[type="text"] {
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="file"], input[type="date"], input[type="datetime-local"] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -23,34 +23,10 @@ input[type="text"] {
   color: white;
 }
 
-input[type="email"] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: none;
-  background-color: #313335;
-  color: white;
-}
-
-input[type="password"] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: none;
-  background-color: #313335;
-  color: white;
-}
-
-input[type="number"] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: none;
-  background-color: #313335;
-  color: white;
+input[type="datetime-local"] {
+  appearance: none; /* Per rimuovere lo stile predefinito del browser */
+  -webkit-appearance: none; /* Per rimuovere lo stile predefinito su Safari e Chrome */
+  -moz-appearance: textfield; /* Per rimuovere lo stile predefinito su Firefox */
 }
 
 select {
@@ -65,11 +41,8 @@ select {
 }
 
 .margini{
-
-
   margin-left: 80px;
   margin-right: 80px
-
 }
 
 .crispy_table {
