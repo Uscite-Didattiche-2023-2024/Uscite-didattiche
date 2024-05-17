@@ -1,15 +1,23 @@
 {% extends "gite/index.html" %}
 {% block content %}
-<title>Uscite Didattiche - Conferma Elimina gita</title>
+{% load static %}
 
-    <div class="content-section">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/crispyform.css' %}">
+
+
+<title fw-bolder >Uscite Didattiche - Conferma Elimina gita</title>
+
+    <div class="content-section margini">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
                 <h2 class="fw-bolder" >Sei sicuro che vuoi eliminare la gita "{{ gita.Proposta_Gita.Titolo }}"</h2>
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-light mt-1 mb-1" type="submit">Si, elimina</button>
+                <button style="margin-left: 20px;" class="btn btn-outline-light mt-1 mb-1" type="submit">Si, elimina</button>
                 <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'gite' %}">Cancel</a>
             </div>
         </form>
