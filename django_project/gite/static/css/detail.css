@@ -1,0 +1,46 @@
+/* detail.css for gita detail */
+
+#gita-detail {
+  background-color: #2c2c2c;
+  color: #fff;
+  padding: 20px;
+  font-family: Arial, sans-serif; /* Cambio del tipo di font */
+}
+
+#gita-detail h1 {
+  color: #ffdc7c;
+}
+
+#gita-detail p {
+  margin-bottom: 10px;
+}
+
+#gita-detail ul {
+  margin-bottom: 20px;
+}
+
+#gita-detail ul li {
+  list-style-type: none;
+}
+
+/* detail.css for proposta detail */
+
+#proposta-detail {
+  background-color: #2c2c2c;
+  color: #fff;
+  padding: 20px;
+  font-family: Arial, sans-serif; /* Cambio del tipo di font */
+}
+
+#proposta-detail h1 {
+  color: #ffbb00;
+}
+
+#proposta-detail p {
+  margin-bottom: 10px;
+}
+
+#proposta-detail a.btn {
+  margin-top: 10px;
+}
+

@@ -6,12 +6,11 @@
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="btn btn-outline-light mt-1 mb-1">Elimina Gita</legend>
                 <h2 class="fw-bolder" >Sei sicuro che vuoi eliminare la gita "{{ gita.Proposta_Gita.Titolo }}"</h2>
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-light mt-1 mb-1" type="submit">Si, elimina</button>
-                <a class="btn btn-outline-secondary" href="{% url 'proposta-detail' gita.Proposta_Gita.id %}">Cancel</a>
+                <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'gite' %}">Cancel</a>
             </div>
         </form>
     </div>
