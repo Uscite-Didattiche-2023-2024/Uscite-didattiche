@@ -1,19 +1,28 @@
 {% extends "gite/index.html" %}
 
 {% block content %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/crispyform.css' %}">
+
+
+
 
 <title>Uscite Didattiche - Conferma</title>
 
-    <div class="content-section">
+    <div class="content-section margini">
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Delete Post</legend>
-                <h2>Are you sure you want to delete the post "{{ object.Titolo }}"</h2>
+                <legend class=" mb-4 fw-bolder">Elimina Gita:</legend>
+                <h2>Sei sicuro di voler eliminare "{{ object.Titolo }}"</h2>
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-light mt-1 mb-1" type="submit">Yes, Delete</button>
-                <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'proposta-detail' object.id %}">Cancel</a>
+                <button style="margin-left: 15px" class="btn btn-outline-light mt-1 mb-1" type="submit">Si, Elimina</button>
+                <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'proposta-detail' object.id %}">Annulla</a>
             </div>
         </form>
     </div>
