@@ -21,7 +21,7 @@ class UserRegisterForm(UserCreationForm):
     ]
 
     caratteristiche = forms.ChoiceField(choices=CARATTERISTICHE_CHOICES, required=False)
-    tipi_allergie = forms.CharField(max_length=100, required=False, label='Tipi di Allergie')
+    dettagli = forms.CharField(max_length=100, required=False, label='Tipi di Allergie')
 
     class Meta:
         model = User
@@ -36,7 +36,10 @@ class UserRegisterForm(UserCreationForm):
             user.save()
             profile, created = Profile.objects.get_or_create(user=user)
             profile.caratteristiche = self.cleaned_data['caratteristiche']
-            profile.tipi_allergie = self.cleaned_data['tipi_allergie'] if self.cleaned_data['caratteristiche'] == 'allergico' else ''
+            if self.cleaned_data['caratteristiche'] in ['allergico', 'invalido']:
+                profile.dettagli = self.cleaned_data['dettagli']
+            else:
+                profile.dettagli = ''
             profile.save()
         return user
 
@@ -50,4 +53,4 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['image', 'caratteristiche', 'tipi_allergie']
+        fields = ['image', 'caratteristiche', 'dettagli']

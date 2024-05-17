@@ -33,12 +33,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const tipiAllergieDiv = document.getElementById('div_id_tipi_allergie');
 
     function toggleTipiAllergie() {
-        if (caratteristicheSelect.value === 'allergico') {
+        const selectedValue = caratteristicheSelect.value;
+        if (selectedValue === 'allergico' || selectedValue === 'invalido') {
             tipiAllergieDiv.style.display = 'block';
         } else {
             tipiAllergieDiv.style.display = 'none';
         }
     }
+
 
     caratteristicheSelect.addEventListener('change', toggleTipiAllergie);
 

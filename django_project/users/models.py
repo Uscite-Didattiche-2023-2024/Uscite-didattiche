@@ -18,15 +18,15 @@ class Profile(models.Model):
     
     # Usa il campo ChoiceField per le caratteristiche
     caratteristiche = models.CharField(max_length=100, choices=CARATTERISTICHE_CHOICES, blank=True, null=True) 
-    tipi_allergie = models.CharField(max_length=100, blank=True, null=True)  # Aggiungi questo campo
+    dettagli = models.CharField(max_length=100, blank=True, null=True)  # Aggiungi questo campo
 
     def __str__(self):
         return f'{self.user.username} Profile'
 
     def save(self, *args, **kwargs):
-        # Se la caratteristica è cambiata in qualcosa di diverso da 'allergico', ripulisce 'tipi_allergie'
-        if self.caratteristiche != 'allergico':
-            self.tipi_allergie = ''
+        # Se la caratteristica è cambiata in qualcosa di diverso da 'allergico', ripulisce 'dettagli'
+        if self.caratteristiche not in ['allergico', 'invalido']:
+            self.dettagli = ''
         super(Profile, self).save(*args, **kwargs)
         img = Image.open(self.image.path)
         if img.height > 300 or img.width > 300:
