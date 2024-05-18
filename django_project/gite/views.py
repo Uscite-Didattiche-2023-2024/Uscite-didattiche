@@ -246,17 +246,20 @@ class ProfiloDetailView(LoginRequiredMixin, DetailView):
 #CALENDAR NEEDED
 # CALENDAR  
 class CustomHTMLCalendar(HTMLCalendar):
+    def __init__(self, gite_per_giorno):
+        super().__init__()
+        self.gite_per_giorno = gite_per_giorno
+
     def formatday(self, day, weekday, year, month):
         if day == 0:
-            return '<td class="noday">&nbsp;</td>'  # day outside month
+            return '<td class="noday">&nbsp;</td>'  # giorno fuori dal mese
         else:
+            gite = self.gite_per_giorno.get(day, [])
+            gite_list = ''.join(f'<div>{gita.Proposta_Gita.Titolo}</div>' for gita in gite)
             day_link = f"/calendario?year={year}&month={month}&day={day}"
-            return f'<td class="{self.cssclasses[weekday]}"><a href="{day_link}">{day}</a></td>'
+            return f'<td class="{self.cssclasses[weekday]}"><a href="{day_link}">{day}</a>{gite_list}</td>'
 
     def formatmonth(self, year, month, withyear=True):
-        """
-        Return a formatted month as a table.
-        """
         v = []
         a = v.append
         a('<table border="0" cellpadding="0" cellspacing="0" class="month">')
@@ -273,9 +276,6 @@ class CustomHTMLCalendar(HTMLCalendar):
         return ''.join(v)
 
     def formatweek(self, theweek, year, month):
-        """
-        Return a complete week as a table row.
-        """
         s = ''.join(self.formatday(d, wd, year, month) for (d, wd) in theweek)
         return f'<tr>{s}</tr>'
 
@@ -297,9 +297,6 @@ class CalendarioView(LoginRequiredMixin, ListView):
         year = int(self.request.GET.get('year', datetime.now().year))
         month = int(self.request.GET.get('month', datetime.now().month))
 
-        # Creazione del calendario
-        cal = CustomHTMLCalendar().formatmonth(year, month)
-
         # Calcolo dei giorni con gite nel mese corrente
         gite_per_giorno = {}
         gite = Gita.objects.filter(Data_ritrovo__year=year, Data_ritrovo__month=month)
@@ -307,9 +304,8 @@ class CalendarioView(LoginRequiredMixin, ListView):
             giorno = gita.Data_ritrovo.day
             gite_per_giorno.setdefault(giorno, []).append(gita)
 
-        # Aggiungi un punto nei giorni con gite nel calendario
-        for giorno, gite in gite_per_giorno.items():
-            cal = cal.replace(f">{giorno}<", f">• {giorno}<")
+        # Creazione del calendario
+        cal = CustomHTMLCalendar(gite_per_giorno).formatmonth(year, month)
 
         current_date = datetime(year, month, 1)
         first_day_next_month = (current_date.replace(day=28) + timedelta(days=4)).replace(day=1)
