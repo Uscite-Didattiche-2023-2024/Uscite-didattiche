@@ -257,9 +257,21 @@ class GiteDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Passa l'intero oggetto Gite al contesto
-        context['gita'] = self.object
-        return context    
+        gita = self.object
+        allegato_tipo = None
+        
+        if gita.Allegato:
+            if gita.Allegato.url.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+                allegato_tipo = 'image'
+            elif gita.Allegato.url.lower().endswith('.pdf'):
+                allegato_tipo = 'pdf'
+            else:
+                allegato_tipo = 'other'
+
+        # Passa l'intero oggetto Gite e il tipo di allegato al contesto
+        context['gita'] = gita
+        context['allegato_tipo'] = allegato_tipo
+        return context
 
 class ProfiloDetailView(LoginRequiredMixin, DetailView):
     model = User 

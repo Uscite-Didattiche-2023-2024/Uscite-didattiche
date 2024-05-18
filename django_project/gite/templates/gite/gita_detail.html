@@ -12,7 +12,7 @@
   <div class="row">
     <div class="col-md-6" id="gita-detail">
       <h1 class="fw-bolder">{{ gita.Proposta_Gita.Titolo }}</h1>
-      <p><a href="{% url 'profilo-utente' user.id %}">Creatore: {{ gita.Proposta_Gita.Creatore }}</a></p>
+      <p><a href="{% url 'profilo-utente' pk=gita.Proposta_Gita.Creatore.pk %}">Creatore: {{ gita.Proposta_Gita.Creatore }}</a></p>
       <p>Descrizione: {{ gita.Proposta_Gita.Descrizione }}</p>
       <p>Posto: {{ gita.Proposta_Gita.Posto }}</p>
       <p>Data ritrovo: {{ gita.Data_ritrovo }}</p>
@@ -39,16 +39,23 @@
       <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'proposte' %}">Torna alla lista delle gite</a>
     </div>
     <div class="col-md-6 allegato text-center">
-      Allegato: <br>
       {% if gita.Allegato %}
+        Allegato <br>
+        {% if allegato_tipo == 'image' %}
           <a href="{{ gita.Allegato.url }}" target="_blank">
-              <img src="{{ gita.Allegato.url }}" alt="Allegato" class="img-fluid">
+            <img src="{{ gita.Allegato.url }}" alt="Allegato" class="img-fluid">
           </a>
-          <br>
-          <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" target="_blank">Ingrandisci</a>
+        {% elif allegato_tipo == 'pdf' %}
+          <a href="{{ gita.Allegato.url }}" target="_blank">
+            PDF
+            <embed src="{{ gita.Allegato.url }}" type="application/pdf" width="100%" height="400px" />
+          </a>
+        {% endif %}
+        <br>
+        <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" target="_blank">Ingrandisci</a>
+        <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" download>Scarica</a>
       {% endif %}
-  </div>
-  
+    </div>
   </div>
 </div>
 {% endblock %}
