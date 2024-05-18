@@ -12,10 +12,11 @@ from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic.base import View
 
+#CALENDAR NEEDED
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime, timedelta
-
+#END CALENDAR NEEDED
 
 from django.views.generic import (
     TemplateView,
@@ -242,6 +243,7 @@ class ProfiloDetailView(LoginRequiredMixin, DetailView):
         context['user'] = self.object 
         return context
     
+#CALENDAR NEEDED
 # CALENDAR  
 class CustomHTMLCalendar(HTMLCalendar):
     def formatday(self, day, weekday, year, month):
@@ -322,3 +324,4 @@ class CalendarioView(LoginRequiredMixin, ListView):
         context['next_month'] = next_month_link
 
         return context
+#END CALENDAR NEEDED
