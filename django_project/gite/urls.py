@@ -6,7 +6,6 @@ from .views import (
     Proposta_gitaDetailView,
     Proposta_gitaUpdateView,
     Proposta_gitaDeleteView,
-    CalendarioView,
     GitaCreateView,
     Conferma_proposta,
     Rifiuta_proposta,
@@ -15,6 +14,7 @@ from .views import (
     GitaUpdateView,
     GitaDeleteView,
     ProfiloDetailView,
+    CalendarioView,
 )
 from . import views
 

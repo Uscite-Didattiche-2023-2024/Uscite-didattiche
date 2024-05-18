@@ -12,6 +12,11 @@ from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic.base import View
 
+import calendar
+from calendar import HTMLCalendar
+from datetime import datetime, timedelta
+
+
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -21,26 +26,11 @@ from django.views.generic import (
     DeleteView,
 )
 
-from .forms import GitaForm, PropostaGitaForm
+from .forms import GitaForm
 from .models import Classe, Classe_gita, Gita, Proposta_Gita, Notifica
 
 class HomeView(TemplateView):
     template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
-
-
-class CalendarioView(LoginRequiredMixin, ListView):
-    model = Gita
-    template_name = 'gite/calendario.html'
-    context_object_name = 'Calendario'
-    paginate_by = 5
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.order_by('Data_ritrovo')
-
-        # Personalizza la query per includere il nome dell'autore
-        return queryset
-    
     
 class Proposta_gitaListView(LoginRequiredMixin, ListView):
     model = Proposta_Gita
@@ -57,16 +47,10 @@ class Proposta_gitaListView(LoginRequiredMixin, ListView):
         # Personalizza la query per includere il nome dell'autore
         return queryset
     
-class Proposta_gitaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
     model = Proposta_Gita
-    form_class = PropostaGitaForm
-    permission_required = 'gite.add_proposta_gita'
+    fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato']  
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.has_perm(self.permission_required):
-            raise PermissionDenied
-        return super().dispatch(request, *args, **kwargs)
-  
     def form_valid(self, form):
         form.instance.Creatore = self.request.user  
         messages.success(self.request, 'Gita creata con successo!')  # TOFIX
@@ -75,9 +59,6 @@ class Proposta_gitaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateVie
     def get_success_url(self):
         return reverse_lazy('proposte')
     
-    def test_func(self):
-        return self.request.user.has_perm(self.permission_required)
-
 class Proposta_gitaDetailView(LoginRequiredMixin, DetailView):
     model = Proposta_Gita
 
@@ -90,7 +71,7 @@ class Proposta_gitaDetailView(LoginRequiredMixin, DetailView):
 
 class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Proposta_Gita
-    form_class = PropostaGitaForm
+    fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato'] 
     success_url = reverse_lazy('proposte')
     permission_required = 'gite.change_proposta_gita'
 
@@ -113,9 +94,7 @@ class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
 
 class GitaCreateView(LoginRequiredMixin, CreateView):
     model = Gita
-    form_class = GitaForm
-    template_name = 'gite/gita_form.html'
-    success_url = reverse_lazy('gite')
+    fields = ['Stato', 'Data_ritrovo', 'Data_rientro', 'Luogo_ritrovo', 'Luogo_rientro', 'Proposta_Gita']
     permission_required = 'gite.add_gita'
 
     def dispatch(self, request, *args, **kwargs):
@@ -143,18 +122,16 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
             initial['Proposta_Gita'] = proposta_gita_id
         return initial
 
+    def get_success_url(self):
+        return reverse_lazy('gite')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['classi'] = Classe.objects.all()  # Aggiungi le classi al contesto
         
         return context
 
-class Conferma_proposta(LoginRequiredMixin, UserPassesTestMixin, View):
-
-    def test_func(self):
-        proposta = get_object_or_404(Proposta_Gita, pk=self.kwargs['pk'])
-        return self.request.user.has_perm('gite.change_proposta_gita', proposta)
-    
+class Conferma_proposta(LoginRequiredMixin, View):
     def get(self, request, pk):
         proposta = get_object_or_404(Proposta_Gita, pk=pk)
         proposta.Stato = 'CONFERMATA'
@@ -162,12 +139,7 @@ class Conferma_proposta(LoginRequiredMixin, UserPassesTestMixin, View):
         notifiche = Notifica.objects.all()  # Ottieni le notifiche
         return redirect(reverse('gita-create') + f'?proposta_gita_id={proposta.id}')
 
-class Rifiuta_proposta(LoginRequiredMixin, UserPassesTestMixin, View):
-    
-    def test_func(self):
-        proposta = get_object_or_404(Proposta_Gita, pk=self.kwargs['pk'])
-        return self.request.user.has_perm('gite.change_proposta_gita', proposta)
-    
+class Rifiuta_proposta(LoginRequiredMixin, View):
     def get(self, request, pk):
         proposta = get_object_or_404(Proposta_Gita, pk=pk)
         proposta.Stato = 'RIFIUTATA'
@@ -212,7 +184,7 @@ class GitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
     def test_func(self):
-        gita = self.get_object()
+        proposta = self.get_object()
         return self.request.user.has_perm('gite.change_gita')
     
     def handle_no_permission(self):
@@ -257,21 +229,9 @@ class GiteDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        gita = self.object
-        allegato_tipo = None
-        
-        if gita.Allegato:
-            if gita.Allegato.url.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
-                allegato_tipo = 'image'
-            elif gita.Allegato.url.lower().endswith('.pdf'):
-                allegato_tipo = 'pdf'
-            else:
-                allegato_tipo = 'other'
-
-        # Passa l'intero oggetto Gite e il tipo di allegato al contesto
-        context['gita'] = gita
-        context['allegato_tipo'] = allegato_tipo
-        return context
+        # Passa l'intero oggetto Gite al contesto
+        context['gita'] = self.object
+        return context    
 
 class ProfiloDetailView(LoginRequiredMixin, DetailView):
     model = User 
@@ -280,4 +240,85 @@ class ProfiloDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user'] = self.object 
+        return context
+    
+# CALENDAR  
+class CustomHTMLCalendar(HTMLCalendar):
+    def formatday(self, day, weekday, year, month):
+        if day == 0:
+            return '<td class="noday">&nbsp;</td>'  # day outside month
+        else:
+            day_link = f"/calendario?year={year}&month={month}&day={day}"
+            return f'<td class="{self.cssclasses[weekday]}"><a href="{day_link}">{day}</a></td>'
+
+    def formatmonth(self, year, month, withyear=True):
+        """
+        Return a formatted month as a table.
+        """
+        v = []
+        a = v.append
+        a('<table border="0" cellpadding="0" cellspacing="0" class="month">')
+        a('\n')
+        a(self.formatmonthname(year, month, withyear=withyear))
+        a('\n')
+        a(self.formatweekheader())
+        a('\n')
+        for week in self.monthdays2calendar(year, month):
+            a(self.formatweek(week, year, month))
+            a('\n')
+        a('</table>')
+        a('\n')
+        return ''.join(v)
+
+    def formatweek(self, theweek, year, month):
+        """
+        Return a complete week as a table row.
+        """
+        s = ''.join(self.formatday(d, wd, year, month) for (d, wd) in theweek)
+        return f'<tr>{s}</tr>'
+
+class CalendarioView(LoginRequiredMixin, ListView):
+    model = Gita
+    template_name = 'gite/calendario.html'
+    context_object_name = 'Calendario'
+    paginate_by = 5
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.order_by('Data_ritrovo')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Ottieni il mese e l'anno correnti
+        year = int(self.request.GET.get('year', datetime.now().year))
+        month = int(self.request.GET.get('month', datetime.now().month))
+
+        # Creazione del calendario
+        cal = CustomHTMLCalendar().formatmonth(year, month)
+
+        # Calcolo dei giorni con gite nel mese corrente
+        gite_per_giorno = {}
+        gite = Gita.objects.filter(Data_ritrovo__year=year, Data_ritrovo__month=month)
+        for gita in gite:
+            giorno = gita.Data_ritrovo.day
+            gite_per_giorno.setdefault(giorno, []).append(gita)
+
+        # Aggiungi un punto nei giorni con gite nel calendario
+        for giorno, gite in gite_per_giorno.items():
+            cal = cal.replace(f">{giorno}<", f">• {giorno}<")
+
+        current_date = datetime(year, month, 1)
+        first_day_next_month = (current_date.replace(day=28) + timedelta(days=4)).replace(day=1)
+        previous_month = current_date - timedelta(days=1)
+        next_month = first_day_next_month
+
+        previous_month_link = f"/calendario?year={previous_month.year}&month={previous_month.month}"
+        next_month_link = f"/calendario?year={next_month.year}&month={next_month.month}"
+
+        context['calendar'] = cal
+        context['previous_month'] = previous_month_link
+        context['next_month'] = next_month_link
+
         return context
