@@ -18,7 +18,12 @@
 
 
   <style>
-   
+    /* Nascondi la campanella su dispositivi mobili con larghezza inferiore a 500px */
+    @media (max-width: 300px) {
+      .custom-notification {
+        display: none;
+      }
+    }
   </style>
 
 
@@ -57,15 +62,10 @@
             Home
           </a>
         </li>
+        {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link fs-5" href="{% url 'gite' %}" aria-label="Content-page">
             Le tue gite
-          </a>
-        </li>
-        {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link fs-5" href="{% url 'gite-aboutUs' %}" aria-label="Register-page">
-            About us
           </a>
         </li>
         {% else %}
@@ -75,6 +75,13 @@
           </a>
         </li>
         {% endif %}
+        
+        <li class="nav-item">
+          <a class="nav-link fs-5" href="{% url 'gite-aboutUs' %}" aria-label="Register-page">
+            About us
+          </a>
+        </li>
+
         <div class="custom-notification">
           <div class="custom-notification-icon" onclick="toggleNotificationBox()">
               <i id="Bell" class="fas fa-bell"></i>
