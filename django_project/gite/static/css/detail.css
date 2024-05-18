@@ -23,6 +23,19 @@
   list-style-type: none;
 }
 
+/* CSS per posizionare l'allegato in basso */
+.allegato {
+  background-color: #2c2c2c;
+  padding: 20px;
+}
+
+.allegato img {
+  background-color: #2c2c2c;
+  max-width: 27%; /* Imposta la larghezza massima dell'immagine al 70% del contenitore */
+  margin: 10 auto; /* Centra l'immagine orizzontalmente */
+  margin-left: 10;
+}
+
 /* detail.css for proposta detail */
 
 #proposta-detail {
@@ -43,4 +56,3 @@
 #proposta-detail a.btn {
   margin-top: 10px;
 }
-

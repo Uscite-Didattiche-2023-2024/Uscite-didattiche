@@ -4,13 +4,28 @@
 
 <title>Uscite Didattiche - profile</title>
 
-<div class="container">
-  <h1>{{ user.username }}</h1>
-  <p>Nome: {{ user.first_name }}</p>
-  <p>Cognome: {{ user.last_name}}</p>
-  <p>Email: {{ user.email }}</p>
-  <p>Data creazione dell'account: {{ user.date_joined }}</p>
-  <p>Ultimo login: {{ user.last_login }} </p>
+<div class="media margini">
+  <img class="rounded-circle account-img" src="{{ user.profile.image.url }}" style="max-width: 100%; height: auto;">
+  <div class="media-body">
+    <h2 class="account-heading">{{ user.username }}</h2>
+    {% if user.first_name %}
+    <p class="text-secondary">Nome: {{ user.first_name }}</p>
+    {% endif %}
+    {% if user.last_name %}
+    <p class="text-secondary">Cognome: {{ user.last_name }}</p>
+    {% endif %}
+    {% if user.email %}
+    <p class="text-secondary">Email: {{ user.email }}</p>
+    {% endif %}
+    {% if user.profile.caratteristiche %}
+      <p class="text-secondary">Caratteristiche: {{ user.profile.caratteristiche }}</p>
+    {% endif %}
+    {% if user.profile.dettagli %}
+      <p class="text-secondary">Dettagli: {{ user.profile.dettagli }}</p>
+    {% endif %}
   
+    <p class="text-secondary">Data creazione dell'account: {{ user.date_joined }}</p>
+    <p class="text-secondary">Ultimo login: {{ user.last_login }} </p>
+  </div>
 </div>
 {% endblock %}
