@@ -27,7 +27,7 @@ from django.views.generic import (
     DeleteView,
 )
 
-from .forms import GitaForm
+from .forms import GitaForm, PropostaGitaForm
 from .models import Classe, Classe_gita, Gita, Proposta_Gita, Notifica
 
 class HomeView(TemplateView):
@@ -48,10 +48,16 @@ class Proposta_gitaListView(LoginRequiredMixin, ListView):
         # Personalizza la query per includere il nome dell'autore
         return queryset
     
-class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
+class Proposta_gitaCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Proposta_Gita
-    fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato']  
+    form_class = PropostaGitaForm
+    permission_required = 'gite.add_proposta_gita'
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm(self.permission_required):
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+  
     def form_valid(self, form):
         form.instance.Creatore = self.request.user  
         messages.success(self.request, 'Gita creata con successo!')  # TOFIX
@@ -60,6 +66,9 @@ class Proposta_gitaCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('proposte')
     
+    def test_func(self):
+        return self.request.user.has_perm(self.permission_required)
+
 class Proposta_gitaDetailView(LoginRequiredMixin, DetailView):
     model = Proposta_Gita
 
@@ -72,7 +81,7 @@ class Proposta_gitaDetailView(LoginRequiredMixin, DetailView):
 
 class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Proposta_Gita
-    fields = ['Titolo', 'Descrizione', 'Data', 'Posto', 'Costo', 'Stato'] 
+    form_class = PropostaGitaForm
     success_url = reverse_lazy('proposte')
     permission_required = 'gite.change_proposta_gita'
 
@@ -95,7 +104,9 @@ class Proposta_gitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
 
 class GitaCreateView(LoginRequiredMixin, CreateView):
     model = Gita
-    fields = ['Stato', 'Data_ritrovo', 'Data_rientro', 'Luogo_ritrovo', 'Luogo_rientro', 'Proposta_Gita']
+    form_class = GitaForm
+    template_name = 'gite/gita_form.html'
+    success_url = reverse_lazy('gite')
     permission_required = 'gite.add_gita'
 
     def dispatch(self, request, *args, **kwargs):
@@ -123,16 +134,18 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
             initial['Proposta_Gita'] = proposta_gita_id
         return initial
 
-    def get_success_url(self):
-        return reverse_lazy('gite')
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['classi'] = Classe.objects.all()  # Aggiungi le classi al contesto
         
         return context
 
-class Conferma_proposta(LoginRequiredMixin, View):
+class Conferma_proposta(LoginRequiredMixin, UserPassesTestMixin, View):
+
+    def test_func(self):
+        proposta = get_object_or_404(Proposta_Gita, pk=self.kwargs['pk'])
+        return self.request.user.has_perm('gite.change_proposta_gita', proposta)
+    
     def get(self, request, pk):
         proposta = get_object_or_404(Proposta_Gita, pk=pk)
         proposta.Stato = 'CONFERMATA'
@@ -140,7 +153,12 @@ class Conferma_proposta(LoginRequiredMixin, View):
         notifiche = Notifica.objects.all()  # Ottieni le notifiche
         return redirect(reverse('gita-create') + f'?proposta_gita_id={proposta.id}')
 
-class Rifiuta_proposta(LoginRequiredMixin, View):
+class Rifiuta_proposta(LoginRequiredMixin, UserPassesTestMixin, View):
+    
+    def test_func(self):
+        proposta = get_object_or_404(Proposta_Gita, pk=self.kwargs['pk'])
+        return self.request.user.has_perm('gite.change_proposta_gita', proposta)
+    
     def get(self, request, pk):
         proposta = get_object_or_404(Proposta_Gita, pk=pk)
         proposta.Stato = 'RIFIUTATA'
@@ -185,7 +203,7 @@ class GitaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
     def test_func(self):
-        proposta = self.get_object()
+        gita = self.get_object()
         return self.request.user.has_perm('gite.change_gita')
     
     def handle_no_permission(self):
@@ -230,9 +248,21 @@ class GiteDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Passa l'intero oggetto Gite al contesto
-        context['gita'] = self.object
-        return context    
+        gita = self.object
+        allegato_tipo = None
+        
+        if gita.Allegato:
+            if gita.Allegato.url.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+                allegato_tipo = 'image'
+            elif gita.Allegato.url.lower().endswith('.pdf'):
+                allegato_tipo = 'pdf'
+            else:
+                allegato_tipo = 'other'
+
+        # Passa l'intero oggetto Gite e il tipo di allegato al contesto
+        context['gita'] = gita
+        context['allegato_tipo'] = allegato_tipo
+        return context
 
 class ProfiloDetailView(LoginRequiredMixin, DetailView):
     model = User 
