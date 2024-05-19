@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.http import JsonResponse
 from datetime import datetime, timedelta
 from django.forms.models import model_to_dict
 from django.db.models import Q
@@ -273,7 +274,6 @@ class ProfiloDetailView(LoginRequiredMixin, DetailView):
         context['user'] = self.object 
         return context
     
-#CALENDAR NEEDED
 # CALENDAR  
 class CustomHTMLCalendar(HTMLCalendar):
     def __init__(self, gite_per_giorno):
@@ -282,12 +282,11 @@ class CustomHTMLCalendar(HTMLCalendar):
 
     def formatday(self, day, weekday, year, month):
         if day == 0:
-            return '<td class="noday">&nbsp;</td>'  # giorno fuori dal mese
+            return '<td class="noday">&nbsp;</td>'
         else:
             gite = self.gite_per_giorno.get(day, [])
-            gite_list = ''.join(f'<div>{gita.Proposta_Gita.Titolo}</div>' for gita in gite)
-            day_link = f"/calendario?year={year}&month={month}&day={day}"
-            return f'<td class="{self.cssclasses[weekday]}"><a href="{day_link}">{day}</a>{gite_list}</td>'
+            gite_list = ''.join(f'<div><a href="javascript:void(0);" onclick="loadEventDetails({gita.id})">{gita.Proposta_Gita.Titolo}</a></div>' for gita in gite)
+            return f'<td class="{self.cssclasses[weekday]}">{day}{gite_list}</td>'
 
     def formatmonth(self, year, month, withyear=True):
         v = []
@@ -308,6 +307,16 @@ class CustomHTMLCalendar(HTMLCalendar):
     def formatweek(self, theweek, year, month):
         s = ''.join(self.formatday(d, wd, year, month) for (d, wd) in theweek)
         return f'<tr>{s}</tr>'
+
+
+def gita_details(request, gita_id):
+    gita = get_object_or_404(Gita, id=gita_id)
+    data = {
+        'titolo': gita.Proposta_Gita.Titolo,
+        'data_ritrovo': gita.Data_ritrovo.strftime('%Y-%m-%d %H:%M'),
+        'descrizione': gita.Proposta_Gita.Descrizione
+    }
+    return JsonResponse(data)
 
 class CalendarioView(LoginRequiredMixin, ListView):
     model = Gita
@@ -350,4 +359,3 @@ class CalendarioView(LoginRequiredMixin, ListView):
         context['next_month'] = next_month_link
 
         return context
-#END CALENDAR NEEDED

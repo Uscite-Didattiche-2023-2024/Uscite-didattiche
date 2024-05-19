@@ -38,6 +38,7 @@ urlpatterns = [
     path('gita/new/', GitaCreateView.as_view(), name='gita-create'),
     path('gite/', GiteListView.as_view(), name='gite'),
     path('gite/<int:pk>/', GiteDetailView.as_view(), name='gite-detail'),
+    path('gita/details/<int:gita_id>/', views.gita_details, name='gita-details'),
     path('gita/<int:pk>/update/', GitaUpdateView.as_view(), name='gita-update'),
     path('gita/<int:pk>/delete/', GitaDeleteView.as_view(), name='gita-delete'),
     
