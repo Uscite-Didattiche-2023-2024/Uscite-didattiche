@@ -8,6 +8,7 @@ from .models import Classe_gita
 from .models import Classe
 from .models import Presenti_prenotati
 from .models import Notifica
+from .models import User_classe
 
 
 
@@ -21,5 +22,6 @@ admin.site.register(Classe_gita)
 admin.site.register(Classe)
 admin.site.register(Presenti_prenotati)
 admin.site.register(Notifica)
+admin.site.register(User_classe)
 
 

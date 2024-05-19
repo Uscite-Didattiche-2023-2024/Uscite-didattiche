@@ -152,3 +152,13 @@ class Notifica(models.Model):
 
     class Meta:
         verbose_name_plural = 'Notifica'
+
+class User_classe(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    classe = models.ForeignKey('Classe', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} - {}".format(self.user.username, self.classe)
+
+    class Meta:
+        verbose_name_plural = 'User_classe'
