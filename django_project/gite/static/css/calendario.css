@@ -4,7 +4,8 @@
     height: 100%;
     margin-left: 70px;
 }
-th.month{
+
+th.month {
     font-size: 50px;
 }
 
@@ -13,17 +14,17 @@ th.month{
 }
 
 table.month {
-    width:90%;
+    width: 90%;
     height: auto;
     table-layout: fixed;
     border-collapse: collapse;
 }
 
-table.month tr{
+table.month tr {
     height: 80px;
 }
 
-table.month td{
+table.month td {
     cursor: pointer;
 }
 
@@ -65,6 +66,83 @@ table.month td a {
     text-decoration: underline;
 }
 
-table.month td.noday{
+table.month td.noday {
     cursor: not-allowed;
+}
+
+/* Media Queries per dispositivi mobili */
+@media (max-width: 768px) {
+    #content-main {
+        flex-direction: column;
+        margin-left: 0;
+    }
+
+    #calendarDiv, #eventDiv {
+        width: 100%;
+    }
+
+    th.month {
+        font-size: 30px;
+    }
+
+    .object-tools {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .object-tools li {
+        margin-bottom: 10px;
+    }
+
+    table.month tr {
+        height: auto;
+    }
+
+    table.month th, table.month td {
+        padding: 5px;
+    }
+
+    table.month {
+        width: 100%;
+    }
+
+    table.month td a {
+        font-size: 12px; /* Imposta una dimensione del font più piccola per dispositivi mobili */
+    }
+}
+
+@media (max-width: 1100px) {
+    table.month td a {
+        font-size: 12px; /* Imposta una dimensione del font più piccola per dispositivi mobili */
+    }
+}
+
+@media (max-width: 850px) {
+    table.month td a {
+        font-size: 10px; /* Imposta una dimensione del font più piccola per dispositivi mobili */
+    }
+}
+@media (max-width: 768px) {
+    table.month td a {
+        font-size: 14px; /* Imposta una dimensione del font più piccola per dispositivi mobili */
+    }
+}
+
+@media (max-width: 550px) {
+    table.month td a {
+        font-size: 12px; /* Imposta una dimensione del font più piccola per dispositivi mobili */
+    }
+}
+
+@media (max-width: 450px) {
+    table.month td a {
+        font-size: 10px; /* Imposta una dimensione del font più piccola per dispositivi mobili */
+    }
+}
+
+@media (max-width: 385px) {
+    table.month td a {
+        font-size: 7px; /* Imposta una dimensione del font più piccola per dispositivi mobili */
+    }
 }
