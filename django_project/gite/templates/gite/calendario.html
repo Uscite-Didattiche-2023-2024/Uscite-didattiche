@@ -30,8 +30,12 @@
         .then(data => {
             console.log("Data received: ", data); // Log i dati ricevuti
             const details = `<strong>Titolo:</strong> ${data.titolo}<br>
-                             <strong>Data:</strong> ${data.data_ritrovo}<br>
-                             <strong>Descrizione:</strong> ${data.descrizione}`;
+                             <strong>Data ritrovo:</strong> ${data.data_ritrovo}<br>
+                             <strong>Descrizione:</strong> ${data.descrizione}<br>
+                             <strong>Posto:</strong> ${data.posto}<br>
+                             <strong>Costo:</strong> ${data.costo}<br>
+                             <strong>Stato:</strong> ${data.stato}`
+                             
             document.getElementById('eventDetails').innerHTML = details;
         })
         .catch(error => {
