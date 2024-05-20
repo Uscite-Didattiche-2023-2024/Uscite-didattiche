@@ -19,7 +19,6 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/calendario.css' %}">
   <!--END CALENDAR NEEDED -->
 
-
   <style>
     /* Nascondi la campanella su dispositivi mobili con larghezza inferiore a 500px */
     @media (max-width: 440px) {
@@ -30,7 +29,6 @@
     }
   </style>
 
-
 </head>
 
 <body class="bg-black text-white mt-0" data-bs-spy="scroll" data-bs-target="#navScroll">
@@ -40,7 +38,6 @@
       <!-- SIDEBAR-->
       <script src="{% static 'js/Bell.js'%}"></script>
       <script src="{% static 'js/Sidebar.js'%}"></script>
-
 
       <div class="custom-container">
         <button class="custom-toggle-btn custom-serifbianco" onclick="toggleMenu()">☰</button>
@@ -86,22 +83,23 @@
           </a>
         </li>
       </ul>
-        <div class="custom-notification">
-          <div class="custom-notification-icon" onclick="toggleNotificationBox()">
-              <i id="Bell" class="fas fa-bell"></i>
-              <i class="custom-notification-number">{{ notifiche.count }}</i>
-          </div>          
-          <script>if('{{ notifiche.count }}'!=0){startshakebell();}</script>
-          <div class="custom-notification-box" id="Box" style="display: none;">
-              {% for notifica in notifiche %}
-                  <div class="custom-notification-box-item">
-                      <h3>{{ notifica.Titolo }}</h3>
-                      <p>Gita: {{ notifica.Gita }}</p>
-                      <p>Proposta Gita: {{ notifica.Proposta_Gita }}</p>
-                      <p>Classe: {{ notifica.Classe }}</p>
-                  </div>
-              {% endfor %}
-          </div>
+      <div class="custom-notification">
+        <div class="custom-notification-icon" onclick="toggleNotificationBox()">
+            <i id="Bell" class="fas fa-bell"></i>
+            <i class="custom-notification-number">{{ notifiche.count }}</i>
+        </div>          
+        <script>if('{{ notifiche.count }}' != '0'){startshakebell();}</script>
+        <div class="custom-notification-box" id="Box" style="display: none;">
+            {% for notifica in notifiche %}
+            <div class="custom-notification-box-item">
+              <a href="{% url 'gite-detail' notifica.Gita.id %}"><h4>{{ notifica.Titolo }}</h4></a>
+                <p>{{ notifica.Descrizione }}</p>
+                <p>Gita: {{ notifica.Gita.Proposta_Gita.Titolo }}</p>
+                <p>Proposta Gita: {{ notifica.Proposta_Gita.Titolo }}</p>
+                <p>Classi: {{ notifica.Classe.all|join:", " }}</p>
+            </div>
+            {% endfor %}
+        </div>
       </div>
       
       <script>
@@ -147,7 +145,6 @@
       console.log(scrollpos)
     })
   </script>
-
 
 </body>
 

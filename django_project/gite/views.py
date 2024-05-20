@@ -38,13 +38,19 @@ class HomeView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        # Ottieni la classe e il gruppo dell'utente
+        # Ottieni la classe e i gruppi dell'utente
         user_classe = User_classe.objects.filter(user=user).first()
-        gruppo = user.groups.first()
-        if user_classe and gruppo:
-            notifiche = Notifica.objects.filter(Gruppo=gruppo, Classe=user_classe.classe)
+        gruppi_utente = user.groups.all()
+        
+        # Filtra le notifiche basandosi sulla classe e sui gruppi dell'utente
+        if user_classe:
+            notifiche = Notifica.objects.filter(
+                Classe=user_classe.classe,
+                groups__in=gruppi_utente
+            ).distinct()
         else:
             notifiche = Notifica.objects.none()
+        
         context['notifiche'] = notifiche
         return context
 
