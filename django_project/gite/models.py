@@ -141,9 +141,8 @@ class Notifica(models.Model):
     Descrizione = models.CharField(max_length=300, default='')
     Gita = models.ForeignKey('Gita', on_delete=models.CASCADE, default='')
     Proposta_Gita = models.ForeignKey('Proposta_Gita', on_delete=models.CASCADE, default='')
-    Classe = models.ForeignKey('Classe', on_delete=models.CASCADE, default='')
-    Documenti = models.ForeignKey('Documenti', on_delete=models.CASCADE, default='')
-
+    Classe = models.ManyToManyField('Classe', related_name="notifica")
+    Documenti = models.ForeignKey('Documenti', on_delete=models.CASCADE, default='', blank=True, null=True)
 
     groups = models.ManyToManyField(Group, related_name="notifica")
 
