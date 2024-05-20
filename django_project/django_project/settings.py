@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'gite.middleware.AddNotificationContextMiddleware',
+    'gite.middleware.Custom403Middleware',  # Aggiungi il middleware personalizzato per 403
 ]
 
 ROOT_URLCONF = 'django_project.urls'

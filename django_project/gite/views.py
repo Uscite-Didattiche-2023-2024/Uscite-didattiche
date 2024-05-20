@@ -31,6 +31,7 @@ from django.views.generic import (
 from .forms import GitaForm, PropostaGitaForm
 from .models import Classe, Classe_gita, Gita, Proposta_Gita, Notifica
 
+
 class HomeView(TemplateView):
     template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
     
