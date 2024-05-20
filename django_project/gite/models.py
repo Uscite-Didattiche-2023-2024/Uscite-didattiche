@@ -26,7 +26,7 @@ class Classe(models.Model):
         return "{}{}".format(self.anno, self.sezione)
         
     class Meta:
-        verbose_name_plural = 'Classe'
+        verbose_name_plural = 'Classi'
 
 class Gita(models.Model):
     STATO_CHOICES = (

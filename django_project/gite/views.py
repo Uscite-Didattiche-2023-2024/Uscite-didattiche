@@ -1,10 +1,11 @@
+from urllib import request
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
 from django.utils import timezone
 from django.http import JsonResponse
 from datetime import datetime, timedelta
@@ -31,8 +32,22 @@ from django.views.generic import (
 from .forms import GitaForm, PropostaGitaForm
 from .models import Classe, Classe_gita, Gita, Proposta_Gita, Notifica, User_classe
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        # Ottieni la classe e il gruppo dell'utente
+        user_classe = User_classe.objects.filter(user=user).first()
+        gruppo = user.groups.first()
+        if user_classe and gruppo:
+            notifiche = Notifica.objects.filter(Gruppo=gruppo, Classe=user_classe.classe)
+        else:
+            notifiche = Notifica.objects.none()
+        context['notifiche'] = notifiche
+        return context
+
     
 class Proposta_gitaListView(LoginRequiredMixin, ListView):
     model = Proposta_Gita
@@ -121,24 +136,45 @@ class GitaCreateView(LoginRequiredMixin, CreateView):
         self.object = form.save()
         # Ottieni le classi selezionate dalla form
         classi_selezionate = self.request.POST.getlist('classi')
+        
         # Crea le entità classe_gita per ciascuna classe selezionata
         for classe_id in classi_selezionate:
             classe_gita = Classe_gita.objects.create(Gita=self.object, Classe_id=classe_id)
             classe_gita.save()
+        
+        # Crea una sola notifica per tutte le classi
+        notifica = Notifica.objects.create(
+            Titolo=f'Nuova gita: {self.object.Proposta_Gita.Titolo}',
+            Descrizione=f'È stata creata una nuova gita che coinvolge le classi selezionate.',
+            Gita=self.object,
+            Proposta_Gita=self.object.Proposta_Gita,
+        )
+        
+        # Aggiungi tutte le classi alla notifica
+        for classe_id in classi_selezionate:
+            classe = Classe.objects.get(id=classe_id)
+            notifica.Classe.add(classe)
+        
+        # Aggiungi i gruppi alla notifica
+        gruppi = Group.objects.filter(name__in=["Studente minorenne", "Studente maggiorenne", "Genitore"])
+        for gruppo in gruppi:
+            notifica.groups.add(gruppo)
+
+        notifica.save()
+        
         messages.success(self.request, 'Gita creata con successo!')
         return super().form_valid(form)
 
     def get_initial(self):
         initial = super().get_initial()
         proposta_gita_id = self.request.GET.get('proposta_gita_id')
-        if proposta_gita_id:
+        if (proposta_gita_id):
             initial['Proposta_Gita'] = proposta_gita_id
         return initial
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['classi'] = Classe.objects.all()  # Aggiungi le classi al contesto
-        
         return context
 
 class Conferma_proposta(LoginRequiredMixin, UserPassesTestMixin, View):
