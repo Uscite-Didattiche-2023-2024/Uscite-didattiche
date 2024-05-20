@@ -52,10 +52,23 @@ class HomeView(LoginRequiredMixin, TemplateView):
         else:
             notifiche = Notifica.objects.none()
         
+        # Conta le notifiche non lette per l'utente corrente
+        notifiche_non_lette = notifiche.exclude(utenti_letto=user).count()
+        
         context['notifiche'] = notifiche
+        context['notifiche_non_lette'] = notifiche_non_lette
         return context
 
-    
+@login_required
+def index(request):
+    notifiche_non_lette = Notifica.objects.exclude(utenti_letto=request.user).count()
+    notifiche = Notifica.objects.all()  # O qualsiasi filtro che usi per le notifiche
+
+    context = {
+        'notifiche_non_lette': notifiche_non_lette,
+        'notifiche': notifiche,
+    }
+    return render(request, 'index.html', context)
 class Proposta_gitaListView(LoginRequiredMixin, ListView):
     model = Proposta_Gita
     template_name = 'gite/proposte_list.html'  # <app>/<model>_<viewtype>.html
@@ -324,7 +337,11 @@ class GiteDetailView(LoginRequiredMixin, DetailView):
 def segna_come_letto(request, notifica_id):
     notifica = Notifica.objects.get(id=notifica_id)
     notifica.utenti_letto.add(request.user)
-    return redirect(request.GET.get('next', reverse('homepage')))
+
+    # Conta le notifiche non lette per l'utente corrente
+    notifiche_non_lette = Notifica.objects.exclude(utenti_letto=request.user).count()
+
+    return JsonResponse({'success': True, 'unread_count': notifiche_non_lette})
 
 class ProfiloDetailView(LoginRequiredMixin, DetailView):
     model = User 

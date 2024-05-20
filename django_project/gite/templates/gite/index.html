@@ -1,3 +1,4 @@
+<!-- index.html -->
 {% load static %}
 {% load crispy_forms_tags %}
 
@@ -5,8 +6,7 @@
 <link rel="shortcut icon" type="image/svg" href="{% static 'img/svg/logomg.svg' %}" >
 
 <!doctype html>
-<html style="margin-left: 3%; margin-right: 3%;" class="h-100" lang="en">
-
+<html style="margin-left: 3%; margin-right: 3%;" class="h-100" lang="it">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
@@ -86,36 +86,58 @@
       <div class="custom-notification">
         <div class="custom-notification-icon" onclick="toggleNotificationBox()">
             <i id="Bell" class="fas fa-bell"></i>
-            <i class="custom-notification-number">{{ notifiche.count }}</i>
+            <i class="custom-notification-number">{{ notifiche_non_lette }}</i>
         </div>
-        <script>if('{{ notifiche.count }}' != '0'){startshakebell();}</script>
+        <script>
+          if('{{ notifiche_non_lette }}' != '0'){ startshakebell(); }
+        </script>
         <div class="custom-notification-box" id="Box" style="display: none;">
             {% for notifica in notifiche %}
             {% if request.user not in notifica.utenti_letto.all %}
-            <div class="custom-notification-box-item">
+            <div class="custom-notification-box-item" data-id="{{ notifica.id }}">
               <a href="{% url 'gite-detail' notifica.Gita.id %}"><h4>{{ notifica.Titolo }}</h4></a>
                 <p>{{ notifica.Descrizione }}</p>
                 <p>Gita: {{ notifica.Gita.Proposta_Gita.Titolo }}</p>
                 <p>Proposta Gita: {{ notifica.Proposta_Gita.Titolo }}</p>
                 <p>Classi: {{ notifica.Classe.all|join:", " }}</p>
-                <a href="{% url 'segna_come_letto' notifica.id %}?next={{ request.path }}" class="btn btn-primary">Segna come Letta</a>
+                <a href="#" onclick="segnaComeLetta('{{ notifica.id }}')" class="btn btn-primary">Segna come Letta</a>
             </div>
             {% endif %}
             {% endfor %}
         </div>
-      </div>
+      </div>  
+    
+     <script>
+    function toggleNotificationBox() {
+        var box = document.getElementById("Box");
+        if (box.style.display === "none") {
+            box.style.display = "block";
+        } else {
+            box.style.display = "none";
+        }
+    }
 
-      <script>
-          function toggleNotificationBox() {
-              var box = document.getElementById("Box");
-              if (box.style.display === "none") {
-                  box.style.display = "block";
-              } else {
-                  box.style.display = "none";
-              }
-          }
-      </script>
-      
+    function segnaComeLetta(notificaId) {
+        const url = "{% url 'segna_come_letto' 1 %}".replace('1', notificaId);
+        fetch(`${url}?next={{ request.path }}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const notificaItem = document.querySelector(`.custom-notification-box-item[data-id="${notificaId}"]`);
+                notificaItem.style.display = 'none';
+
+                const notificationNumber = document.querySelector('.custom-notification-number');
+                notificationNumber.textContent = data.unread_count;
+            }
+        });
+    }
+  </script>
+    
     </div>
   </nav>
   <main>
