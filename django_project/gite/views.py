@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.http import JsonResponse
 from datetime import datetime, timedelta
@@ -318,6 +319,12 @@ class GiteDetailView(LoginRequiredMixin, DetailView):
         context['gita'] = gita
         context['allegato_tipo'] = allegato_tipo
         return context
+
+@login_required
+def segna_come_letto(request, notifica_id):
+    notifica = Notifica.objects.get(id=notifica_id)
+    notifica.utenti_letto.add(request.user)
+    return redirect(request.GET.get('next', reverse('homepage')))
 
 class ProfiloDetailView(LoginRequiredMixin, DetailView):
     model = User 

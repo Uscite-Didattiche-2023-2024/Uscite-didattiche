@@ -87,21 +87,24 @@
         <div class="custom-notification-icon" onclick="toggleNotificationBox()">
             <i id="Bell" class="fas fa-bell"></i>
             <i class="custom-notification-number">{{ notifiche.count }}</i>
-        </div>          
+        </div>
         <script>if('{{ notifiche.count }}' != '0'){startshakebell();}</script>
         <div class="custom-notification-box" id="Box" style="display: none;">
             {% for notifica in notifiche %}
+            {% if request.user not in notifica.utenti_letto.all %}
             <div class="custom-notification-box-item">
               <a href="{% url 'gite-detail' notifica.Gita.id %}"><h4>{{ notifica.Titolo }}</h4></a>
                 <p>{{ notifica.Descrizione }}</p>
                 <p>Gita: {{ notifica.Gita.Proposta_Gita.Titolo }}</p>
                 <p>Proposta Gita: {{ notifica.Proposta_Gita.Titolo }}</p>
                 <p>Classi: {{ notifica.Classe.all|join:", " }}</p>
+                <a href="{% url 'segna_come_letto' notifica.id %}?next={{ request.path }}" class="btn btn-primary">Segna come Letta</a>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
       </div>
-      
+
       <script>
           function toggleNotificationBox() {
               var box = document.getElementById("Box");
