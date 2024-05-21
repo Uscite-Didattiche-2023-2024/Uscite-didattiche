@@ -1,402 +1,304 @@
-{% extends "gite/index.html" %}
+{% extends 'gite/index.html' %}
 {% load static %}
 
 {% block content %}
-<!doctype html>
-<html class="h-100" lang="en">
+  <!DOCTYPE html>
+  <html class="h-100" lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+      <meta name="description" content="A well made and handcrafted Bootstrap 5 template" />
+      <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
+      <meta name="author" content="Holger Koenemann" />
+      <meta name="generator" content="Eleventy v2.0.0" />
+      <meta name="HandheldFriendly" content="true" />
+      <title>Uscite Didattiche - About US</title>
+      <link rel="stylesheet" href="css/theme.min.css" />
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <meta name="description" content="A well made and handcrafted Bootstrap 5 template">
-    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
-    <meta name="author" content="Holger Koenemann">
-    <meta name="generator" content="Eleventy v2.0.0">
-    <meta name="HandheldFriendly" content="true">
-    <title>Uscite Didattiche - About US</title>
-    <link rel="stylesheet" href="css/theme.min.css">
-
-    <style>
+      <style>
         /* inter-300 - latin */
         @font-face {
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 300;
-            font-display: swap;
-            src: local(''),
-                url('fonts/inter-v12-latin-300.woff2') format('woff2'),
-                /* Chrome 26+, Opera 23+, Firefox 39+ */
-                url('fonts/inter-v12-latin-300.woff') format('woff');
-            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+          font-family: 'Inter';
+          font-style: normal;
+          font-weight: 300;
+          font-display: swap;
+          src: local(''), url('fonts/inter-v12-latin-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('fonts/inter-v12-latin-300.woff') format('woff');
+          /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
         }
-
+        
         /* inter-400 - latin */
         @font-face {
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 400;
-            font-display: swap;
-            src: local(''),
-                url('fonts/inter-v12-latin-regular.woff2') format('woff2'),
-                /* Chrome 26+, Opera 23+, Firefox 39+ */
-                url('fonts/inter-v12-latin-regular.woff') format('woff');
-            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+          font-family: 'Inter';
+          font-style: normal;
+          font-weight: 400;
+          font-display: swap;
+          src: local(''), url('fonts/inter-v12-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('fonts/inter-v12-latin-regular.woff') format('woff');
+          /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
         }
-
+        
         @font-face {
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 500;
-            font-display: swap;
-            src: local(''),
-                url('fonts/inter-v12-latin-500.woff2') format('woff2'),
-                /* Chrome 26+, Opera 23+, Firefox 39+ */
-                url('fonts/inter-v12-latin-500.woff') format('woff');
-            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+          font-family: 'Inter';
+          font-style: normal;
+          font-weight: 500;
+          font-display: swap;
+          src: local(''), url('fonts/inter-v12-latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('fonts/inter-v12-latin-500.woff') format('woff');
+          /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
         }
-
+        
         @font-face {
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 700;
-            font-display: swap;
-            src: local(''),
-                url('fonts/inter-v12-latin-700.woff2') format('woff2'),
-                /* Chrome 26+, Opera 23+, Firefox 39+ */
-                url('fonts/inter-v12-latin-700.woff') format('woff');
-            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+          font-family: 'Inter';
+          font-style: normal;
+          font-weight: 700;
+          font-display: swap;
+          src: local(''), url('fonts/inter-v12-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('fonts/inter-v12-latin-700.woff') format('woff');
+          /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
         }
-    </style>
+      </style>
+    </head>
 
-
-</head>
-
-<body class="bg-black text-white mt-0" data-bs-spy="scroll" data-bs-target="#navScroll">
-
-
-
-
-
-
-
-
-
-
-    <div class="container-fluid px-vw-5 position-relative" data-aos="fade">
+    <body class="bg-black text-white mt-0" data-bs-spy="scroll" data-bs-target="#navScroll">
+      <div class="container-fluid px-vw-5 position-relative" data-aos="fade">
         <div class="position-absolute w-100 h-50 bg-black top-0 start-0"></div>
         <div class="position-relative py-vh-5 bg-cover bg-center rounded-5">
-            <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
-                <div class="row">
-
-                    <!-- Primo blocco -->
-                    <div class="col-6">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0"
-                                data-aos="zoom-in-up">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-12">
-                                        <img src="{% static 'img/aboutUs/Andres.jpeg'%}" width="684" height="457"
-                                            alt="our CEO with some nice numbers" class="img-fluid rounded-5"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
-                                        <p class="lead border-bottom pb-4 border-secondary">"Ragazzi ho fatto un commit"
-                                        </p>
-                                        <p class="text-secondary text-center">Andres Turmolini, Front-end</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+          <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
+            <div class="row">
+              <!-- Primo blocco -->
+              <div class="col-6">
+                <div class="d-flex justify-content-center">
+                  <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0" data-aos="zoom-in-up">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-12">
+                        <img src="{% static 'img/aboutUs/Andres.jpeg' %}" width="684" height="457" alt="our CEO with some nice numbers" class="img-fluid rounded-5" loading="lazy" />
+                      </div>
+                      <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
+                        <p class="lead border-bottom pb-4 border-secondary">"Ragazzi ho fatto un commit"</p>
+                        <p class="text-secondary text-center">Andres Turmolini, Front-end</p>
+                      </div>
                     </div>
-
-                    <!-- Secondo blocco -->
-                    <div class="col-6">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0"
-                                data-aos="zoom-in-up">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-12">
-                                        <img src="{% static 'img/aboutUs/Greg.jpeg'%}" width="684" height="457"
-                                            alt="our CEO with some nice numbers" class="img-fluid rounded-5"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
-                                        <p class="lead border-bottom pb-4 border-secondary">"Qui bisogna brasare tutto"
-                                        </p>
-                                        <p class="text-secondary text-center">Gregory Cossa, Back-end</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                  </div>
                 </div>
+              </div>
+
+              <!-- Secondo blocco -->
+              <div class="col-6">
+                <div class="d-flex justify-content-center">
+                  <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0" data-aos="zoom-in-up">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-12">
+                        <img src="{% static 'img/aboutUs/Greg.jpeg' %}" width="684" height="457" alt="our CEO with some nice numbers" class="img-fluid rounded-5" loading="lazy" />
+                      </div>
+                      <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
+                        <p class="lead border-bottom pb-4 border-secondary">"Qui bisogna brasare tutto"</p>
+                        <p class="text-secondary text-center">Gregory Cossa, Back-end</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-
-
-
-    <div class="container-fluid px-vw-5 position-relative" data-aos="fade">
+      <div class="container-fluid px-vw-5 position-relative" data-aos="fade">
         <div class="position-absolute w-100 h-50 bg-black top-0 start-0"></div>
         <div class="position-relative py-vh-5 bg-cover bg-center rounded-5">
-            <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
-                <div class="row">
-
-                    <!-- Primo blocco -->
-                    <div class="col-6">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0"
-                                data-aos="zoom-in-up">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-12">
-                                        <img src="{% static 'img/aboutUs/Chri.jpeg'%}" width="684" height="457"
-                                            alt="our CEO with some nice numbers" class="img-fluid rounded-5"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
-                                        <p class="lead border-bottom pb-4 border-secondary">1:48 Scrivo ad Anze dopo
-                                            aver finito il DB, "Ho gli occhi gonfi"</p>
-                                        <p class="text-secondary text-center">Christian Bertini, Back-end</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+          <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
+            <div class="row">
+              <!-- Primo blocco -->
+              <div class="col-6">
+                <div class="d-flex justify-content-center">
+                  <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0" data-aos="zoom-in-up">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-12">
+                        <img src="{% static 'img/aboutUs/Chri.jpeg' %}" width="684" height="457" alt="our CEO with some nice numbers" class="img-fluid rounded-5" loading="lazy" />
+                      </div>
+                      <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
+                        <p class="lead border-bottom pb-4 border-secondary">1:48 Scrivo ad Anze dopo aver finito il DB, "Ho gli occhi gonfi"</p>
+                        <p class="text-secondary text-center">Christian Bertini, Back-end</p>
+                      </div>
                     </div>
-
-                    <!-- Secondo blocco -->
-                    <div class="col-6">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0"
-                                data-aos="zoom-in-up">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-12">
-                                        <img src="{% static 'img/aboutUs/Red.jpeg'%}" width="684" height="457"
-                                            alt="our CEO with some nice numbers" class="img-fluid rounded-5"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
-                                        <p class="lead border-bottom pb-4 border-secondary">"Mannaggia alla campanella"
-                                        </p>
-                                        <p class="text-secondary text-center">Simone Rossi, Front-end</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                  </div>
                 </div>
+              </div>
+
+              <!-- Secondo blocco -->
+              <div class="col-6">
+                <div class="d-flex justify-content-center">
+                  <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0" data-aos="zoom-in-up">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-12">
+                        <img src="{% static 'img/aboutUs/Red.jpeg' %}" width="684" height="457" alt="our CEO with some nice numbers" class="img-fluid rounded-5" loading="lazy" />
+                      </div>
+                      <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
+                        <p class="lead border-bottom pb-4 border-secondary">"Mannaggia alla campanella"</p>
+                        <p class="text-secondary text-center">Simone Rossi, Front-end</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-
-
-
-
-    <div class="container-fluid px-vw-5 position-relative" data-aos="fade">
+      <div class="container-fluid px-vw-5 position-relative" data-aos="fade">
         <div class="position-absolute w-100 h-50 bg-black top-0 start-0"></div>
         <div class="position-relative py-vh-5 bg-cover bg-center rounded-5">
-            <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
-                <div class="row">
-
-                    <!-- Primo blocco -->
-                    <div class="col-6">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0"
-                                data-aos="zoom-in-up">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-12">
-                                        <img src="{% static 'img/aboutUs/Passe.jpeg'%}" width="684" height="457"
-                                            alt="our CEO with some nice numbers" class="img-fluid rounded-5"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
-                                        <p class="lead border-bottom pb-4 border-secondary">“Backend = se c’è un
-                                            problema, hai dimenticato di migrare”</p>
-                                        <p class="text-secondary text-center">Samuele Passerini, Back-end</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+          <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
+            <div class="row">
+              <!-- Primo blocco -->
+              <div class="col-6">
+                <div class="d-flex justify-content-center">
+                  <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0" data-aos="zoom-in-up">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-12">
+                        <img src="{% static 'img/aboutUs/Passe.jpeg' %}" width="684" height="457" alt="our CEO with some nice numbers" class="img-fluid rounded-5" loading="lazy" />
+                      </div>
+                      <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
+                        <p class="lead border-bottom pb-4 border-secondary">“Backend = se c’è un problema, hai dimenticato di migrare”</p>
+                        <p class="text-secondary text-center">Samuele Passerini, Back-end</p>
+                      </div>
                     </div>
-
-                    <!-- Secondo blocco -->
-                    <div class="col-6">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0"
-                                data-aos="zoom-in-up">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-12">
-                                        <img src="{% static 'img/aboutUs/Dylan.jpeg'%}" width="684" height="457"
-                                            alt="our CEO with some nice numbers" class="img-fluid rounded-5"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
-                                        <p class="lead border-bottom pb-4 border-secondary">“monte? che hai combinato?”
-                                        </p>
-                                        <p class="text-secondary text-center">Dylan Saia, Back-end</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                  </div>
                 </div>
+              </div>
+
+              <!-- Secondo blocco -->
+              <div class="col-6">
+                <div class="d-flex justify-content-center">
+                  <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0" data-aos="zoom-in-up">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-12">
+                        <img src="{% static 'img/aboutUs/Dylan.jpeg' %}" width="684" height="457" alt="our CEO with some nice numbers" class="img-fluid rounded-5" loading="lazy" />
+                      </div>
+                      <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
+                        <p class="lead border-bottom pb-4 border-secondary">“monte? che hai combinato?”</p>
+                        <p class="text-secondary text-center">Dylan Saia, Back-end</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-
-
-
-
-
-
-
-
-    <div class="container-fluid px-vw-5 position-relative" data-aos="fade">
+      <div class="container-fluid px-vw-5 position-relative" data-aos="fade">
         <div class="position-absolute w-100 h-50 bg-black top-0 start-0"></div>
         <div class="position-relative py-vh-5 bg-cover bg-center rounded-5">
-            <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
-                <div class="row">
-
-                    <!-- Primo blocco -->
-                    <div class="col-6">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0"
-                                data-aos="zoom-in-up">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-12">
-                                        <img src="{% static 'img/aboutUs/Giulio.jpeg'%}" width="684" height="457"
-                                            alt="our CEO with some nice numbers" class="img-fluid rounded-5"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
-                                        <p class="lead border-bottom pb-4 border-secondary">"Middleware ti vengo a
-                                            prendere”</p>
-                                        <p class="text-secondary text-center">Giulio Montesdelaoca, Quality Assurance
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+          <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
+            <div class="row">
+              <!-- Primo blocco -->
+              <div class="col-6">
+                <div class="d-flex justify-content-center">
+                  <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0" data-aos="zoom-in-up">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-12">
+                        <img src="{% static 'img/aboutUs/Giulio.jpeg' %}" width="684" height="457" alt="our CEO with some nice numbers" class="img-fluid rounded-5" loading="lazy" />
+                      </div>
+                      <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
+                        <p class="lead border-bottom pb-4 border-secondary">"Middleware ti vengo a prendere”</p>
+                        <p class="text-secondary text-center">Giulio Montesdelaoca, Quality Assurance</p>
+                      </div>
                     </div>
-
-                    <!-- Secondo blocco -->
-                    <div class="col-6">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0"
-                                data-aos="zoom-in-up">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-12">
-                                        <img src="{% static 'img/aboutUs/Tommy.jpeg'%}" width="684" height="457"
-                                            alt="our CEO with some nice numbers" class="img-fluid rounded-5"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
-                                        <p class="lead border-bottom pb-4 border-secondary">“Quando ti dicono che il
-                                            Middle-ware non esiste più”</p>
-                                        <p class="text-secondary text-center">Tomas Davide, Quality Assurance</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                  </div>
                 </div>
+              </div>
+
+              <!-- Secondo blocco -->
+              <div class="col-6">
+                <div class="d-flex justify-content-center">
+                  <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0" data-aos="zoom-in-up">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-12">
+                        <img src="{% static 'img/aboutUs/Tommy.jpeg' %}" width="684" height="457" alt="our CEO with some nice numbers" class="img-fluid rounded-5" loading="lazy" />
+                      </div>
+                      <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
+                        <p class="lead border-bottom pb-4 border-secondary">“Quando ti dicono che il Middle-ware non esiste più”</p>
+                        <p class="text-secondary text-center">Tomas Davide, Quality Assurance</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-
-    <div class="container-fluid px-vw-5 position-relative" data-aos="fade">
+      <div class="container-fluid px-vw-5 position-relative" data-aos="fade">
         <div class="position-absolute w-100 h-50 bg-black top-0 start-0"></div>
         <div class="position-relative py-vh-5 bg-cover bg-center rounded-5">
-            <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
-                <div class="row">
-
-                    <!-- Primo blocco -->
-                    <div class="col-6">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0"
-                                data-aos="zoom-in-up">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-12">
-                                        <img src="{% static 'img/aboutUs/anze.jpg'%}" width="684" height="457"
-                                            alt="our CEO with some nice numbers" class="img-fluid rounded-5"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
-                                        <p class="lead border-bottom pb-4 border-secondary">“Greg,GREG! che c***o hai
-                                            fatto?”</p>
-                                        <p class="text-secondary text-center">Federico Anzelotti, Project Manager
-                                            Front-End e Middle-ware </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+          <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
+            <div class="row">
+              <!-- Primo blocco -->
+              <div class="col-6">
+                <div class="d-flex justify-content-center">
+                  <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0" data-aos="zoom-in-up">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-12">
+                        <img src="{% static 'img/aboutUs/anze.jpg' %}" width="684" height="457" alt="our CEO with some nice numbers" class="img-fluid rounded-5" loading="lazy" />
+                      </div>
+                      <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
+                        <p class="lead border-bottom pb-4 border-secondary">“Greg,GREG! che c***o hai fatto?”</p>
+                        <p class="text-secondary text-center">Federico Anzelotti, Project Manager Front-End e Middle-ware</p>
+                      </div>
                     </div>
-
-                    <!-- Secondo blocco -->
-                    <div class="col-6">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0"
-                                data-aos="zoom-in-up">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-12">
-                                        <img src="{% static 'img/aboutUs/busto.jpg'%}" width="684" height="457"
-                                            alt="our CEO with some nice numbers" class="img-fluid rounded-5"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
-                                        <p class="lead border-bottom pb-4 border-secondary">“No raga non c'è la faccio
-                                            più”</p>
-                                        <p class="text-secondary text-center">Federico Busto, Middle-ware e Back-end</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                  </div>
                 </div>
+              </div>
+
+              <!-- Secondo blocco -->
+              <div class="col-6">
+                <div class="d-flex justify-content-center">
+                  <div class="col-12 d-flex align-items-center bg-dark shadow rounded-5 p-0" data-aos="zoom-in-up">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-12">
+                        <img src="{% static 'img/aboutUs/busto.jpg' %}" width="684" height="457" alt="our CEO with some nice numbers" class="img-fluid rounded-5" loading="lazy" />
+                      </div>
+                      <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
+                        <p class="lead border-bottom pb-4 border-secondary">“No raga non c'è la faccio più”</p>
+                        <p class="text-secondary text-center">Federico Busto, Middle-ware e Back-end</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-
-
-
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/aos.js"></script>
-    <script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/aos.js"></script>
+      <script>
         AOS.init({
-            duration: 800, // values from 0 to 3000, with step 50ms
-        });
-    </script>
-    <script>
-        let scrollpos = window.scrollY
-        const header = document.querySelector(".navbar")
-        const header_height = header.offsetHeight
-
-        const add_class_on_scroll = () => header.classList.add("scrolled", "shadow-sm")
-        const remove_class_on_scroll = () => header.classList.remove("scrolled", "shadow-sm")
-
-        window.addEventListener('scroll', function () {
-            scrollpos = window.scrollY;
-
-            if (scrollpos >= header_height) { add_class_on_scroll() }
-            else { remove_class_on_scroll() }
-
-            console.log(scrollpos)
+          duration: 800 // values from 0 to 3000, with step 50ms
         })
-    </script>
-
-</body>
-
-</html>
-
-
-
-{% endblock content %}
+      </script>
+      <script>
+        let scrollpos = window.scrollY
+        const header = document.querySelector('.navbar')
+        const header_height = header.offsetHeight
+        
+        const add_class_on_scroll = () => header.classList.add('scrolled', 'shadow-sm')
+        const remove_class_on_scroll = () => header.classList.remove('scrolled', 'shadow-sm')
+        
+        window.addEventListener('scroll', function () {
+          scrollpos = window.scrollY
+        
+          if (scrollpos >= header_height) {
+            add_class_on_scroll()
+          } else {
+            remove_class_on_scroll()
+          }
+        
+          console.log(scrollpos)
+        })
+      </script>
+    </body>
+  </html>
+{% endblock %}

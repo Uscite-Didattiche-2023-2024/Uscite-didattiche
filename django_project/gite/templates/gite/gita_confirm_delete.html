@@ -1,17 +1,17 @@
-{% extends "gite/index.html" %}
+{% extends 'gite/index.html' %}
 {% block content %}
-<title>Uscite Didattiche - Conferma Elimina gita</title>
+  <title>Uscite Didattiche - Conferma Elimina gita</title>
 
-<div class="content-section margini">
+  <div class="content-section margini">
     <form method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <h2 class="fw-bolder">Sei sicuro che vuoi eliminare la gita "{{ gita.Proposta_Gita.Titolo }}"</h2>
-        </fieldset>
-        <fieldset class="form-group">
-            <button class="btn btn-outline-light mt-1 mb-1" type="submit">Si, elimina</button>
-            <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'gite' %}">Cancel</a>
-        </fieldset>
+      {% csrf_token %}
+      <fieldset class="form-group">
+        <h2 class="fw-bolder">Sei sicuro che vuoi eliminare la gita "{{ gita.Proposta_Gita.Titolo }}"</h2>
+      </fieldset>
+      <fieldset class="form-group">
+        <button class="btn btn-outline-light mt-1 mb-1" type="submit">Si, elimina</button>
+        <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'gite' %}">Cancel</a>
+      </fieldset>
     </form>
-</div>
-{% endblock content %}
+  </div>
+{% endblock %}

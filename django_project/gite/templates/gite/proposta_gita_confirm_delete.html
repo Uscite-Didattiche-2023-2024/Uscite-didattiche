@@ -1,20 +1,19 @@
-{% extends "gite/index.html" %}
+{% extends 'gite/index.html' %}
 
 {% block content %}
+  <title>Uscite Didattiche - Conferma</title>
 
-<title>Uscite Didattiche - Conferma</title>
-
-<div class="content-section margini">
+  <div class="content-section margini">
     <form method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Delete Post</legend>
-            <h2>Are you sure you want to delete the post "{{ object.Titolo }}"</h2>
-        </fieldset>
-        <fieldset class="form-group">
-            <button class="btn btn-outline-light mt-1 mb-1" type="submit">Yes, Delete</button>
-            <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'proposta-detail' object.id %}">Cancel</a>
-        </fieldset>
+      {% csrf_token %}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Delete Post</legend>
+        <h2>Are you sure you want to delete the post "{{ object.Titolo }}"</h2>
+      </fieldset>
+      <fieldset class="form-group">
+        <button class="btn btn-outline-light mt-1 mb-1" type="submit">Yes, Delete</button>
+        <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'proposta-detail' object.id %}">Cancel</a>
+      </fieldset>
     </form>
-</div>
-{% endblock content %}
+  </div>
+{% endblock %}

@@ -1,47 +1,51 @@
-{% extends "gite/index.html" %}
+{% extends 'gite/index.html' %}
 {% block content %}
-<!DOCTYPE html>
+  <!DOCTYPE html>
 
-<div id="content-main" style="display: flex; justify-content: space-between;">
+  <div id="content-main" style="display: flex; justify-content: space-between;">
     <div id="calendarDiv" style="flex: 3;">
-        <ul class="object-tools">
-            <li><a href="{{ previous_month }}">Previous month</a></li>
-            <li><a href="{{ next_month }}">Next month</a></li>
-        </ul>
-        {{ calendar|safe }}
+      <ul class="object-tools">
+        <li>
+          <a href="{{ previous_month }}">Previous month</a>
+        </li>
+        <li>
+          <a href="{{ next_month }}">Next month</a>
+        </li>
+      </ul>
+      {{ calendar|safe }}
     </div>
     <div id="eventDiv" style="flex: 1; padding: 20px; background-color: #565656;">
-        <!-- Qui verranno visualizzati i dettagli delle gite -->
-        <h4>Dettagli Gita</h4>
-        <div id="eventDetails">Clicca su una gita per vedere i dettagli.</div>
+      <!-- Qui verranno visualizzati i dettagli delle gite -->
+      <h4>Dettagli Gita</h4>
+      <div id="eventDetails">Clicca su una gita per vedere i dettagli.</div>
     </div>
-</div>
+  </div>
 
-<script>
+  <script>
     function loadEventDetails(gitaId) {
-        console.log("Function called with ID: ", gitaId); // Log l'ID per vedere se è corretto
-        fetch(`/gita/details/${gitaId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("Data received: ", data); // Log i dati ricevuti
-                const details = `<strong>Titolo:</strong> ${data.titolo}<br>
-                             <strong>Data ritrovo:</strong> ${data.data_ritrovo}<br>
-                             <strong>Descrizione:</strong> ${data.descrizione}<br>
-                             <strong>Luogo:</strong> ${data.posto}<br>
-                             <strong>Costo:</strong> ${data.costo}<br>
-                             <strong>Stato:</strong> ${data.stato}`
-
-                document.getElementById('eventDetails').innerHTML = details;
-            })
-            .catch(error => {
-                console.error('Error loading the gita details:', error);
-                document.getElementById('eventDetails').innerHTML = 'Failed to load details';
-            });
+      console.log('Function called with ID: ', gitaId) // Log l'ID per vedere se è corretto
+      fetch(`/gita/details/${gitaId}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok')
+          }
+          return response.json()
+        })
+        .then((data) => {
+          console.log('Data received: ', data) // Log i dati ricevuti
+          const details = `<strong>Titolo:</strong> ${data.titolo}<br>
+                                 <strong>Data ritrovo:</strong> ${data.data_ritrovo}<br>
+                                 <strong>Descrizione:</strong> ${data.descrizione}<br>
+                                 <strong>Luogo:</strong> ${data.posto}<br>
+                                 <strong>Costo:</strong> ${data.costo}<br>
+                                 <strong>Stato:</strong> ${data.stato}`
+    
+          document.getElementById('eventDetails').innerHTML = details
+        })
+        .catch((error) => {
+          console.error('Error loading the gita details:', error)
+          document.getElementById('eventDetails').innerHTML = 'Failed to load details'
+        })
     }
-</script>
+  </script>
 {% endblock %}

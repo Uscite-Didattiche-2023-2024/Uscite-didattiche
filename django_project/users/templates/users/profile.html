@@ -1,49 +1,48 @@
-{% extends "gite/index.html" %}
+{% extends 'gite/index.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<title>Uscite Didattiche - profile</title>
+  <title>Uscite Didattiche - profile</title>
 
-<div class="content-section">
+  <div class="content-section">
     <div class="media margini">
-        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-        <div class="media-body">
-            <h2 class="account-heading">{{ user.username }}</h2>
-            <p class="text-secondary">{{ user.email }}</p>
-            <p class="text-secondary">{{ user_classe.classe }}</p>
-        </div>
+      <img class="rounded-circle account-img" src="{{ user.profile.image.url }}" />
+      <div class="media-body">
+        <h2 class="account-heading">{{ user.username }}</h2>
+        <p class="text-secondary">{{ user.email }}</p>
+        <p class="text-secondary">{{ user_classe.classe }}</p>
+      </div>
     </div>
     <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <fieldset class="form-group margini crispyform">
-            <legend class="border-bottom mb-4">Informazioni Profilo:</legend>
-            {{ u_form|crispy }}
-            {{ p_form|crispy }}
-        </fieldset>
-        <div class="form-group">
-            <button style="margin-left: 95px;" class="btn btn-outline-light" type="submit">Aggiorna</button>
-        </div>
+      {% csrf_token %}
+      <fieldset class="form-group margini crispyform">
+        <legend class="border-bottom mb-4">Informazioni Profilo:</legend>
+        {{ u_form|crispy }}
+        {{ p_form|crispy }}
+      </fieldset>
+      <div class="form-group">
+        <button style="margin-left: 95px;" class="btn btn-outline-light" type="submit">Aggiorna</button>
+      </div>
     </form>
-</div>
+  </div>
 
-<script>
+  <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const caratteristicheSelect = document.getElementById('id_caratteristiche');
-        const dettagliDiv = document.getElementById('div_id_dettagli');
-
-        function toggledettagli() {
-            const selectedValue = caratteristicheSelect.value;
-            if (selectedValue === 'allergico' || selectedValue === 'invalido') {
-                dettagliDiv.style.display = 'block';
-            } else {
-                dettagliDiv.style.display = 'none';
-            }
+      const caratteristicheSelect = document.getElementById('id_caratteristiche')
+      const dettagliDiv = document.getElementById('div_id_dettagli')
+    
+      function toggledettagli() {
+        const selectedValue = caratteristicheSelect.value
+        if (selectedValue === 'allergico' || selectedValue === 'invalido') {
+          dettagliDiv.style.display = 'block'
+        } else {
+          dettagliDiv.style.display = 'none'
         }
-
-
-        caratteristicheSelect.addEventListener('change', toggledettagli);
-
-        // Chiamata iniziale per impostare lo stato corretto al caricamento della pagina
-        toggledettagli();
-    });
-</script>
-{% endblock content %}
+      }
+    
+      caratteristicheSelect.addEventListener('change', toggledettagli)
+    
+      // Chiamata iniziale per impostare lo stato corretto al caricamento della pagina
+      toggledettagli()
+    })
+  </script>
+{% endblock %}

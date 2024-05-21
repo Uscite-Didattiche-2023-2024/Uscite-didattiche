@@ -1,32 +1,39 @@
-{% extends "gite/index.html" %}
+{% extends 'gite/index.html' %}
 {% load static %}
 
 {% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}" />
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+  <title>Uscite Didattiche - Lista Proposte</title>
 
-<title>Uscite Didattiche - Lista Proposte</title>
+  <div class="container margini" id="proposta-detail">
+    <h1 class="fw-bolder">{{ proposta.Titolo }}</h1>
+    <p>
+      <a href="{% url 'profilo-utente' user.id %}">Creato da: {{ proposta.Creatore }}</a>
+    </p>
+    <p>
+      Data:{% if proposta.Data %}
+        {{ proposta.Data|date:'F d, Y' }}
+      {% else %}
+        N/D
+      {% endif %}
+    </p>
+    <p>Descrizione: {{ proposta.Descrizione }}</p>
+    <p>Posto: {{ proposta.Posto }}</p>
+    <p>Costo: {{ proposta.Costo }} €</p>
+    <p>Stato: {{ proposta.get_Stato_display }}</p>
 
-<div class="container margini" id="proposta-detail">
-  <h1 class="fw-bolder ">{{ proposta.Titolo }}</h1>
-  <p><a href="{% url 'profilo-utente' user.id %}">Creato da: {{ proposta.Creatore }}</a></p>
-  <p>Data: {% if proposta.Data %}{{ proposta.Data|date:"F d, Y" }}{% else %}N/D{% endif %}</p>
-  <p>Descrizione: {{ proposta.Descrizione }}</p>
-  <p>Posto: {{ proposta.Posto }}</p>
-  <p>Costo: {{ proposta.Costo }} €</p>
-  <p>Stato: {{ proposta.get_Stato_display }}</p>
+    <div>
+      <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'proposta-update' pk=proposta.pk %}">Update</a>
+      <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'proposta-delete' pk=proposta.pk %}">Delete</a>
 
-  <div>
-    <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'proposta-update' pk=proposta.pk %}">Update</a>
-    <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'proposta-delete' pk=proposta.pk %}">Delete</a>
+      <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'conferma-proposta' pk=proposta.pk %}">Confirm</a>
+      <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'rifiuta-proposta' pk=proposta.pk %}">Reject</a>
+    </div>
 
-    <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'conferma-proposta' pk=proposta.pk %}">Confirm</a>
-    <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'rifiuta-proposta' pk=proposta.pk %}">Reject</a>
+    <!-- Aggiungi qui altri dettagli della proposta se necessario -->
+    <br />
+    <a href="{% url 'proposte' %}" class="btn btn-outline-light mt-1 mb-1">Torna alla lista delle gite</a>
   </div>
-
-  <!-- Aggiungi qui altri dettagli della proposta se necessario -->
-  <br>
-  <a href="{% url 'proposte' %}" class="btn btn-outline-light mt-1 mb-1">Torna alla lista delle gite</a>
-</div>
 {% endblock %}

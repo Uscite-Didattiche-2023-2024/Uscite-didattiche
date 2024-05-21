@@ -1,36 +1,29 @@
-{% extends "gite/index.html" %}
+{% extends 'gite/index.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
+  <title>Uscite Didattiche - Registrati</title>
 
+  <head>
+    <link rel="stylesheet" href="{% static 'css/theme.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/crispyform.css' %}" />
+  </head>
 
-<title>Uscite Didattiche - Registrati</title>
-
-<head>
-
-    <link rel="stylesheet" href="{% static 'css/theme.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/crispyform.css' %}">
-
-
-</head>
-
-<div class="content-section crispy_table fw-bolder margini">
+  <div class="content-section crispy_table fw-bolder margini">
     <form method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <h1 class="mb-4 fw-bolder">Registrati:</h1>
-            {{ form|crispy }}
-        </fieldset>
-        <div class="form-group">
-            <button style="margin-left: 10px;" class="btn btn-outline-light" type="submit">Registrati</button>
-        </div>
+      {% csrf_token %}
+      <fieldset class="form-group">
+        <h1 class="mb-4 fw-bolder">Registrati:</h1>
+        {{ form|crispy }}
+      </fieldset>
+      <div class="form-group">
+        <button style="margin-left: 10px;" class="btn btn-outline-light" type="submit">Registrati</button>
+      </div>
     </form>
-    <br>
-    <br>
+    <br />
+    <br />
     <div class="border-top pt-3">
-        <small class="text-muted">
-            Hai già un account? <a class="ml-2" href="{% url 'login' %}">Accedi</a>
-        </small>
+      <small class="text-muted">Hai già un account? <a class="ml-2" href="{% url 'login' %}">Accedi</a></small>
     </div>
-</div>
-{% endblock content %}
+  </div>
+{% endblock %}

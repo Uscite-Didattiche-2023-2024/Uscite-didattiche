@@ -1,22 +1,22 @@
-{% extends "gite/index.html" %} {% load crispy_forms_tags %} {% load static %} {% block content %}
+{% extends 'gite/index.html' %} {% load crispy_forms_tags %} {% load static %} {% block content %}
+  <title>Uscite Didattiche - Form Gite</title>
 
-<title>Uscite Didattiche - Form Gite</title>
-
-<div class="content-section margini">
-  <form method="POST" id="propostaForm">
-    {% csrf_token %}
-    <fieldset class="form-group fw-bolder">
-      <legend class="  fs-5 fw-bolder">Proponi la tua Gita:</legend>
-      {{ form|crispy }}
-    </fieldset>
-    <div class="form-group">
-      <br />
-      <button style="margin-left: 20px" class="btn btn-outline-light crispy_font" type="submit">
-        Proponi
-      </button>
-    </div>
-  </form>
-</div>
-{% if messages %} {% for message in messages %}
-<div class="alert alert-success" role="alert">{{ message }}</div>
-{% endfor %} {% endif %} {% endblock content %}
+  <div class="content-section margini">
+    <form method="POST" id="propostaForm">
+      {% csrf_token %}
+      <fieldset class="form-group fw-bolder">
+        <legend class="fs-5 fw-bolder">Proponi la tua Gita:</legend>
+        {{ form|crispy }}
+      </fieldset>
+      <div class="form-group">
+        <br />
+        <button style="margin-left: 20px" class="btn btn-outline-light crispy_font" type="submit">Proponi</button>
+      </div>
+    </form>
+  </div>
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success" role="alert">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
