@@ -88,10 +88,12 @@
       <div class="custom-notification">
         <div class="custom-notification-icon" onclick="toggleNotificationBox()">
           <i id="Bell" class="fas fa-bell"></i>
-          <i class="custom-notification-number">{{ notifiche_non_lette }}</i>
+          <i class="custom-notification-number">{{notifiche.count}}</i>
         </div>
         <script>
-          if ('{{ notifiche }}' != '0') { startshakebell(); }
+          if ('{{ notifiche.count }' != '0') {
+            startshakebell();
+          }
         </script>
         <div class="custom-notification-box" id="Box" style="display: none;">
           {% for notifica in notifiche %}

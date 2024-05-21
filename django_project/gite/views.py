@@ -18,6 +18,7 @@ from django.forms.models import model_to_dict
 from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic.base import View
+from django.db.models import Count
 
 # CALENDAR NEEDED
 import calendar
@@ -54,8 +55,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
 @login_required
 def index(request):
-    notifiche_non_lette = Notifica.objects.filter(~Q(utenti_letto=request.user)).count()
     notifiche = Notifica.objects.all()
+    notifiche_non_lette = notifiche.filter(~Q(utenti_letto=request.user)).count()
 
     context = {
         "notifiche_non_lette": notifiche_non_lette,
@@ -69,8 +70,8 @@ def segna_come_letto(request, notifica_id):
     notifica = get_object_or_404(Notifica, id=notifica_id)
     notifica.utenti_letto.add(request.user)
 
-    # Conta le notifiche non lette per l'utente corrente
-    notifiche_non_lette = Notifica.objects.filter(~Q(utenti_letto=request.user)).count()
+    # Aggiorna il conteggio delle notifiche non lette per l'utente corrente
+    notifiche_non_lette = Notifica.objects.exclude(utenti_letto=request.user).count()
 
     return JsonResponse({"success": True, "unread_count": notifiche_non_lette})
 
