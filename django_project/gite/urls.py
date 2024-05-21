@@ -41,6 +41,7 @@ urlpatterns = [
     path('gita/details/<int:gita_id>/', views.gita_details, name='gita-details'),
     path('gita/<int:pk>/update/', GitaUpdateView.as_view(), name='gita-update'),
     path('gita/<int:pk>/delete/', GitaDeleteView.as_view(), name='gita-delete'),
+    path('notifiche/letto/<int:notifica_id>/', views.segna_come_letto, name='segna_come_letto'),
     
     # Calendario
     path('calendario/', CalendarioView.as_view(), name='calendario'),

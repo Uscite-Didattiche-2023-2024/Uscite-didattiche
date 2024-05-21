@@ -26,7 +26,7 @@ class Classe(models.Model):
         return "{}{}".format(self.anno, self.sezione)
         
     class Meta:
-        verbose_name_plural = 'Classe'
+        verbose_name_plural = 'Classi'
 
 class Gita(models.Model):
     STATO_CHOICES = (
@@ -143,7 +143,7 @@ class Notifica(models.Model):
     Proposta_Gita = models.ForeignKey('Proposta_Gita', on_delete=models.CASCADE, default='')
     Classe = models.ManyToManyField('Classe', related_name="notifica")
     Documenti = models.ForeignKey('Documenti', on_delete=models.CASCADE, default='', blank=True, null=True)
-
+    utenti_letto = models.ManyToManyField(User, related_name='notifiche_lette', blank=True)
     groups = models.ManyToManyField(Group, related_name="notifica")
 
     def __str__(self):
