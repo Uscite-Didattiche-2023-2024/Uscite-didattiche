@@ -88,10 +88,10 @@
       <div class="custom-notification">
         <div class="custom-notification-icon" onclick="toggleNotificationBox()">
           <i id="Bell" class="fas fa-bell"></i>
-          <i class="custom-notification-number">{{notifiche.count}}</i>
+          <i class="custom-notification-number">{{ notifiche_non_lette }}</i>
         </div>
         <script>
-          if ('{{ notifiche.count }' != '0') {
+          if ('{{ notifiche_non_lette }}' != '0') {
             startshakebell();
           }
         </script>
@@ -114,6 +114,13 @@
       </div>
 
       <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var notificationNumber = document.querySelector('.custom-notification-number');
+          if (notificationNumber.textContent.trim() === "") {
+            notificationNumber.textContent = '0';
+          }
+        });
+
         function toggleNotificationBox() {
           var box = document.getElementById("Box");
           if (box.style.display === "none") {
