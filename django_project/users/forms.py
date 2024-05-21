@@ -2,30 +2,29 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
+from gite.models import Classe, User_classe
 
 class PasswordResetForm(forms.Form):
     from_email = forms.EmailField(label="From Email")
     to_email = forms.EmailField(label="To Email")
 
-
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
     first_name = forms.CharField(max_length=100, required=False)
     last_name = forms.CharField(max_length=100, required=False)
-
+    classe = forms.ModelChoiceField(queryset=Classe.objects.all(), required=False)
     CARATTERISTICHE_CHOICES = [
         ('nessuna', 'Nessuna'),
         ('dsa', 'DSA'),
         ('invalido', 'Invalido'),
         ('allergico', 'Allergico'),
     ]
-
     caratteristiche = forms.ChoiceField(choices=CARATTERISTICHE_CHOICES, required=False)
     dettagli = forms.CharField(max_length=100, required=False, label='Tipi di Allergie')
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name']
+        fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name', 'classe', 'caratteristiche', 'dettagli']
 
     def save(self, commit=True):
         user = super(UserRegisterForm, self).save(commit=False)
@@ -41,6 +40,9 @@ class UserRegisterForm(UserCreationForm):
             else:
                 profile.dettagli = ''
             profile.save()
+            if self.cleaned_data['classe']:
+                user_classe = User_classe(user=user, classe=self.cleaned_data['classe'])
+                user_classe.save()
         return user
 
 class UserUpdateForm(forms.ModelForm):

@@ -29,7 +29,7 @@ from django.views.generic import (
 )
 
 from .forms import GitaForm, PropostaGitaForm
-from .models import Classe, Classe_gita, Gita, Proposta_Gita, Notifica
+from .models import Classe, Classe_gita, Gita, Proposta_Gita, Notifica, User_classe
 
 class HomeView(TemplateView):
     template_name = 'gite/home.html'  # <app>/<model>_<viewtype>.html
@@ -239,9 +239,21 @@ class GiteListView(LoginRequiredMixin, ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        # Personalizza la query per includere il nome dell'autore
-        queryset = queryset.select_related('Proposta_Gita__Creatore').order_by('-Data_ritrovo')
+        user = self.request.user
+        if user.has_perm('gite.view_gita'):
+            # Se l'utente ha il permesso, restituisce tutte le gite
+            queryset = Gita.objects.all().select_related('Proposta_Gita__Creatore').order_by('-Data_ritrovo')
+        else:
+            try:
+                user_classe = User_classe.objects.get(user=user).classe
+            except User_classe.DoesNotExist:
+                user_classe = None
+
+            if user_classe:
+                queryset = Gita.objects.filter(classe_gita__Classe=user_classe).select_related('Proposta_Gita__Creatore').order_by('-Data_ritrovo')
+            else:
+                queryset = Gita.objects.none()  # Nessuna gita se l'utente non ha una classe assegnata
+        
         return queryset
     
 class GiteDetailView(LoginRequiredMixin, DetailView):
