@@ -2,23 +2,19 @@
 {% block content %}
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>403 Forbidden</title>
 </head>
-<body >
-   <div class="margini">
-    <h1>Non hai i permessi necessari</h1>
-    <p>Non sei autorizzato ad accedere a questa pagina.</p>
-    {% if notifiche %}
-        <ul>
-        {% for notifica in notifiche %}
-            <li>{{ notifica.titolo }}: {{ notifica.messaggio }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+
+<body>
+    <div class="margini">
+        <h1>Non hai i permessi necessari</h1>
+        <p>Non sei autorizzato ad accedere a questa pagina.</p>
     </div>
 </body>
+
 </html>
 {% endblock %}

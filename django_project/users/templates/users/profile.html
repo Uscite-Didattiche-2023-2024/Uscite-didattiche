@@ -26,24 +26,24 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const caratteristicheSelect = document.getElementById('id_caratteristiche');
-    const dettagliDiv = document.getElementById('div_id_dettagli');
+    document.addEventListener('DOMContentLoaded', function () {
+        const caratteristicheSelect = document.getElementById('id_caratteristiche');
+        const dettagliDiv = document.getElementById('div_id_dettagli');
 
-    function toggledettagli() {
-        const selectedValue = caratteristicheSelect.value;
-        if (selectedValue === 'allergico' || selectedValue === 'invalido') {
-            dettagliDiv.style.display = 'block';
-        } else {
-            dettagliDiv.style.display = 'none';
+        function toggledettagli() {
+            const selectedValue = caratteristicheSelect.value;
+            if (selectedValue === 'allergico' || selectedValue === 'invalido') {
+                dettagliDiv.style.display = 'block';
+            } else {
+                dettagliDiv.style.display = 'none';
+            }
         }
-    }
 
 
-    caratteristicheSelect.addEventListener('change', toggledettagli);
+        caratteristicheSelect.addEventListener('change', toggledettagli);
 
-    // Chiamata iniziale per impostare lo stato corretto al caricamento della pagina
-    toggledettagli();
-});
+        // Chiamata iniziale per impostare lo stato corretto al caricamento della pagina
+        toggledettagli();
+    });
 </script>
 {% endblock content %}

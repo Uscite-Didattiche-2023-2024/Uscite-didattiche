@@ -3,10 +3,11 @@
 {% load crispy_forms_tags %}
 
 <title>Uscite Didattiche</title>
-<link rel="shortcut icon" type="image/svg" href="{% static 'img/svg/logomg.svg' %}" >
+<link rel="shortcut icon" type="image/svg" href="{% static 'img/svg/logomg.svg' %}">
 
 <!doctype html>
 <html style="margin-left: 3%; margin-right: 3%;" class="h-100" lang="it">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
@@ -53,7 +54,8 @@
         </div>
       </div>
       <a class="navbar-brand pe-md-4 fs-4 col-12 col-md-auto text-center" href="{% url 'homepage' %}">
-        <img class="header_login fixed" width="60" height="55" viewBox="0 0 400 400" src="{% static 'img/svg/logomg.svg' %}"></svg>
+        <img class="header_login fixed" width="60" height="55" viewBox="0 0 400 400"
+          src="{% static 'img/svg/logomg.svg' %}"></svg>
         <span class="ms-md-1 mt-1 fw-bolder me-md-5">Uscite Didattiche</span>
       </a>
 
@@ -76,7 +78,7 @@
           </a>
         </li>
         {% endif %}
-        
+
         <li class="nav-item">
           <a class="nav-link fs-5" href="{% url 'gite-aboutUs' %}" aria-label="Register-page">
             About us
@@ -85,59 +87,61 @@
       </ul>
       <div class="custom-notification">
         <div class="custom-notification-icon" onclick="toggleNotificationBox()">
-            <i id="Bell" class="fas fa-bell"></i>
-            <i class="custom-notification-number">{{ notifiche_non_lette }}</i>
+          <i id="Bell" class="fas fa-bell"></i>
+          <i class="custom-notification-number">{{ notifiche_non_lette }}</i>
         </div>
         <script>
-          if('{{ notifiche_non_lette }}' != '0'){ startshakebell(); }
+          if ('{{ notifiche }}' != '0') { startshakebell(); }
         </script>
         <div class="custom-notification-box" id="Box" style="display: none;">
-            {% for notifica in notifiche %}
-            {% if request.user not in notifica.utenti_letto.all %}
-            <div class="custom-notification-box-item" data-id="{{ notifica.id }}">
-              <a href="{% url 'gite-detail' notifica.Gita.id %}"><h4>{{ notifica.Titolo }}</h4></a>
-                <p>{{ notifica.Descrizione }}</p>
-                <p>Gita: {{ notifica.Gita.Proposta_Gita.Titolo }}</p>
-                <p>Proposta Gita: {{ notifica.Proposta_Gita.Titolo }}</p>
-                <p>Classi: {{ notifica.Classe.all|join:", " }}</p>
-                <a href="#" onclick="segnaComeLetta('{{ notifica.id }}')" class="btn btn-primary">Segna come Letta</a>
-            </div>
-            {% endif %}
-            {% endfor %}
+          {% for notifica in notifiche %}
+          {% if request.user not in notifica.utenti_letto.all %}
+          <div class="custom-notification-box-item" data-id="{{ notifica.id }}">
+            <a href="{% url 'gite-detail' notifica.Gita.id %}">
+              <h4>{{ notifica.Titolo }}</h4>
+            </a>
+            <p>{{ notifica.Descrizione }}</p>
+            <p>Gita: {{ notifica.Gita.Proposta_Gita.Titolo }}</p>
+            <p>Proposta Gita: {{ notifica.Proposta_Gita.Titolo }}</p>
+            <p>Classi: {{ notifica.Classe.all|join:", " }}</p>
+            <a href="#" onclick="segnaComeLetta('{{ notifica.id }}')" class="btn btn-primary">Segna come Letta</a>
+          </div>
+          {% endif %}
+          {% endfor %}
         </div>
-      </div>  
-    
-     <script>
-    function toggleNotificationBox() {
-        var box = document.getElementById("Box");
-        if (box.style.display === "none") {
-            box.style.display = "block";
-        } else {
-            box.style.display = "none";
-        }
-    }
+      </div>
 
-    function segnaComeLetta(notificaId) {
-        const url = "{% url 'segna_come_letto' 1 %}".replace('1', notificaId);
-        fetch(`${url}?next={{ request.path }}`, {
+      <script>
+        function toggleNotificationBox() {
+          var box = document.getElementById("Box");
+          if (box.style.display === "none") {
+            box.style.display = "block";
+          } else {
+            box.style.display = "none";
+          }
+        }
+
+        function segnaComeLetta(notificaId) {
+          const url = "{% url 'segna_come_letto' 1 %}".replace('1', notificaId);
+          fetch(`${url}?next={{ request.path }}`, {
             method: 'POST',
             headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
+              'X-CSRFToken': '{{ csrf_token }}'
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
                 const notificaItem = document.querySelector(`.custom-notification-box-item[data-id="${notificaId}"]`);
                 notificaItem.style.display = 'none';
 
                 const notificationNumber = document.querySelector('.custom-notification-number');
                 notificationNumber.textContent = data.unread_count;
-            }
-        });
-    }
-  </script>
-    
+              }
+            });
+        }
+      </script>
+
     </div>
   </nav>
   <main>

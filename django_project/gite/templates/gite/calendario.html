@@ -21,27 +21,27 @@
     function loadEventDetails(gitaId) {
         console.log("Function called with ID: ", gitaId); // Log l'ID per vedere se è corretto
         fetch(`/gita/details/${gitaId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Data received: ", data); // Log i dati ricevuti
-            const details = `<strong>Titolo:</strong> ${data.titolo}<br>
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Data received: ", data); // Log i dati ricevuti
+                const details = `<strong>Titolo:</strong> ${data.titolo}<br>
                              <strong>Data ritrovo:</strong> ${data.data_ritrovo}<br>
                              <strong>Descrizione:</strong> ${data.descrizione}<br>
                              <strong>Luogo:</strong> ${data.posto}<br>
                              <strong>Costo:</strong> ${data.costo}<br>
                              <strong>Stato:</strong> ${data.stato}`
-                             
-            document.getElementById('eventDetails').innerHTML = details;
-        })
-        .catch(error => {
-            console.error('Error loading the gita details:', error);
-            document.getElementById('eventDetails').innerHTML = 'Failed to load details';
-        });
+
+                document.getElementById('eventDetails').innerHTML = details;
+            })
+            .catch(error => {
+                console.error('Error loading the gita details:', error);
+                document.getElementById('eventDetails').innerHTML = 'Failed to load details';
+            });
     }
 </script>
 {% endblock %}

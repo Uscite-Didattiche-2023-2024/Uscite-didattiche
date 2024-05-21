@@ -26,7 +26,8 @@
         {% for gita in gite %}
         <tr>
             <td><a class="article-title" href="{% url 'gite-detail' gita.id %}">{{ gita.Proposta_Gita.Titolo }}</a></td>
-            <td><a href="{% url 'profilo-utente' pk=gita.Proposta_Gita.Creatore.pk %}">{{ gita.Proposta_Gita.Creatore }}</a></td>
+            <td><a href="{% url 'profilo-utente' pk=gita.Proposta_Gita.Creatore.pk %}">{{ gita.Proposta_Gita.Creatore
+                    }}</a></td>
             <td>{{ gita.Proposta_Gita.Descrizione }}</td>
             <td>{{ gita.Luogo_ritrovo }}</td>
             <td>{{ gita.Luogo_rientro }}</td>
@@ -50,15 +51,15 @@
     {% for num in page_obj.paginator.page_range %}
     {% if page_obj.number == num %}
     <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-    {% endif %}
-    {% endfor %}
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a class="btn btn-outline-info mb-4"
+        href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+        {% endfor %}
 
-    {% if page_obj.has_next %}
-    <a class="btn btn-outline-light mb-4" href="?page={{ page_obj.next_page_number }}">Prossimo</a>
-    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Ultimo</a>
-    {% endif %}
+        {% if page_obj.has_next %}
+        <a class="btn btn-outline-light mb-4" href="?page={{ page_obj.next_page_number }}">Prossimo</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Ultimo</a>
+        {% endif %}
 </div>
 {% endif %}
 

@@ -18,12 +18,12 @@
     <p class="text-secondary">Email: {{ user.email }}</p>
     {% endif %}
     {% if user.profile.caratteristiche %}
-      <p class="text-secondary">Caratteristiche: {{ user.profile.caratteristiche }}</p>
+    <p class="text-secondary">Caratteristiche: {{ user.profile.caratteristiche }}</p>
     {% endif %}
     {% if user.profile.dettagli %}
-      <p class="text-secondary">Dettagli: {{ user.profile.dettagli }}</p>
+    <p class="text-secondary">Dettagli: {{ user.profile.dettagli }}</p>
     {% endif %}
-  
+
     <p class="text-secondary">Data creazione dell'account: {{ user.date_joined }}</p>
     <p class="text-secondary">Ultimo login: {{ user.last_login }} </p>
   </div>

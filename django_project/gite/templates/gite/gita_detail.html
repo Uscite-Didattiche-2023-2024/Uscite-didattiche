@@ -12,7 +12,8 @@
   <div class="row">
     <div class="col-md-6" id="gita-detail">
       <h1 class="fw-bolder">{{ gita.Proposta_Gita.Titolo }}</h1>
-      <p><a href="{% url 'profilo-utente' pk=gita.Proposta_Gita.Creatore.pk %}">Creatore: {{ gita.Proposta_Gita.Creatore }}</a></p>
+      <p><a href="{% url 'profilo-utente' pk=gita.Proposta_Gita.Creatore.pk %}">Creatore: {{ gita.Proposta_Gita.Creatore
+          }}</a></p>
       <p>Descrizione: {{ gita.Proposta_Gita.Descrizione }}</p>
       <p>Posto: {{ gita.Proposta_Gita.Posto }}</p>
       <p>Data ritrovo: {{ gita.Data_ritrovo }}</p>
@@ -25,10 +26,10 @@
       <p>Classi associate:</p>
       <ul>
         {% for classe_gita in gita.classe_gita_set.all %}
-          <li>{{ classe_gita.Classe }}</li>
+        <li>{{ classe_gita.Classe }}</li>
         {% endfor %}
       </ul>
-      
+
       <div>
         <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'gita-update' pk=gita.pk %}">Update</a>
         <a class="btn btn-outline-light mt-1 mb-1" href="{% url 'gita-delete' pk=gita.pk %}">Delete</a>
@@ -40,23 +41,23 @@
     </div>
     <div class="col-md-6 allegato text-center">
       {% if gita.Allegato %}
-        Allegato <br>
-        {% if allegato_tipo == 'image' %}
-          <a href="{{ gita.Allegato.url }}" target="_blank">
-            <img src="{{ gita.Allegato.url }}" alt="Allegato" class="img-fluid">
-          </a>
-          <br>
-          <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" target="_blank">Ingrandisci</a>
-          <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" download>Scarica</a>
-        {% elif allegato_tipo == 'pdf' %}
-              <p>Impossibile guardare la preview </p>
-              <!-- <embed src="{{ gita.Allegato.url }}" type="application/pdf" width="100%" height="400px" /> TOFIX -->
-              <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" target="_blank">Visualizza</a>
-              <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" download>Scarica</a>
-        {% else %}
-          <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" target="_blank">Ingrandisci</a>
-          <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" download>Scarica</a>
-        {% endif %}
+      Allegato <br>
+      {% if allegato_tipo == 'image' %}
+      <a href="{{ gita.Allegato.url }}" target="_blank">
+        <img src="{{ gita.Allegato.url }}" alt="Allegato" class="img-fluid">
+      </a>
+      <br>
+      <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" target="_blank">Ingrandisci</a>
+      <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" download>Scarica</a>
+      {% elif allegato_tipo == 'pdf' %}
+      <p>Impossibile guardare la preview </p>
+      <!-- <embed src="{{ gita.Allegato.url }}" type="application/pdf" width="100%" height="400px" /> TOFIX -->
+      <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" target="_blank">Visualizza</a>
+      <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" download>Scarica</a>
+      {% else %}
+      <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" target="_blank">Ingrandisci</a>
+      <a class="btn btn-outline-light mt-2" href="{{ gita.Allegato.url }}" download>Scarica</a>
+      {% endif %}
       {% endif %}
     </div>
   </div>

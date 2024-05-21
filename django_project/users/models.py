@@ -5,24 +5,26 @@ from PIL import Image
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    
+    image = models.ImageField(default="default.jpg", upload_to="profile_pics")
+
     CARATTERISTICHE_CHOICES = [
-        ('nessuna', 'Nessuna'),  
-        ('dsa', 'DSA'),
-        ('invalido', 'Invalido'),
-        ('allergico', 'Allergico'),
+        ("nessuna", "Nessuna"),
+        ("dsa", "DSA"),
+        ("invalido", "Invalido"),
+        ("allergico", "Allergico"),
     ]
-    
-    caratteristiche = models.CharField(max_length=100, choices=CARATTERISTICHE_CHOICES, blank=True, null=True) 
+
+    caratteristiche = models.CharField(
+        max_length=100, choices=CARATTERISTICHE_CHOICES, blank=True, null=True
+    )
     dettagli = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f"{self.user.username} Profile"
 
     def save(self, *args, **kwargs):
-        if self.caratteristiche not in ['allergico', 'invalido']:
-            self.dettagli = ''
+        if self.caratteristiche not in ["allergico", "invalido"]:
+            self.dettagli = ""
         super(Profile, self).save(*args, **kwargs)
         img = Image.open(self.image.path)
         if img.height > 300 or img.width > 300:

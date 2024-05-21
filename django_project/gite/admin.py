@@ -11,7 +11,6 @@ from .models import Notifica
 from .models import User_classe
 
 
-
 # Register your models here.
 admin.site.register(Gita)
 admin.site.register(Proposta_Gita)
@@ -23,5 +22,3 @@ admin.site.register(Classe)
 admin.site.register(Presenti_prenotati)
 admin.site.register(Notifica)
 admin.site.register(User_classe)
-
-

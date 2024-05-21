@@ -6,7 +6,7 @@
 
 <div class="content-section margini">
     <form method="POST" enctype="multipart/form-data" id="gitaForm">
-        {% csrf_token %}    
+        {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Nuova Gita</legend>
             {{ form|crispy }}
@@ -14,7 +14,7 @@
                 <label for="id_classi">Seleziona le Classi:</label>
                 <select name="classi" id="id_classi" class="form-control" multiple>
                     {% for classe in classi %}
-                        <option value="{{ classe.pk }}">{{ classe }}</option>
+                    <option value="{{ classe.pk }}">{{ classe }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -25,10 +25,10 @@
     </form>
 </div>
 {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-success" role="alert">
-            {{ message }} 
-        </div>
-    {% endfor %}
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
 {% endif %}
 {% endblock content %}
