@@ -314,7 +314,10 @@ def gita_details(request, gita_id):
     data = {
         'titolo': gita.Proposta_Gita.Titolo,
         'data_ritrovo': gita.Data_ritrovo.strftime('%Y-%m-%d %H:%M'),
-        'descrizione': gita.Proposta_Gita.Descrizione
+        'descrizione': gita.Proposta_Gita.Descrizione,
+        'posto': gita.Proposta_Gita.Posto,
+        'costo': gita.Proposta_Gita.Costo,
+        'stato': gita.Proposta_Gita.Stato
     }
     return JsonResponse(data)
 
