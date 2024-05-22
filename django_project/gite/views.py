@@ -40,17 +40,25 @@ from .forms import GitaForm, PropostaGitaForm
 from .models import Classe, Classe_gita, Gita, Proposta_Gita, Notifica, User_classe
 
 
-class HomeView(LoginRequiredMixin, TemplateView):
+class HomeView(TemplateView):
     template_name = "gite/home.html"  # <app>/<model>_<viewtype>.html
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        # Ottieni la classe e i gruppi dell'utente
-        user_classe = User_classe.objects.filter(user=user).first()
-        gruppi_utente = user.groups.all()
 
+        if user.is_authenticated:
+            # Ottieni la classe e i gruppi dell'utente
+            user_classe = User_classe.objects.filter(user=user).first()
+            gruppi_utente = user.groups.all()
+        else:
+            user_classe = None
+            gruppi_utente = None
+
+        context['user_classe'] = user_classe
+        context['gruppi_utente'] = gruppi_utente
         return context
+
 
 
 @login_required
