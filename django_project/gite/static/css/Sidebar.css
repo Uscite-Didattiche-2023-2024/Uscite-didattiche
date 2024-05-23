@@ -16,13 +16,13 @@ body {
 }
 
 .custom-toggle-btn {
-  font-size: 20px;
+  font-size: 30px;
   cursor: pointer;
   border: none;
   background: none;
   display: block;
   /* Aggiunto display:flex per abilitare il flexbox */
-  height: 40px;
+  height: 80px;
   width: 40px;
   transition: transform 0.5s; 
 }
