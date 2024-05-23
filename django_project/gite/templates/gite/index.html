@@ -85,6 +85,7 @@
           </a>
         </li>
       </ul>
+      {% if user.is_authenticated %}
       <div class="custom-notification">
         <div class="custom-notification-icon" onclick="toggleNotificationBox()">
           <i id="Bell" class="fas fa-bell"></i>
@@ -112,6 +113,7 @@
           {% endfor %}
         </div>
       </div>
+      {% endif %}
 
       <script>
         document.addEventListener("DOMContentLoaded", function () {
