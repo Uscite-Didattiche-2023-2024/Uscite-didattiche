@@ -13,6 +13,5 @@ class AddNotificationContextMiddleware(MiddlewareMixin):
 class Custom403Middleware(MiddlewareMixin):
     def process_response(self, request, response):
         if response.status_code == 403:
-            context = {"notifiche": Notifica.objects.all()}
-            return render(request, "gite/403.html", context)
+            return render(request, "gite/403.html")
         return response
