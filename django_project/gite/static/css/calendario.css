@@ -1,15 +1,20 @@
-#content-main {
+.content-main {
     display: flex;
     flex-direction: row;
     height: 100%;
     margin-left: 70px;
 }
 
+.eventDiv {
+    background-color: #565656;
+    padding: 3%;
+}
+
 th.month {
     font-size: 50px;
 }
 
-#calendarDiv {
+.calendarDiv {
     width: 60%;
 }
 
@@ -81,12 +86,12 @@ table.month td.noday {
 
 /* Media Queries per dispositivi mobili */
 @media (max-width: 768px) {
-    #content-main {
+    .content-main {
         flex-direction: column;
         margin-left: 0;
     }
 
-    #calendarDiv, #eventDiv {
+    .calendarDiv, .eventDiv {
         width: 100%;
     }
 

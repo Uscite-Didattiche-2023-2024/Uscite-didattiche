@@ -1,9 +1,15 @@
 {% extends 'gite/index.html' %}
+
+{% load static %}
 {% block content %}
   <!DOCTYPE html>
 
-  <div id="content-main" style="display: flex; justify-content: space-between;">
-    <div id="calendarDiv" style="flex: 3;">
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/calendario.css' %}">
+  </head>
+
+  <div class="content-main">
+    <div class="calendarDiv">
       <ul class="object-tools">
         <li>
           <a href="{{ previous_month }}">Previous month</a>
@@ -14,7 +20,7 @@
       </ul>
       {{ calendar|safe }}
     </div>
-    <div id="eventDiv" style="flex: 1; padding: 20px; background-color: #565656;">
+    <div class="eventDiv">
       <!-- Qui verranno visualizzati i dettagli delle gite -->
       <h4>Dettagli Gita</h4>
       <div id="eventDetails">Clicca su una gita per vedere i dettagli.</div>
