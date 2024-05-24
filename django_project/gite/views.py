@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import (
     PermissionRequiredMixin,
     UserPassesTestMixin,
 )
+from django.utils.timezone import localtime
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group, Permission
@@ -438,13 +439,14 @@ def gita_details(request, gita_id):
     gita = get_object_or_404(Gita, id=gita_id)
     data = {
         "titolo": gita.Proposta_Gita.Titolo,
-        "data_ritrovo": gita.Data_ritrovo.strftime("%Y-%m-%d %H:%M"),
+        "data_ritrovo": localtime(gita.Data_ritrovo).strftime("%d-%m-%Y %H:%M"),
         "descrizione": gita.Proposta_Gita.Descrizione,
         "posto": gita.Proposta_Gita.Posto,
         "costo": gita.Proposta_Gita.Costo,
-        "stato": gita.Proposta_Gita.Stato,
+        "stato": gita.Stato,
     }
     return JsonResponse(data)
+
 
 
 class CalendarioView(LoginRequiredMixin, ListView):
