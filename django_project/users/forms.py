@@ -12,7 +12,7 @@ class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
     first_name = forms.CharField(max_length=100, required=False)
     last_name = forms.CharField(max_length=100, required=False)
-    classe = forms.ModelChoiceField(queryset=Classe.objects.all(), required=False)
+    classe = forms.ModelMultipleChoiceField(queryset=Classe.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
     CARATTERISTICHE_CHOICES = [
         ("nessuna", "Nessuna"),
         ("dsa", "DSA"),
@@ -56,8 +56,8 @@ class UserRegisterForm(UserCreationForm):
             else:
                 profile.dettagli = ""
             profile.save()
-            if self.cleaned_data["classe"]:
-                user_classe = User_classe(user=user, classe=self.cleaned_data["classe"])
+            for classe in self.cleaned_data["classe"]:
+                user_classe = User_classe(user=user, classe=classe)
                 user_classe.save()
         return user
 
