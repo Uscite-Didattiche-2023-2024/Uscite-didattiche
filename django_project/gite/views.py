@@ -445,6 +445,7 @@ def gita_details(request, gita_id):
         "costo": gita.Proposta_Gita.Costo,
         "stato": gita.Stato,
     }
+    
     return JsonResponse(data)
 
 

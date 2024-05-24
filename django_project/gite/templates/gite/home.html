@@ -11,10 +11,7 @@
         {% if user.is_authenticated %}
         <!-- Se l'utente ha effettuato il login -->
         <!--<link rel="stylesheet" type="text/css">TOFIX -->
-        <form action="{% url 'logout' %}" method="post">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-outline-light" type="submit">Logout</button>
-        </form>
+
 
         {% else %}
         <!-- Se l'utente non ha effettuato il login -->
@@ -24,10 +21,15 @@
         <h1 class="display-huge mt-3 mb-3 lh-1">Benvenuto!</h1>
       </div>
       <div class="col-12 col-xl-8">
+        {% if perms.gite.add_proposta_gita %}
         <p class="lead text-secondary">Proponi la tua gita adesso</p>
+        {%else%}
+        <p class="lead text-secondary">Visualizza le tue gite!</p>
+        {%endif%}
       </div>
       {% if user.is_authenticated %}
       <div class="col-12 text-center">
+        {% if perms.gite.add_proposta_gita %}
         <a href="{% url 'proposta-create' %}" class="btn btn-xl btn-light">Crea la tua proposta
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right"
             viewBox="0 0 16 16">
@@ -35,6 +37,15 @@
               d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
           </svg>
         </a>
+        {%else%}
+        <a href="{% url 'gite' %}" class="btn btn-xl btn-light">Visualizza le gite
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+          </svg>
+        </a>
+        {%endif%}
         {% else %}
         <div class="col-12 text-center">
           <a href="{% url 'login' %}" class="btn btn-xl btn-light">Accedi
