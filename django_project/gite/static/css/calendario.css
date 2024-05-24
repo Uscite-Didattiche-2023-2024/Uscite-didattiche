@@ -91,8 +91,19 @@ table.month td.noday {
         margin-left: 0;
     }
 
+    .margini{
+      margin-left: 10%;
+      margin-right: 10%;  
+
+    }
+
     .calendarDiv, .eventDiv {
-        width: 100%;
+      width: 100%;  
+    }
+
+    .eventDiv{
+        background-color: #565656;
+        padding: 3%;
     }
 
     th.month {
