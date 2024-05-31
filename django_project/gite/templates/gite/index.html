@@ -112,11 +112,6 @@
           <i id="Bell" class="fas fa-bell"></i>
           <i class="custom-notification-number">{{ notifiche_non_lette }}</i>
         </div>
-        <script>
-          if ('{{ notifiche_non_lette }}' != '0') {
-            startshakebell();
-          }
-        </script>
         <div class="custom-notification-box" id="Box" style="display: none;">
           {% for notifica in notifiche %}
           {% if request.user not in notifica.utenti_letto.all %}
@@ -138,10 +133,7 @@
 
       <script>
         document.addEventListener("DOMContentLoaded", function () {
-          getUnreadCount() 
-          if (notificationNumber.textContent.trim() === "") {
-            notificationNumber.textContent = '0';
-          }
+          getUnreadCount()
         });
 
         function toggleNotificationBox() {
@@ -153,25 +145,28 @@
           }
         }
 
-function getUnreadCount() {
-  const url = "{% url 'segna_come_letto' 1 %}"
+        function getUnreadCount() {
+          const url = "{% url 'segna_come_letto' 1 %}"
 
-  return fetch(url, {
-    method: 'GET', // O 'POST' se necessario
-    headers: {
-      'X-CSRFToken': '{{ csrf_token }}'
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        const notificationNumber = document.querySelector('.custom-notification-number');
-        notificationNumber.textContent = data.unread_count;
-      } else {
-        throw new Error('Failed to retrieve unread count');
-      }
-    });
-}
+          return fetch(url, {
+            method: 'GET', // O 'POST' se necessario
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}'
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                const notificationNumber = document.querySelector('.custom-notification-number');
+                notificationNumber.textContent = data.unread_count;
+                if (notificationNumber.textContent != '0') {
+                  startshakebell();
+                }
+              } else {
+                throw new Error('Failed to retrieve unread count');
+              }
+            });
+        }
 
         function segnaComeLetta(notificaId) {
           const url = "{% url 'segna_come_letto' 1 %}".replace('1', notificaId);
@@ -189,6 +184,9 @@ function getUnreadCount() {
 
                 const notificationNumber = document.querySelector('.custom-notification-number');
                 notificationNumber.textContent = data.unread_count;
+                if (notificationNumber.textContent == '0') {
+                  stopshakebell();
+                }
               }
             });
         }
