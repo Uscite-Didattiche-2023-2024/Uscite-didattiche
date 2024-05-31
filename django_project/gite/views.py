@@ -75,6 +75,12 @@ def index(request):
 
 
 @login_required
+def prendi_notifiche(request, notifica_id):
+    notifiche_non_lette = Notifica.objects.filter(~Q(utenti_letto=request.user)).count()
+    return JsonResponse({"success": True, "unread_count": notifiche_non_lette})
+
+
+@login_required
 def segna_come_letto(request, notifica_id):
     notifica = get_object_or_404(Notifica, id=notifica_id)
     notifica.utenti_letto.add(request.user)

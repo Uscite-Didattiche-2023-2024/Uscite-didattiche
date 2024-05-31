@@ -138,7 +138,7 @@
 
       <script>
         document.addEventListener("DOMContentLoaded", function () {
-          var notificationNumber = document.querySelector('.custom-notification-number');
+          getUnreadCount() 
           if (notificationNumber.textContent.trim() === "") {
             notificationNumber.textContent = '0';
           }
@@ -152,6 +152,26 @@
             box.style.display = "none";
           }
         }
+
+function getUnreadCount() {
+  const url = "{% url 'segna_come_letto' 1 %}"
+
+  return fetch(url, {
+    method: 'GET', // O 'POST' se necessario
+    headers: {
+      'X-CSRFToken': '{{ csrf_token }}'
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const notificationNumber = document.querySelector('.custom-notification-number');
+        notificationNumber.textContent = data.unread_count;
+      } else {
+        throw new Error('Failed to retrieve unread count');
+      }
+    });
+}
 
         function segnaComeLetta(notificaId) {
           const url = "{% url 'segna_come_letto' 1 %}".replace('1', notificaId);
